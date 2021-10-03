@@ -17,6 +17,6 @@ builders:
   node_aggregating_builder:
     import: 'package:code_gen_exp/builder.dart'
     builder_factories: ['nodeAggregatingBuilder']
-    build_extensions: { r'$lib$': ['tlwr.json'] }
+    build_extensions: { r'$lib$': ['tlwr.txt'] }
     auto_apply: dependents
     build_to: source
