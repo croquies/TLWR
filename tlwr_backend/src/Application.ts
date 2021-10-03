@@ -9,13 +9,17 @@ import * as cookieParser from 'cookie-parser';
 
 // Routes
 import {EventLog} from './routes/index';
-import Config from './Config';
+import ConfigService from './services/ConfigService';
+import {Service} from 'typedi';
 
+@Service()
 export class Application {
-  private static server?: Express;
-  private static httpServer?: Server;
+  private server?: Express;
+  private httpServer?: Server;
 
-  public static async createApplication() {
+  constructor(private config: ConfigService) {}
+
+  public async createApplication() {
     const server = express();
 
     // Use standard middleware
@@ -31,39 +35,39 @@ export class Application {
     // Register routers
     server.use('/eventlog', EventLog);
 
-    // Application setup
-    Application.httpServer = server.listen(Config.port);
-    Application.server = server;
-    Application.handleExit(server);
-    return Application.server;
+    // this setup
+    this.httpServer = server.listen(this.config.port);
+    this.server = server;
+    this.handleExit(server);
+    return this.server;
   }
 
-  private static handleExit(express: Express) {
+  private handleExit(express: Express) {
     process.on('uncaughtException', (err: Error) => {
       console.error('Uncaught exception', err);
-      Application.shutdownProperly(1);
+      this.shutdownProperly(1);
     });
     process.on('unhandledRejection', (reason: {} | null | undefined) => {
       console.error('Unhandled Rejection at promise', reason);
-      Application.shutdownProperly(2);
+      this.shutdownProperly(2);
     });
     process.on('SIGINT', () => {
       console.info('Caught SIGINT');
-      Application.shutdownProperly(128 + 2);
+      this.shutdownProperly(128 + 2);
     });
     process.on('SIGTERM', () => {
       console.info('Caught SIGTERM');
-      Application.shutdownProperly(128 + 2);
+      this.shutdownProperly(128 + 2);
     });
     process.on('exit', () => {
       console.info('Exiting');
     });
   }
 
-  private static shutdownProperly(exitCode: number) {
+  private shutdownProperly(exitCode: number) {
     Promise.resolve()
       .then(() => {
-        if (Application.httpServer) Application.httpServer.close();
+        if (this.httpServer) this.httpServer.close();
       })
       .then(() => {
         console.info('Shutdown complete');

@@ -31,8 +31,10 @@
     "@types/cors": "^2.8.12",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.13",
+    "@types/express-session": "^1.17.4",
     "@types/helmet": "^4.0.0",
     "@types/node": "^14.17.20",
+    "@types/uuid": "^8.3.1",
     "gts": "^3.1.0",
     "nodemon": "^2.0.13",
     "ts-node": "^10.2.1",
@@ -45,7 +47,11 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
+    "express-session": "^1.17.2",
     "helmet": "^4.6.0",
-    "nocache": "^3.0.1"
+    "nocache": "^3.0.1",
+    "reflect-metadata": "^0.1.13",
+    "typedi": "^0.10.0",
+    "uuid": "^8.3.2"
   }
 }
