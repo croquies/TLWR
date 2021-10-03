@@ -11,8 +11,8 @@ Here's a link to the working site. Have a look around, we made the frontend as i
 And here's a link to the server repo.
 
 ## The Team
-Taejung Heo - [GitHub](https://github.com/Aqudi)
-Wonmo Jung - [GitHub](https://github.com/croquies)
+- Taejung Heo - [GitHub](https://github.com/Aqudi)
+- Wonmo Jung - [GitHub](https://github.com/croquies)
 
 
 ## Demo
