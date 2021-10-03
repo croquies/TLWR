@@ -10,6 +10,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  source_gen: ^1.0.0
 
 dev_dependencies:
   flutter_test:
