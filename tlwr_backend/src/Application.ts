@@ -6,18 +6,24 @@ import * as helmet from 'helmet';
 import * as nocache from 'nocache';
 import * as cors from 'cors';
 import * as cookieParser from 'cookie-parser';
+import {v4 as uuidv4} from 'uuid';
 
 // Routes
 import {EventLog} from './routes/index';
 import ConfigService from './services/ConfigService';
 import {Service} from 'typedi';
+import session = require('express-session');
+import LoggerService from './services/LoggerService';
 
 @Service()
 export class Application {
   private server?: Express;
   private httpServer?: Server;
 
-  constructor(private config: ConfigService) {}
+  constructor(
+    private config: ConfigService,
+    private loggerService: LoggerService
+  ) {}
 
   public async createApplication() {
     const server = express();
@@ -26,6 +32,23 @@ export class Application {
     server.use(express.json());
     server.use(cookieParser());
     server.use(cors());
+
+    server.use(
+      session({
+        secret: this.config.session_secret,
+        resave: false,
+        saveUninitialized: true,
+        genid: function () {
+          return uuidv4(); // use UUIDs for session IDs
+        },
+        cookie: {secure: this.config.isProduction, maxAge: 360000},
+      })
+    );
+    // production cookie setting
+    // http://expressjs.com/en/resources/middleware/session.html
+    if (this.config.isProduction) {
+      server.set('trust proxy', 1);
+    }
 
     // Use security middleware
     server.use(nocache());
@@ -38,29 +61,31 @@ export class Application {
     // this setup
     this.httpServer = server.listen(this.config.port);
     this.server = server;
-    this.handleExit(server);
+    this.handleExit();
     return this.server;
   }
 
-  private handleExit(express: Express) {
+  private handleExit() {
     process.on('uncaughtException', (err: Error) => {
-      console.error('Uncaught exception', err);
+      this.loggerService.logger.error(`Uncaught exception ${err}`);
       this.shutdownProperly(1);
     });
     process.on('unhandledRejection', (reason: {} | null | undefined) => {
-      console.error('Unhandled Rejection at promise', reason);
+      this.loggerService.logger.error(
+        `Unhandled Rejection at promise ${reason}`
+      );
       this.shutdownProperly(2);
     });
     process.on('SIGINT', () => {
-      console.info('Caught SIGINT');
+      this.loggerService.logger.info('Caught SIGINT');
       this.shutdownProperly(128 + 2);
     });
     process.on('SIGTERM', () => {
-      console.info('Caught SIGTERM');
+      this.loggerService.logger.info('Caught SIGTERM');
       this.shutdownProperly(128 + 2);
     });
     process.on('exit', () => {
-      console.info('Exiting');
+      this.loggerService.logger.info('Exiting');
     });
   }
 
@@ -70,12 +95,12 @@ export class Application {
         if (this.httpServer) this.httpServer.close();
       })
       .then(() => {
-        console.info('Shutdown complete');
-        process.exit(exitCode);
+        this.loggerService.logger.info('Shutdown complete');
+        process.exitCode = exitCode;
       })
       .catch(err => {
-        console.error('Error during shutdown', err);
-        process.exit(1);
+        this.loggerService.logger.error(`Error during shutdown ${err}`);
+        process.exitCode = 1;
       });
   }
 }
