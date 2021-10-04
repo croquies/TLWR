@@ -9,7 +9,7 @@ import * as cookieParser from 'cookie-parser';
 import {v4 as uuidv4} from 'uuid';
 
 // Routes
-import {EventLog} from './routes/index';
+import {Project, PageNode, DynamicEvent} from './routes/index';
 import ConfigService from './services/ConfigService';
 import {Service} from 'typedi';
 import session = require('express-session');
@@ -56,7 +56,9 @@ export class Application {
     server.use(helmet.referrerPolicy({policy: 'same-origin'}));
 
     // Register routers
-    server.use('/eventlog', EventLog);
+    server.use('/dynamic-event', DynamicEvent);
+    server.use('/page-node', PageNode);
+    server.use('/project', Project);
 
     // this setup
     this.httpServer = server.listen(this.config.port);
