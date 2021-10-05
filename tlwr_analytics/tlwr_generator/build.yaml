@@ -1,21 +1,21 @@
 targets:
   $default:
     builders:
-      code_gen_exp|locating_builder:
+      tlwr_generator|locating_builder:
         enabled: true
-      code_gen_exp|node_aggregating_builder:
+      tlwr_generator|node_aggregating_builder:
         enabled: true
 
 builders:
   locating_builder:
-    import: 'package:code_gen_exp/builder.dart'
+    import: 'package:tlwr_generator/builder.dart'
     builder_factories: ['locatingBuilder']
     build_extensions: { '.dart': ['.tlwr'] }
     auto_apply: dependents
     build_to: cache
 
   node_aggregating_builder:
-    import: 'package:code_gen_exp/builder.dart'
+    import: 'package:tlwr_generator/builder.dart'
     builder_factories: ['nodeAggregatingBuilder']
     build_extensions: { r'$lib$': ['tlwr.txt'] }
     auto_apply: dependents
