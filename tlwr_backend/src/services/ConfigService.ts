@@ -23,6 +23,16 @@ export default class ConfigService {
     this.tlwr_secret = process.env.TLWR_SECRET || '';
     this.tlwr_public = process.env.TLWR_PUBLIC || '';
     this.tlwr_api_url = process.env.TLWR_API_URL || '';
+
+    if (this.isNotProduction) {
+      console.log(this.port);
+      console.log(this.environment);
+      console.log(this.session_secret);
+      console.log(this.log_dir);
+      console.log(this.tlwr_secret);
+      console.log(this.tlwr_public);
+      console.log(this.tlwr_api_url);
+    }
   }
 
   public get isProduction(): boolean {

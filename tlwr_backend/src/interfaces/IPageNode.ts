@@ -1,15 +1,27 @@
+export interface IPageNodeAdditionalInfo {
+  initial?: boolean;
+  [key: string]: any;
+}
+
 export interface IPageNode {
-  id: number;
-  project_id: number;
+  id: string;
+  project_id: string;
   path: string;
-  class_name: string;
-  additional_info: object;
+  class_name?: string;
+  additional_info?: IPageNodeAdditionalInfo;
   created_at: string;
 }
 
-export interface IPageNodeInputDTO {
-  project_id: number;
+export interface IPageNodeRequest {
   path: string;
-  class_name: string;
-  additional_info: object;
+  class_name?: string;
+  additional_info?: IPageNodeAdditionalInfo;
+}
+
+export interface IPageNodeInDB {
+  id?: string;
+  project_id: string;
+  path: string;
+  class_name?: string;
+  additional_info?: IPageNodeAdditionalInfo;
 }

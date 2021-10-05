@@ -1,8 +1,10 @@
 import {Request as ExpressRequest} from 'express';
 import {Body, Controller, Post, Route, Request} from 'tsoa';
-import {PostgrestResponse} from '@supabase/postgrest-js';
 
-import {IDynamicEventInputDTO} from '../interfaces/IDynamicEvent';
+import {
+  IDynamicEventInDB,
+  IDynamicEventRequest,
+} from '../interfaces/IDynamicEvent';
 import DatabaseService from '../services/DatabaseService';
 import LoggerService from '../services/LoggerService';
 import {Service} from 'typedi';
@@ -20,14 +22,32 @@ export class DynamicEventController extends Controller {
   @Post()
   public async logEvent(
     @Request() req: ExpressRequest,
-    @Body() body: IDynamicEventInputDTO
+    @Body() body: IDynamicEventRequest
   ) {
     this.loggerService.logger.info(JSON.stringify(body));
-    body = {
-      ...body,
+    const event: IDynamicEventInDB = {
+      project_id: body.project_id,
       session_id: req.session.id,
     };
-    await this.databaseService.logEvent(body);
+    if (body.from) {
+      const pageNode = await this.databaseService.createPageNode({
+        ...body.from,
+        project_id: body.project_id,
+      });
+      if (pageNode != null) {
+        event.from = pageNode.id;
+      }
+    }
+    if (body.to) {
+      const pageNode = await this.databaseService.createPageNode({
+        ...body.to,
+        project_id: body.project_id,
+      });
+      if (pageNode != null) {
+        event.to = pageNode.id;
+      }
+    }
+    await this.databaseService.createDynamicEvent(event);
     this.setStatus(201);
   }
 }

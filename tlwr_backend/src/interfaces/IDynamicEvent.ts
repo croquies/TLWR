@@ -1,17 +1,23 @@
-import {IPageNodeInputDTO} from './IPageNode';
+import {IPageNodeRequest} from './IPageNode';
 
 export interface IDynamicEvent {
   id: string;
-  project_id: number;
+  project_id: string;
   session_id: string;
-  from: number;
-  to: number;
+  from?: string;
+  to: string;
   created_at: string;
 }
 
-export interface IDynamicEventInputDTO {
-  project_id: number;
+export interface IDynamicEventRequest {
+  project_id: string;
+  from?: IPageNodeRequest;
+  to: IPageNodeRequest;
+}
+
+export interface IDynamicEventInDB {
+  project_id: string;
   session_id?: string;
-  from?: IPageNodeInputDTO;
-  to?: IPageNodeInputDTO;
+  from?: string;
+  to?: string;
 }

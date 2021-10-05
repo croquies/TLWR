@@ -11,24 +11,30 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "IPageNodeInputDTO": {
+    "IPageNodeAdditionalInfo": {
         "dataType": "refObject",
         "properties": {
-            "project_id": {"dataType":"double","required":true},
+            "initial": {"dataType":"boolean"},
+        },
+        "additionalProperties": {"dataType":"any"},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "IPageNodeRequest": {
+        "dataType": "refObject",
+        "properties": {
             "path": {"dataType":"string","required":true},
-            "class_name": {"dataType":"string","required":true},
-            "additional_info": {"dataType":"object","required":true},
+            "class_name": {"dataType":"string"},
+            "additional_info": {"ref":"IPageNodeAdditionalInfo"},
         },
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "IDynamicEventInputDTO": {
+    "IDynamicEventRequest": {
         "dataType": "refObject",
         "properties": {
-            "project_id": {"dataType":"double","required":true},
-            "session_id": {"dataType":"string"},
-            "from": {"ref":"IPageNodeInputDTO"},
-            "to": {"ref":"IPageNodeInputDTO"},
+            "project_id": {"dataType":"string","required":true},
+            "from": {"ref":"IPageNodeRequest"},
+            "to": {"ref":"IPageNodeRequest","required":true},
         },
         "additionalProperties": false,
     },
@@ -48,7 +54,7 @@ export function RegisterRoutes(app: express.Router) {
             async function DynamicEventController_logEvent(request: any, response: any, next: any) {
             const args = {
                     req: {"in":"request","name":"req","required":true,"dataType":"object"},
-                    body: {"in":"body","name":"body","required":true,"ref":"IDynamicEventInputDTO"},
+                    body: {"in":"body","name":"body","required":true,"ref":"IDynamicEventRequest"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
