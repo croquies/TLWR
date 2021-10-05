@@ -7,16 +7,20 @@ environment:
   sdk: ">=2.13.0 <3.0.0"
 
 dependencies:
+  adaptive_breakpoints: ^0.0.5
   adaptive_navigation: ^0.0.4
   auto_route: ^2.4.2
   bloc: ^7.2.0
   flutter:
     sdk: flutter
   flutter_bloc: ^7.3.0
+  flutter_hooks: ^0.18.0
   flutter_localizations:
     sdk: flutter
   freezed: ^0.14.5
   intl: ^0.17.0
+  nil: ^1.1.1
+  responsive_builder: ^0.4.1
 
 dev_dependencies:
   auto_route_generator: ^2.4.1
