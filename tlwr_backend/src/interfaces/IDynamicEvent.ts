@@ -1,4 +1,4 @@
-import {IPageNode} from './IPageNode';
+import {IPageNodeInputDTO} from './IPageNode';
 
 export interface IDynamicEvent {
   id: string;
@@ -11,7 +11,7 @@ export interface IDynamicEvent {
 
 export interface IDynamicEventInputDTO {
   project_id: number;
-  session_id: string;
-  from: IPageNode;
-  to: IPageNode;
+  session_id?: string;
+  from?: IPageNodeInputDTO;
+  to?: IPageNodeInputDTO;
 }

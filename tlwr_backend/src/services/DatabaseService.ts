@@ -5,7 +5,11 @@ import SupabaseService from './SupabaseService';
 
 @Service()
 export default class DatabaseService {
-  private dynamicEvent = 'DynamicEvent';
+  private dynamicEvents = 'dynamic_events';
+  private pageNodes = 'page_nodes';
+  private profiles = 'profiles';
+  private projects = 'projects';
+  private users = 'users';
 
   constructor(
     private supabaseService: SupabaseService,
@@ -15,7 +19,7 @@ export default class DatabaseService {
   public async logEvent(event: IDynamicEventInputDTO) {
     this.loggerService.logger.info(`logEvent: ${JSON.stringify(event)}`);
     return await this.supabaseService.supabase
-      .from<IDynamicEventInputDTO>(this.dynamicEvent)
+      .from<IDynamicEventInputDTO>(this.dynamicEvents)
       .insert(event);
   }
 }

@@ -1,4 +1,5 @@
 import * as express from 'express';
+import swaggerUi = require('swagger-ui-express');
 import {Express} from 'express';
 import {Server} from 'http';
 
@@ -9,7 +10,7 @@ import * as cookieParser from 'cookie-parser';
 import {v4 as uuidv4} from 'uuid';
 
 // Routes
-import {Project, PageNode, DynamicEvent} from './routes/index';
+import {RegisterRoutes} from './routes';
 import ConfigService from './services/ConfigService';
 import {Service} from 'typedi';
 import session = require('express-session');
@@ -56,9 +57,16 @@ export class Application {
     server.use(helmet.referrerPolicy({policy: 'same-origin'}));
 
     // Register routers
-    server.use('/dynamic-event', DynamicEvent);
-    server.use('/page-node', PageNode);
-    server.use('/project', Project);
+    RegisterRoutes(server);
+    server.use(
+      '/docs',
+      swaggerUi.serve,
+      async (req: express.Request, res: express.Response) => {
+        return res.send(
+          swaggerUi.generateHTML(await import('../build/swagger.json'))
+        );
+      }
+    );
 
     // this setup
     this.httpServer = server.listen(this.config.port);
