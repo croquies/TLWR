@@ -1,7 +1,4 @@
 library tlwr_observer;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'package:tlwr_observer/tlwr_observer.dart';
+export 'tlwr_page_widget/tlwr_page_widget.dart' show TLWRPageWidget;
