@@ -8,10 +8,14 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  freezed_annotation: ^0.14.1
+  dartz: 0.10.0-nullsafety.1
   flutter:
     sdk: flutter
 
 dev_dependencies:
+  freezed: ^0.14.1+1
+  build_runner: ^2.0.2
   flutter_test:
     sdk: flutter
   flutter_lints: ^1.0.0
