@@ -48,7 +48,7 @@ class SideMenuListTile extends StatelessWidget {
 }
 
 class TLWRSideMenu extends HookWidget {
-  TLWRSideMenu({Key? key, this.menus = const []}) : super(key: key);
+  const TLWRSideMenu({Key? key, this.menus = const []}) : super(key: key);
 
   final List<SideMenuItem> menus;
 

@@ -33,9 +33,7 @@ class AppRouter extends _i4.RootStackRouter {
 
   @override
   List<_i4.RouteConfig> get routes => [
-        _i4.RouteConfig('/#redirect',
-            path: '/', redirectTo: '/dashboard', fullMatch: true),
-        _i4.RouteConfig(DashboardRoute.name, path: '/dashboard'),
+        _i4.RouteConfig(DashboardRoute.name, path: '/'),
         _i4.RouteConfig(SignUpRoute.name, path: '/sign-up'),
         _i4.RouteConfig(SignInRoute.name, path: '/sign-in')
       ];
@@ -43,7 +41,7 @@ class AppRouter extends _i4.RootStackRouter {
 
 /// generated route for [_i1.DashboardPage]
 class DashboardRoute extends _i4.PageRouteInfo<void> {
-  const DashboardRoute() : super(name, path: '/dashboard');
+  const DashboardRoute() : super(name, path: '/');
 
   static const String name = 'DashboardRoute';
 }

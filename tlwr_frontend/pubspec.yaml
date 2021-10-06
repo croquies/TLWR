@@ -11,6 +11,7 @@ dependencies:
   adaptive_navigation: ^0.0.4
   auto_route: ^2.4.2
   bloc: ^7.2.0
+  dartz: ^0.10.0
   flutter:
     sdk: flutter
   flutter_bloc: ^7.3.0
@@ -22,6 +23,7 @@ dependencies:
   nil: ^1.1.1
   responsive_builder: ^0.4.1
   supabase_flutter: ^0.2.8
+  uuid: ^3.0.5
 
 dev_dependencies:
   auto_route_generator: ^2.4.1

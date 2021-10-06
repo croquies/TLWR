@@ -9,18 +9,15 @@ import 'package:tlwr_frontend/presentation/dashboard/dashboard_page.dart';
     MaterialRoute(
       page: DashboardPage,
       path: '/',
-      name: 'Dashboard',
       initial: true,
     ),
     MaterialRoute(
       page: SignUpPage,
       path: '/sign-up',
-      name: 'Sign up',
     ),
     MaterialRoute(
       page: SignInPage,
       path: '/sign-in',
-      name: 'Sign in',
     ),
   ],
 )
