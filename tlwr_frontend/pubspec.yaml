@@ -21,6 +21,7 @@ dependencies:
   intl: ^0.17.0
   nil: ^1.1.1
   responsive_builder: ^0.4.1
+  supabase_flutter: ^0.2.8
 
 dev_dependencies:
   auto_route_generator: ^2.4.1

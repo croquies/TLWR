@@ -9,7 +9,9 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -26,10 +28,23 @@ class AppBlocObserver extends BlocObserver {
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   Bloc.observer = AppBlocObserver();
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
+
+  await Supabase.initialize(
+          url: 'https://kgmtyctqxepebrkzkfrt.supabase.co',
+          anonKey:
+              // ignore: lines_longer_than_80_chars
+              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoiYW5vbiIsImlhdCI6MTYzMzI2MDk0NSwiZXhwIjoxOTQ4ODM2OTQ1fQ.LgPbYBzh9QkMyMMlG97r0PIH2PvQatPIoMTsIwA3Ndc',
+          debug: !kReleaseMode // optional
+          )
+      .catchError((error) {
+    log(error.toString());
+  });
 
   await runZonedGuarded(
     () async => runApp(await builder()),
