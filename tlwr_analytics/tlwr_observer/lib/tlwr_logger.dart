@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:tlwr_observer/entities/dynamic_event.dart';
 
 import 'entities/page_node.dart';
@@ -10,8 +9,9 @@ class TLWRLogger {
 
   static final TLWRLogger _instance = TLWRLogger._();
   static TLWRLogger get instance => _instance;
-  void setProjectId(String id) {
-    projectId = id;
+  factory TLWRLogger.initialize({required String id}) {
+    _instance.projectId = id;
+    return _instance;
   }
 
   Future<void> sendLog({
