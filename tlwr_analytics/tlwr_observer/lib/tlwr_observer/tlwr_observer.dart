@@ -4,11 +4,17 @@ import 'package:tlwr_observer/entities/page_node.dart';
 import 'package:tlwr_observer/tlwr_logger.dart';
 
 class TLWRObserver extends RouteObserver<ModalRoute<dynamic>> {
-  final TLWRLogger tlwrLogger = TLWRLogger.instance;
+  late final TLWRLogger tlwrLogger;
 
   TLWRObserver._();
   static final TLWRObserver _instance = TLWRObserver._();
   static TLWRObserver get instance => _instance;
+
+  factory TLWRObserver.initialize({required TLWRLogger tlwrLogger}) {
+    // ignore: prefer_initializing_formals
+    _instance.tlwrLogger = tlwrLogger;
+    return _instance;
+  }
 
   Option<PageNode> fromPageNode = none();
   Option<PageNode> toPageNode = none();
