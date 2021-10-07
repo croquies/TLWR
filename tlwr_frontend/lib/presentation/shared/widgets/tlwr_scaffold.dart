@@ -43,6 +43,12 @@ class TLWRScaffold extends HookWidget {
             routePath: getRoutePath(SignUpRoute.name),
             routeName: SignUpRoute.name,
           ),
+          TLWRMenuData(
+            title: routeName(SignOutRoute.name),
+            icon: const Icon(Icons.logout),
+            routePath: getRoutePath(SignOutRoute.name),
+            routeName: SignOutRoute.name,
+          ),
         ]);
 
     return Scaffold(

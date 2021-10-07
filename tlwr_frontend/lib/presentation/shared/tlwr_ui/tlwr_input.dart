@@ -15,6 +15,7 @@ class TLWRInputFormField extends StatelessWidget {
     this.trailingTapped,
     this.password = false,
     this.keyboardType,
+    this.textInputAction,
     this.onChanged,
   }) : super(key: key);
 
@@ -28,6 +29,7 @@ class TLWRInputFormField extends StatelessWidget {
   final bool password;
   final void Function()? trailingTapped;
   final TextInputType? keyboardType;
+  final TextInputAction? textInputAction;
   final void Function(String?)? onChanged;
 
   final inputBorder = UnderlineInputBorder(
@@ -44,6 +46,7 @@ class TLWRInputFormField extends StatelessWidget {
       validator: validator,
       onChanged: onChanged,
       keyboardType: keyboardType,
+      textInputAction: textInputAction,
       decoration: InputDecoration(
         hintText: placeholder,
         contentPadding:
