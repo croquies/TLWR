@@ -9,9 +9,9 @@ class NodeLayout extends StatefulWidget {
 
 class _NodeLayoutState extends State<NodeLayout> {
   List<Node> nodes = [
-    Node(offset: Offset(70, 100), text: 'text1'),
-    Node(offset: Offset(200, 100), text: 'text2'),
-    Node(offset: Offset(200, 230), text: 'text3'),
+    Node(offset: Offset(70, 100), text: 'Page 1'),
+    Node(offset: Offset(200, 100), text: 'Page 2'),
+    Node(offset: Offset(200, 230), text: 'Page 3'),
   ];
 
   Function onDragStart(int index) => (x, y) {
@@ -62,11 +62,17 @@ class _Item extends StatelessWidget {
   final Function onDragStart;
   final String text;
 
-  _handleDrag(details) {
-    print(details);
+  _handleDrag(DragUpdateDetails details) {
+    var x = offset.dx + details.delta.dx;
+    var y = offset.dy + details.delta.dy;
+    onDragStart(x, y);
+  }
+
+  _handleDragStart(details) {
+    print("handle drag start 2 : ${details.globalPosition} $offset");
     var x = details.globalPosition.dx;
     var y = details.globalPosition.dy;
-    onDragStart(x, y);
+    onDragStart(offset.dx, offset.dy);
   }
 
   @override
@@ -75,7 +81,7 @@ class _Item extends StatelessWidget {
       left: offset.dx - size / 2,
       top: offset.dy - size / 2,
       child: GestureDetector(
-        onPanStart: _handleDrag,
+        onPanStart: _handleDragStart,
         onPanUpdate: _handleDrag,
         child: Container(
           width: size,
@@ -126,5 +132,16 @@ class Node {
 
   Node copyWithNewOffset(Offset offset) {
     return Node(offset: offset, text: text);
+  }
+}
+
+class Edge {
+  Edge({required this.offset, required this.text});
+
+  final Offset offset;
+  final String text;
+
+  Edge copyWithNewOffset(Offset offset) {
+    return Edge(offset: offset, text: text);
   }
 }
