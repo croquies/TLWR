@@ -8,7 +8,7 @@ class TLWRButton extends StatelessWidget {
     Key? key,
     required this.title,
     this.disabled = false,
-    this.busy = false,
+    this.loading = false,
     this.onTap,
     this.leading,
   })  : outline = false,
@@ -20,13 +20,13 @@ class TLWRButton extends StatelessWidget {
     this.onTap,
     this.leading,
   })  : disabled = false,
-        busy = false,
+        loading = false,
         outline = true,
         super(key: key);
 
   final String title;
   final bool disabled;
-  final bool busy;
+  final bool loading;
   final void Function()? onTap;
   final bool outline;
   final Widget? leading;
@@ -51,7 +51,7 @@ class TLWRButton extends StatelessWidget {
                 border: Border.all(
                   color: kcPrimaryColor,
                 )),
-        child: !busy
+        child: !loading
             ? Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
