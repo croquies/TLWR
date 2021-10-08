@@ -1,30 +1,58 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:beamer/beamer.dart';
+import 'package:flutter/material.dart';
 import 'package:tlwr_frontend/presentation/auth/sign_in/sign_in_page.dart';
-import 'package:tlwr_frontend/presentation/auth/sign_out/sign_out_page.dart';
 import 'package:tlwr_frontend/presentation/auth/sign_up/sign_up_page.dart';
 import 'package:tlwr_frontend/presentation/dashboard/dashboard_page.dart';
+import 'package:tlwr_frontend/presentation/home/home_page.dart';
 import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 
-@MaterialAutoRouter(
-  replaceInRouteName: 'Page,Route',
-  routes: <AutoRoute>[
-    MaterialRoute(
-      page: DashboardPage,
-      path: RouteNames.home,
-      initial: true,
-    ),
-    MaterialRoute(
-      page: SignUpPage,
-      path: RouteNames.signUp,
-    ),
-    MaterialRoute(
-      page: SignInPage,
-      path: RouteNames.signIn,
-    ),
-    MaterialRoute(
-      page: SignOutPage,
-      path: RouteNames.signOut,
-    ),
-  ],
-)
-class $AppRouter {}
+class RootLocation extends BeamLocation {
+  RootLocation({BeamState? state}) : super(state);
+
+  @override
+  List<String> get pathBlueprints =>
+      [RouteNames.home, RouteNames.signIn, RouteNames.signUp];
+
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    return [
+      if (state.uri.pathSegments.contains(RouteNames.home))
+        BeamPage(
+          key: const ValueKey(RouteNames.home),
+          title: RouteNames.home,
+          child: const HomePage(),
+        ),
+      if (state.uri.pathSegments.contains(RouteNames.signIn))
+        BeamPage(
+          key: const ValueKey(RouteNames.signIn),
+          title: RouteNames.signIn,
+          child: const SignInPage(),
+        ),
+      if (state.uri.pathSegments.contains(RouteNames.signUp))
+        BeamPage(
+          key: const ValueKey(RouteNames.signUp),
+          title: RouteNames.signUp,
+          child: const SignUpPage(),
+        ),
+    ];
+  }
+}
+
+class DashboardLocation extends BeamLocation {
+  DashboardLocation({BeamState? state}) : super(state);
+
+  @override
+  List<String> get pathBlueprints =>
+      ['${RouteNames.getPath(RouteNames.dashboard)}*'];
+
+  @override
+  List<BeamPage> buildPages(BuildContext context, BeamState state) {
+    final pages = RootLocation().buildPages(context, state)
+      ..add(BeamPage(
+        key: const ValueKey(RouteNames.dashboard),
+        title: RouteNames.dashboard,
+        child: const DashboardPage(),
+      ));
+    return pages;
+  }
+}

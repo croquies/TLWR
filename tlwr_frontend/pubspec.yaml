@@ -9,7 +9,7 @@ environment:
 dependencies:
   adaptive_breakpoints: ^0.0.5
   adaptive_navigation: ^0.0.4
-  auto_route: ^2.4.2
+  beamer: ^0.14.1
   bloc: ^7.2.0
   dartz: ^0.10.0
   flutter:
@@ -28,7 +28,6 @@ dependencies:
   uuid: ^3.0.5
 
 dev_dependencies:
-  auto_route_generator: ^2.4.1
   bloc_test: ^8.2.0
   build_runner: ^2.1.4
   flutter_test:

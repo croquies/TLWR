@@ -1,35 +1,42 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
-
+import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/shared/resources/resources.dart';
+
+enum RouteType { nonAuth, auth, both }
 
 class TLWRMenuData {
   const TLWRMenuData({
     required this.title,
     required this.icon,
-    required this.routePath,
     required this.routeName,
+    this.callback,
+    this.routeType = RouteType.auth,
   });
   final String title;
   final Widget icon;
-  final String routePath;
   final String routeName;
+  final Function()? callback;
+  final RouteType routeType;
 
   TLWRMenuData copyWith({
     String? title,
     Widget? icon,
     String? routePath,
     String? routeName,
+    Function()? callback,
+    RouteType? routeType,
   }) {
     return TLWRMenuData(
       title: title ?? this.title,
       icon: icon ?? this.icon,
-      routePath: routePath ?? this.routePath,
       routeName: routeName ?? this.routeName,
+      callback: callback ?? this.callback,
+      routeType: routeType ?? this.routeType,
     );
   }
 }
@@ -92,8 +99,7 @@ class TLWRMenuDesktop extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedIndex = useState(0);
-    final currentRoute = ModalRoute.of(context)?.settings.name;
+    final currentPath = context.currentBeamLocation.state.pathBlueprintSegments;
 
     return SizedBox(
       height: 100,
@@ -110,10 +116,15 @@ class TLWRMenuDesktop extends HookWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TLWRMenuItem(
                     item: menus[index],
-                    selected: menus[index].routeName == currentRoute,
+                    selected: currentPath.contains(menus[index].routeName),
                     onPressed: () {
-                      selectedIndex.value = index;
-                      context.router.pushNamed(menus[index].routePath);
+                      final callback = menus[index].callback;
+                      if (callback != null) {
+                        callback();
+                      } else {
+                        context.beamToNamed(
+                            RouteNames.getPath(menus[index].routeName));
+                      }
                     },
                   ),
                 ),
@@ -139,7 +150,16 @@ class TLWRMenu extends StatelessWidget {
           return ScreenTypeLayout(
             mobile: const TLWRMenuMobile(),
             tablet: TLWRMenuDesktop(
-              menus: menus,
+              menus: state.maybeWhen(
+                authenticated: () => menus
+                    .where((e) =>
+                        [RouteType.auth, RouteType.both].contains(e.routeType))
+                    .toList(),
+                orElse: () => menus
+                    .where((e) => [RouteType.nonAuth, RouteType.both]
+                        .contains(e.routeType))
+                    .toList(),
+              ),
             ),
           ); // return widget here based on BlocA's state
         });

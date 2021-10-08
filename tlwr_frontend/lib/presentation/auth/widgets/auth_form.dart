@@ -82,7 +82,7 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
                 child: Column(
                   children: <Widget>[
                     TLWRInputFormField(
-                      autofocus: true,
+                      // autofocus: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.emailAddress,
                       textInputAction: TextInputAction.next,
@@ -96,7 +96,7 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
                     TLWRInputFormField(
                       controller:
                           context.read<AuthFormBloc>().passwordController,
-                      autofocus: true,
+                      // autofocus: true,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       textInputAction:
                           signUp ? TextInputAction.next : TextInputAction.done,
@@ -113,7 +113,7 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
                         controller: context
                             .read<AuthFormBloc>()
                             .confirmPasswordController,
-                        autofocus: true,
+                        // autofocus: true,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         textInputAction: TextInputAction.done,
                         validator: (_) => confirmPasswordValidator(

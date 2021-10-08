@@ -1,68 +1,87 @@
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:tlwr_frontend/presentation/routes/router.gr.dart';
+import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
+import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/shared/widgets/tlwr_menu.dart';
 
 class TLWRScaffold extends HookWidget {
-  const TLWRScaffold({Key? key, this.title, required this.child})
+  const TLWRScaffold(
+      {Key? key, this.title, required this.child, this.isLoading = false})
       : super(key: key);
 
   final String? title;
   final Widget child;
-
-  String routeName(String name) {
-    final beforeCapitalLetter = RegExp('(?=[A-Z])');
-    final splitedName = name.split(beforeCapitalLetter);
-    final result = splitedName.sublist(0, splitedName.length - 1).join(' ');
-    return result;
-  }
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     final scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
-    final nameAndPaths = useMemoized(() => AppRouter().routes);
-    final getRoutePath = useCallback(
-        (name) => nameAndPaths.firstWhere((e) => e.name == name).path, []);
+    final signOut = useState(false);
 
-    final menus = useMemoized(() => <TLWRMenuData>[
-          TLWRMenuData(
-            title: routeName(DashboardRoute.name),
-            icon: const Icon(Icons.dashboard),
-            routePath: getRoutePath(DashboardRoute.name),
-            routeName: DashboardRoute.name,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        final menus = <TLWRMenuData>[
+          const TLWRMenuData(
+            title: 'Home',
+            icon: Icon(Icons.home),
+            routeName: RouteNames.home,
+            routeType: RouteType.both,
+          ),
+          const TLWRMenuData(
+            title: 'Dashboard',
+            icon: Icon(Icons.dashboard),
+            routeName: RouteNames.dashboard,
+          ),
+          const TLWRMenuData(
+            title: 'Sign in',
+            icon: Icon(Icons.login),
+            routeName: RouteNames.signIn,
+            routeType: RouteType.nonAuth,
+          ),
+          const TLWRMenuData(
+            title: 'Sign up',
+            icon: Icon(Icons.exit_to_app),
+            routeName: RouteNames.signUp,
+            routeType: RouteType.nonAuth,
           ),
           TLWRMenuData(
-            title: routeName(SignInRoute.name),
-            icon: const Icon(Icons.login),
-            routePath: getRoutePath(SignInRoute.name),
-            routeName: SignInRoute.name,
-          ),
-          TLWRMenuData(
-            title: routeName(SignUpRoute.name),
-            icon: const Icon(Icons.exit_to_app),
-            routePath: getRoutePath(SignUpRoute.name),
-            routeName: SignUpRoute.name,
-          ),
-          TLWRMenuData(
-            title: routeName(SignOutRoute.name),
+            title: 'Sign out',
             icon: const Icon(Icons.logout),
-            routePath: getRoutePath(SignOutRoute.name),
-            routeName: SignOutRoute.name,
+            routeName: RouteNames.signOut,
+            callback: () {
+              signOut.value = true;
+              context.read<AuthBloc>().add(const AuthEvent.signedOut());
+              context.beamToNamed(RouteNames.home);
+            },
           ),
-        ]);
+        ];
 
-    return Scaffold(
-      key: scaffoldKey,
-      // endDrawer:
-      //     sizingInformation.isDesktop ? null : TLWRMenu(menus: menus),
-      body: SafeArea(
-        child: Column(
-          children: [
-            TLWRMenu(menus: menus),
-            Expanded(child: child),
-          ],
-        ),
-      ),
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            // endDrawer:
+            //     sizingInformation.isDesktop ? null : TLWRMenu(menus: menus),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  TLWRMenu(menus: menus),
+                  if (isLoading || signOut.value)
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  else
+                    Expanded(child: child),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 }
