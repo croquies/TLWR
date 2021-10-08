@@ -1,1 +1,7 @@
-tlwr_analytics/.fvm
+tlwr_analytics/.fvm/flutter_sdk
+tlwr_frontend/.fvm/flutter_sdk
+node_modules
+logs
+build
+.env
+.env.local
