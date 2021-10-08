@@ -1,5 +1,4 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
@@ -24,23 +23,21 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
           () {},
           (either) => either.fold(
             (failure) {
-              context.read<AuthFormBloc>().clearPassword();
               showDialog(
                 context: context,
                 builder: (context) => TLWRAlertDialog(
                   description: failure.map(
                     errorWithMessage: (error) => error.message,
+                    emailIsNotConfirmed: (_) =>
+                        'Please check your email to complete sign up process.',
                     cancelledByUser: (_) => 'Cancelled',
                     serverError: (_) => 'Server error',
-                    emailAlreadyInUse: (_) => 'Email already in use',
-                    invalidEmailAndPasswordCombination: (_) =>
-                        'Invalid email and password combination',
                   ),
                 ),
-              );
+              ).then((value) => context.read<AuthFormBloc>().clearPassword());
             },
             (_) {
-              context.router.replaceNamed(RouteNames.home);
+              context.beamToNamed(RouteNames.home);
               context
                   .read<AuthBloc>()
                   .add(const AuthEvent.authCheckRequested());
@@ -62,7 +59,11 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
             SizedBox(
               child: Container(
                 margin: const EdgeInsets.only(top: 50),
-                child: const Center(child: TLWRText.heading1('Sign in')),
+                child: Center(
+                  child: TLWRText.heading1(
+                    signUp ? 'Sign up' : 'Sign in',
+                  ),
+                ),
               ),
             ),
             Container(

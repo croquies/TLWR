@@ -1,9 +1,7 @@
 import 'package:dartz/dartz.dart';
-import 'package:injectable/injectable.dart';
 import 'package:tlwr_frontend/domain/auth/auth_failure.dart';
 import 'package:tlwr_frontend/domain/auth/user.dart';
 
-@module
 abstract class IUserRepository {
   Future<Option<User>> getSignedInUser();
   Future<Either<AuthFailure, Unit>> signUpWithEmailAndPassword({

@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -19,13 +18,15 @@ class UserRepository implements IUserRepository {
   Future<void> signOut() async {
     _logger.d('signOut');
     await _supabase.client.auth.signOut();
+    _logger.d(_supabase.client.auth.session()?.toJson());
   }
 
   @override
   Future<Option<User>> getSignedInUser() async {
-    _logger.d('getSignedInUser ${_supabase.client.auth.currentUser}');
+    _logger.d('getSignedInUser ${_supabase.client.auth.currentUser?.toJson()}');
+    final currentUser = _supabase.client.auth.currentUser;
     return optionOf(
-      User.fromJson(_supabase.client.auth.currentUser?.toJson() ?? {}),
+      currentUser != null ? User.fromJson(currentUser.toJson()) : null,
     );
   }
 
@@ -41,11 +42,11 @@ class UserRepository implements IUserRepository {
         password,
       );
       _logger.d(response.data);
-      if (response.error == null) {
-        return right(unit);
-      } else {
+      if (response.error != null) {
         return left(
             AuthFailure.errorWithMessage(response.error?.message ?? ''));
+      } else {
+        return right(unit);
       }
     } catch (e) {
       _logger.e(e.toString());
@@ -62,11 +63,15 @@ class UserRepository implements IUserRepository {
         email: email,
         password: password,
       );
-      if (response.error == null) {
-        return right(unit);
-      } else {
+      _logger.d('signInWithEmailAndPassword - user: '
+          '${response.data?.user?.toJson()}');
+      if (response.error != null) {
         return left(
             AuthFailure.errorWithMessage(response.error?.message ?? ''));
+      } else if (response.data?.user?.emailConfirmedAt == null) {
+        return left(const AuthFailure.emailIsNotConfirmed());
+      } else {
+        return right(unit);
       }
     } catch (e) {
       _logger.e(e.toString());

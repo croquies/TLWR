@@ -22,13 +22,13 @@ class _$UserTearOff {
   const _$UserTearOff();
 
   _User call(
-      {required String? id,
-      required String? email,
-      required String? emailConfirmedAt}) {
+      {String? id,
+      String? email,
+      @JsonKey(name: 'confirmed_at') String? confirmedAt}) {
     return _User(
       id: id,
       email: email,
-      emailConfirmedAt: emailConfirmedAt,
+      confirmedAt: confirmedAt,
     );
   }
 
@@ -43,8 +43,10 @@ const $User = _$UserTearOff();
 /// @nodoc
 mixin _$User {
   String? get id => throw _privateConstructorUsedError;
-  String? get email => throw _privateConstructorUsedError;
-  String? get emailConfirmedAt => throw _privateConstructorUsedError;
+  String? get email =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  @JsonKey(name: 'confirmed_at')
+  String? get confirmedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -55,7 +57,10 @@ mixin _$User {
 abstract class $UserCopyWith<$Res> {
   factory $UserCopyWith(User value, $Res Function(User) then) =
       _$UserCopyWithImpl<$Res>;
-  $Res call({String? id, String? email, String? emailConfirmedAt});
+  $Res call(
+      {String? id,
+      String? email,
+      @JsonKey(name: 'confirmed_at') String? confirmedAt});
 }
 
 /// @nodoc
@@ -70,7 +75,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? email = freezed,
-    Object? emailConfirmedAt = freezed,
+    Object? confirmedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -81,9 +86,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      emailConfirmedAt: emailConfirmedAt == freezed
-          ? _value.emailConfirmedAt
-          : emailConfirmedAt // ignore: cast_nullable_to_non_nullable
+      confirmedAt: confirmedAt == freezed
+          ? _value.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -94,7 +99,10 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   factory _$UserCopyWith(_User value, $Res Function(_User) then) =
       __$UserCopyWithImpl<$Res>;
   @override
-  $Res call({String? id, String? email, String? emailConfirmedAt});
+  $Res call(
+      {String? id,
+      String? email,
+      @JsonKey(name: 'confirmed_at') String? confirmedAt});
 }
 
 /// @nodoc
@@ -110,7 +118,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? email = freezed,
-    Object? emailConfirmedAt = freezed,
+    Object? confirmedAt = freezed,
   }) {
     return _then(_User(
       id: id == freezed
@@ -121,9 +129,9 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
           ? _value.email
           : email // ignore: cast_nullable_to_non_nullable
               as String?,
-      emailConfirmedAt: emailConfirmedAt == freezed
-          ? _value.emailConfirmedAt
-          : emailConfirmedAt // ignore: cast_nullable_to_non_nullable
+      confirmedAt: confirmedAt == freezed
+          ? _value.confirmedAt
+          : confirmedAt // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -133,7 +141,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_User implements _User {
   const _$_User(
-      {required this.id, required this.email, required this.emailConfirmedAt});
+      {this.id, this.email, @JsonKey(name: 'confirmed_at') this.confirmedAt});
 
   factory _$_User.fromJson(Map<String, dynamic> json) => _$$_UserFromJson(json);
 
@@ -141,12 +149,13 @@ class _$_User implements _User {
   final String? id;
   @override
   final String? email;
-  @override
-  final String? emailConfirmedAt;
+  @override // ignore: invalid_annotation_target
+  @JsonKey(name: 'confirmed_at')
+  final String? confirmedAt;
 
   @override
   String toString() {
-    return 'User(id: $id, email: $email, emailConfirmedAt: $emailConfirmedAt)';
+    return 'User(id: $id, email: $email, confirmedAt: $confirmedAt)';
   }
 
   @override
@@ -157,9 +166,9 @@ class _$_User implements _User {
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.email, email) ||
                 const DeepCollectionEquality().equals(other.email, email)) &&
-            (identical(other.emailConfirmedAt, emailConfirmedAt) ||
+            (identical(other.confirmedAt, confirmedAt) ||
                 const DeepCollectionEquality()
-                    .equals(other.emailConfirmedAt, emailConfirmedAt)));
+                    .equals(other.confirmedAt, confirmedAt)));
   }
 
   @override
@@ -167,7 +176,7 @@ class _$_User implements _User {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(email) ^
-      const DeepCollectionEquality().hash(emailConfirmedAt);
+      const DeepCollectionEquality().hash(confirmedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -182,9 +191,9 @@ class _$_User implements _User {
 
 abstract class _User implements User {
   const factory _User(
-      {required String? id,
-      required String? email,
-      required String? emailConfirmedAt}) = _$_User;
+      {String? id,
+      String? email,
+      @JsonKey(name: 'confirmed_at') String? confirmedAt}) = _$_User;
 
   factory _User.fromJson(Map<String, dynamic> json) = _$_User.fromJson;
 
@@ -192,8 +201,9 @@ abstract class _User implements User {
   String? get id => throw _privateConstructorUsedError;
   @override
   String? get email => throw _privateConstructorUsedError;
-  @override
-  String? get emailConfirmedAt => throw _privateConstructorUsedError;
+  @override // ignore: invalid_annotation_target
+  @JsonKey(name: 'confirmed_at')
+  String? get confirmedAt => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$UserCopyWith<_User> get copyWith => throw _privateConstructorUsedError;
