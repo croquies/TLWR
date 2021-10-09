@@ -12,10 +12,14 @@ const blue = Color(0xff005789);
 class NodeLayout extends StatefulWidget {
   final KtList<Node> nodes;
   final KtList<Edge> edges;
+  final double height;
+  final double width;
   const NodeLayout({
     Key? key,
     required this.nodes,
     required this.edges,
+    this.height = 1000,
+    this.width = 1000,
   }) : super(key: key);
 
   @override
@@ -46,56 +50,9 @@ class _NodeLayoutState extends State<NodeLayout> {
   void initState() {
     nodeLocations = _nodesToLocations(
       nodes: widget.nodes,
-      screenWidth: 800,
-      screenHeight: 800,
+      screenWidth: widget.width,
+      screenHeight: widget.height,
     );
-    // nodeLocations = KtList.from([
-    //   NodeLocation(offset: const Offset(70, 100), id: 'node1'),
-    //   NodeLocation(offset: const Offset(200, 100), id: 'node2'),
-    //   NodeLocation(offset: const Offset(200, 230), id: 'node3'),
-    // ]);
-
-    // nodeMap = KtMap.from({
-    //   'node1': const Node(
-    //     label: "Home Page",
-    //     path: "/",
-    //     id: 'node1',
-    //     frequency: 5,
-    //     duration: 3.5,
-    //   ),
-    //   'node2': const Node(
-    //     label: "Login Page",
-    //     path: "/login",
-    //     id: 'node2',
-    //     frequency: 4,
-    //     duration: 1.2,
-    //   ),
-    //   'node3': const Node(
-    //     label: "Registration Page",
-    //     path: "/registration",
-    //     id: 'node3',
-    //     frequency: 3,
-    //     duration: 4.5,
-    //   ),
-    // });
-
-    // edges = KtList.from([
-    //   Edge(
-    //     from: nodes[0],
-    //     to: nodes[2],
-    //     frequency: 1,
-    //   ),
-    //   Edge(
-    //     from: nodes[1],
-    //     to: nodes[2],
-    //     frequency: 1,
-    //   ),
-    //   Edge(
-    //     from: nodes[0],
-    //     to: nodes[2],
-    //     frequency: 2,
-    //   ),
-    // ]);
     super.initState();
   }
 
@@ -168,7 +125,7 @@ class _Item extends StatelessWidget {
     required this.node,
   });
 
-  double size = 30;
+  double size = 60;
   final Offset offset;
   final Function onDragStart;
   final String text;
@@ -200,7 +157,7 @@ class _Item extends StatelessWidget {
           height: size,
           child: Center(
               child: Text(
-            text,
+            node.path,
             style: const TextStyle(
               fontSize: 14,
               color: Colors.white,

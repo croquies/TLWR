@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:kt_dart/collection.dart';
+import 'package:logger/logger.dart';
 import 'package:tlwr_frontend/application/dynamic_event/cubit/get_dynamic_event_cubit.dart';
 import 'package:tlwr_frontend/application/page_node/get_page_node/cubit/get_page_node_cubit.dart';
 import 'package:tlwr_frontend/injectable.dart';
@@ -10,12 +11,13 @@ import 'package:tlwr_graph_viz/data_models/node.dart';
 import 'package:tlwr_graph_viz/tlwr_graph_widget.dart';
 
 class ProjectDetailPage extends StatelessWidget {
-  const ProjectDetailPage({
+  ProjectDetailPage({
     Key? key,
     required this.projectId,
   }) : super(key: key);
 
   final String projectId;
+  final Logger _logger = getIt<Logger>();
 
   @override
   Widget build(BuildContext context) {
@@ -42,26 +44,34 @@ class ProjectDetailPage extends StatelessWidget {
                       initial: (_) => const Center(
                         child: CircularProgressIndicator(),
                       ),
-                      holding: (stateWithEvents) => pageNodeState.map(
-                        initial: (_) => const Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                        holding: (stateWithNodes) => TLWRGraphWidget(
-                          dynamicEvents: stateWithEvents.events,
-                          nodes: stateWithNodes.nodes.map(
-                            (pn) => Node(
-                              id: pn.id,
-                              path: pn.path,
-                              label: pn.className,
-                              frequency: 1,
-                              duration: 1,
-                            ),
+                      holding: (stateWithEvents) {
+                        return pageNodeState.map(
+                          initial: (_) => const Center(
+                            child: CircularProgressIndicator(),
                           ),
-                        ),
-                        failed: (_) => const Center(
-                          child: Text('Error'),
-                        ),
-                      ),
+                          holding: (stateWithNodes) {
+                            final nodes = stateWithNodes.nodes.map(
+                              (pn) => Node(
+                                id: pn.id,
+                                path: pn.path,
+                                label: pn.className,
+                                frequency: 1,
+                                duration: 1,
+                                additionalInfo: {
+                                  'initial': true,
+                                },
+                              ),
+                            );
+                            return TLWRGraphWidget(
+                              dynamicEvents: stateWithEvents.events,
+                              nodes: nodes,
+                            );
+                          },
+                          failed: (_) => const Center(
+                            child: Text('Error'),
+                          ),
+                        );
+                      },
                       failed: (_) => const Center(
                         child: Text('Error'),
                       ),
