@@ -20,7 +20,8 @@ class TLWRScaffold extends HookWidget {
     final scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
     final signOut = useState(false);
 
-    return BlocBuilder<AuthBloc, AuthState>(
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {},
       builder: (context, state) {
         final menus = <TLWRMenuData>[
           const TLWRMenuData(
@@ -49,11 +50,11 @@ class TLWRScaffold extends HookWidget {
           TLWRMenuData(
             title: 'Sign out',
             icon: const Icon(Icons.logout),
-            routeName: RouteNames.signOut,
             callback: () {
               signOut.value = true;
               context.read<AuthBloc>().add(const AuthEvent.signedOut());
               context.beamToNamed(RouteNames.home);
+              signOut.value = false;
             },
           ),
         ];

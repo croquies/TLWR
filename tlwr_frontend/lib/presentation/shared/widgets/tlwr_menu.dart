@@ -2,8 +2,10 @@ import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:logger/logger.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
+import 'package:tlwr_frontend/injectable.dart';
 import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/shared/resources/resources.dart';
 
@@ -11,9 +13,9 @@ enum RouteType { nonAuth, auth, both }
 
 class TLWRMenuData {
   const TLWRMenuData({
-    required this.title,
+    this.title = '',
     required this.icon,
-    required this.routeName,
+    this.routeName = '',
     this.callback,
     this.routeType = RouteType.auth,
   });
@@ -64,11 +66,13 @@ class TLWRMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton.icon(
-      icon: item.icon,
-      label: Text(item.title),
-      onPressed: selected ? null : onPressed,
-    );
+    return item.title.isEmpty
+        ? IconButton(onPressed: onPressed, icon: item.icon)
+        : TextButton.icon(
+            icon: item.icon,
+            label: Text(item.title),
+            onPressed: selected ? null : onPressed,
+          );
   }
 }
 
@@ -99,7 +103,15 @@ class TLWRMenuDesktop extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final selectedIndex = useState(0);
     final currentPath = context.currentBeamLocation.state.pathBlueprintSegments;
+    for (var i = 0; i < menus.length; i++) {
+      if (currentPath.contains(menus[i].routeName) &&
+          selectedIndex.value != i) {
+        selectedIndex.value = i;
+        getIt<Logger>().d('selectedIndex: $i');
+      }
+    }
 
     return SizedBox(
       height: 100,
@@ -116,14 +128,18 @@ class TLWRMenuDesktop extends HookWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: TLWRMenuItem(
                     item: menus[index],
-                    selected: currentPath.contains(menus[index].routeName),
+                    selected: index == selectedIndex.value,
                     onPressed: () {
-                      final callback = menus[index].callback;
+                      final menu = menus[index];
+                      final callback = menu.callback;
                       if (callback != null) {
                         callback();
                       } else {
-                        context.beamToNamed(
-                            RouteNames.getPath(menus[index].routeName));
+                        selectedIndex.value = index;
+                        if (menu.routeName.isNotEmpty) {
+                          context
+                              .beamToNamed(RouteNames.getPath(menu.routeName));
+                        }
                       }
                     },
                   ),
@@ -151,14 +167,27 @@ class TLWRMenu extends StatelessWidget {
             mobile: const TLWRMenuMobile(),
             tablet: TLWRMenuDesktop(
               menus: state.maybeWhen(
-                authenticated: () => menus
-                    .where((e) =>
-                        [RouteType.auth, RouteType.both].contains(e.routeType))
-                    .toList(),
-                orElse: () => menus
-                    .where((e) => [RouteType.nonAuth, RouteType.both]
-                        .contains(e.routeType))
-                    .toList(),
+                authenticated: () {
+                  getIt<Logger>().d('[TLWRMenu] authenticated');
+                  return [
+                    ...menus
+                        .where((e) => [RouteType.auth, RouteType.both]
+                            .contains(e.routeType))
+                        .toList(),
+                    const TLWRMenuData(
+                      icon: Icon(Icons.person),
+                    ),
+                  ];
+                },
+                orElse: () {
+                  getIt<Logger>().d('[TLWRMenu] unauthenticated');
+                  return [
+                    ...menus
+                        .where((e) => [RouteType.nonAuth, RouteType.both]
+                            .contains(e.routeType))
+                        .toList(),
+                  ];
+                },
               ),
             ),
           ); // return widget here based on BlocA's state

@@ -19,21 +19,11 @@ class AppWidget extends HookWidget {
         check: (context, _) => false,
         beamToNamed: RouteNames.getPath(RouteNames.home),
       ),
-      BeamGuard(
-        pathBlueprints: RouteNames.nonAuthRoutes,
-        guardNonMatching: true,
-        check: (context, _) => context.read<AuthState>().maybeWhen(
-              authenticated: () => false,
-              orElse: () => true,
-            ),
-        beamToNamed: RouteNames.getPath(RouteNames.signIn),
-      ),
     ],
     initialPath: RouteNames.getPath(RouteNames.home),
     locationBuilder: BeamerLocationBuilder(
       beamLocations: [
         RootLocation(),
-        DashboardLocation(),
       ],
     ),
   );

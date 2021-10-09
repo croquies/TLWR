@@ -15,7 +15,6 @@ class RouteNames {
   static const String signIn = 'sign-in';
 
   static const String dashboard = 'dashboard';
-  static const String signOut = 'sign-out';
 
   static final List<String> nonAuthRoutes = [
     getPath(home),

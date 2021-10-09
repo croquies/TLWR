@@ -8,6 +8,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:beamer/beamer.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -55,6 +56,8 @@ Future<void> bootstrap(
   });
 
   configureInjection(environment.toString());
+
+  Beamer.setPathUrlStrategy();
 
   await runZonedGuarded(
     () async => runApp(await builder()),
