@@ -16,6 +16,8 @@ class RouteNames {
 
   static const String dashboard = 'dashboard';
 
+  static const String dashboardWithProjectId = 'dashboard/:projectId';
+
   static final List<String> nonAuthRoutes = [
     getPath(home),
     getPath(signUp),
