@@ -420,6 +420,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.1"
+  kt_dart:
+    dependency: "direct main"
+    description:
+      name: kt_dart
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.1"
   logger:
     dependency: "direct main"
     description:
@@ -761,6 +768,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  tlwr_graph_viz:
+    dependency: "direct main"
+    description:
+      path: "../tlwr_graph_viz"
+      relative: true
+    source: path
+    version: "0.0.1"
   typed_data:
     dependency: transitive
     description:

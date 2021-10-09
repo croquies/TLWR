@@ -11,3 +11,10 @@ build
 .vscode/settings.json
 tlwr_frontend/.fvm/fvm_config.json
 tlwr_frontend/.fvm/fvm_config.json
+tlwr_analytics/tlwr_generator/example/android/*
+tlwr_analytics/tlwr_generator/example/ios/*
+tlwr_analytics/tlwr_generator/example/web/favicon.png
+tlwr_analytics/tlwr_generator/example/web/icons/Icon-192.png
+tlwr_analytics/tlwr_generator/example/web/icons/Icon-512.png
+tlwr_analytics/tlwr_generator/example/web/icons/Icon-maskable-192.png
+tlwr_analytics/tlwr_generator/example/web/icons/Icon-maskable-512.png
