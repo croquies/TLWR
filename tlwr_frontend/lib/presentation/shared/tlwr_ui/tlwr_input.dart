@@ -17,6 +17,8 @@ class TLWRInputFormField extends StatelessWidget {
     this.keyboardType,
     this.textInputAction,
     this.onChanged,
+    this.contentPadding =
+        const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
   }) : super(key: key);
 
   final bool autofocus;
@@ -31,6 +33,7 @@ class TLWRInputFormField extends StatelessWidget {
   final TextInputType? keyboardType;
   final TextInputAction? textInputAction;
   final void Function(String?)? onChanged;
+  final EdgeInsetsGeometry contentPadding;
 
   final inputBorder = UnderlineInputBorder(
     borderRadius: BorderRadius.circular(8),
@@ -49,8 +52,7 @@ class TLWRInputFormField extends StatelessWidget {
       textInputAction: textInputAction,
       decoration: InputDecoration(
         hintText: placeholder,
-        contentPadding:
-            const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        contentPadding: contentPadding,
         filled: true,
         fillColor: kcBlackHighlightColor,
         prefixIcon: leading,

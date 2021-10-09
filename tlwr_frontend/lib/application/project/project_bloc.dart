@@ -35,7 +35,7 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
       },
       projectSelected: (e) async* {
         yield state.copyWith(
-          id: e.id ?? '',
+          selectedProjectId: e.id ?? '',
           projectFailureOrSuccessOption: none(),
         );
       },
@@ -47,15 +47,17 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
           projectFailureOrSuccessOption: none(),
         );
 
-        final projectsOption = _projectRepository.list();
-        await projectsOption.fold(() {
-          failureOrSuccess = left(const ProjectFailure.userIsUnAuthenticated());
-        }, (projects) async {
-          failureOrSuccess = projects;
+        final projectsOption = await _projectRepository.list();
+        List<Project>? projects;
+        await projectsOption.fold((failure) async {
+          failureOrSuccess = left(failure);
+        }, (result) async {
+          projects = result;
         });
 
         yield state.copyWith(
           isLoading: false,
+          projects: projects,
           projectFailureOrSuccessOption: optionOf(failureOrSuccess),
         );
       },
@@ -92,8 +94,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     await userOption.fold(() {
       failureOrSuccess = left(const ProjectFailure.userIsUnAuthenticated());
     }, (user) async {
-      failureOrSuccess = await forwardedCall(
-          Project(id: state.id, name: state.name, owner: user.id));
+      failureOrSuccess = await forwardedCall(Project(
+          id: state.selectedProjectId, name: state.name, owner: user.id));
     });
 
     yield state.copyWith(
