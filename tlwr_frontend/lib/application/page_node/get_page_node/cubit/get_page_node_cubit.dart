@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
 import 'package:kt_dart/collection.dart';
 import 'package:tlwr_frontend/domain/page_node/i_page_node_repository.dart';
 import 'package:tlwr_frontend/domain/page_node/page_node.dart';
@@ -7,8 +8,9 @@ import 'package:tlwr_frontend/domain/page_node/page_node.dart';
 part 'get_page_node_state.dart';
 part 'get_page_node_cubit.freezed.dart';
 
+@injectable
 class GetPageNodeCubit extends Cubit<GetPageNodeState> {
-  GetPageNodeCubit(this._repository) : super(GetPageNodeState.initial());
+  GetPageNodeCubit(this._repository) : super(const GetPageNodeState.initial());
 
   final IPageNodeRepository _repository;
 

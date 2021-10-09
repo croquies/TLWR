@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
 import 'package:tlwr_frontend/domain/auth/i_user_repository.dart';
+import 'package:tlwr_frontend/domain/auth/user.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -29,7 +30,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _logger.d('[AuthBloc][authCheckRequested] userOption: $userOption');
         yield userOption.fold(
           () => const AuthState.unauthenticated(),
-          (_) => const AuthState.authenticated(),
+          (user) => AuthState.authenticated(user),
         );
       },
       signedOut: (e) async* {

@@ -8,7 +8,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:beamer/beamer.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
@@ -16,6 +15,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:tlwr_frontend/environment.dart';
 import 'package:tlwr_frontend/injectable.dart';
+import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override

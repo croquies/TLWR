@@ -1,15 +1,18 @@
-import 'package:beamer/beamer.dart';
+import 'package:custom_pop_up_menu/custom_pop_up_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:logger/logger.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+
 import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
 import 'package:tlwr_frontend/injectable.dart';
 import 'package:tlwr_frontend/presentation/routes/route_names.dart';
+import 'package:tlwr_frontend/presentation/shared/colors.dart';
 import 'package:tlwr_frontend/presentation/shared/resources/resources.dart';
 
 enum RouteType { nonAuth, auth, both }
+enum RouteButtonType { normal, popup, popupItem }
 
 class TLWRMenuData {
   const TLWRMenuData({
@@ -18,20 +21,25 @@ class TLWRMenuData {
     this.routeName = '',
     this.callback,
     this.routeType = RouteType.auth,
+    this.routeButtonType = RouteButtonType.normal,
+    this.items,
   });
   final String title;
   final Widget icon;
   final String routeName;
   final Function()? callback;
   final RouteType routeType;
+  final RouteButtonType routeButtonType;
+  final List<TLWRMenuData>? items;
 
   TLWRMenuData copyWith({
     String? title,
     Widget? icon,
-    String? routePath,
     String? routeName,
     Function()? callback,
     RouteType? routeType,
+    RouteButtonType? routeButtonType,
+    List<TLWRMenuData>? items,
   }) {
     return TLWRMenuData(
       title: title ?? this.title,
@@ -39,6 +47,8 @@ class TLWRMenuData {
       routeName: routeName ?? this.routeName,
       callback: callback ?? this.callback,
       routeType: routeType ?? this.routeType,
+      routeButtonType: routeButtonType ?? this.routeButtonType,
+      items: items ?? this.items,
     );
   }
 }
@@ -48,11 +58,17 @@ class TLWRMenuLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Image(image: AssetImage(Images.logo));
+    return const Padding(
+      padding: EdgeInsets.only(left: 15),
+      child: Image(
+        image: AssetImage(Images.logo),
+        height: 50,
+      ),
+    );
   }
 }
 
-class TLWRMenuItem extends StatelessWidget {
+class TLWRMenuItem extends HookWidget {
   const TLWRMenuItem({
     Key? key,
     required this.item,
@@ -66,13 +82,61 @@ class TLWRMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return item.title.isEmpty
-        ? IconButton(onPressed: onPressed, icon: item.icon)
-        : TextButton.icon(
-            icon: item.icon,
-            label: Text(item.title),
-            onPressed: selected ? null : onPressed,
+    final _popupMenuController = useMemoized(() => CustomPopupMenuController());
+
+    if (item.routeButtonType == RouteButtonType.popup) {
+      return CustomPopupMenu(
+        barrierColor: Colors.transparent,
+        pressType: PressType.singleClick,
+        controller: _popupMenuController,
+        child: TextButton.icon(
+          icon: item.icon,
+          label: Text(item.title),
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          ),
+          onPressed: _popupMenuController.showMenu,
+        ),
+        menuBuilder: () {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(5),
+            child: Container(
+              color: kcBlackHighlightColor.withOpacity(0.6),
+              child: IntrinsicWidth(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: (item.items ?? [])
+                      .map(
+                        (item) => TextButton.icon(
+                          icon: item.icon,
+                          label: Text(item.title),
+                          style: TextButton.styleFrom(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 20),
+                          ),
+                          onPressed: item.callback,
+                        ),
+                      )
+                      .toList(),
+                ),
+              ),
+            ),
           );
+        },
+      );
+    }
+    if (item.title.isEmpty) {
+      return IconButton(onPressed: onPressed, icon: item.icon);
+    } else {
+      return TextButton.icon(
+        icon: item.icon,
+        label: Text(item.title),
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+        ),
+        onPressed: selected ? null : onPressed,
+      );
+    }
   }
 }
 
@@ -109,7 +173,6 @@ class TLWRMenuDesktop extends HookWidget {
       if (currentPath.contains(menus[i].routeName) &&
           selectedIndex.value != i) {
         selectedIndex.value = i;
-        getIt<Logger>().d('selectedIndex: $i');
       }
     }
 
@@ -167,20 +230,15 @@ class TLWRMenu extends StatelessWidget {
             mobile: const TLWRMenuMobile(),
             tablet: TLWRMenuDesktop(
               menus: state.maybeWhen(
-                authenticated: () {
-                  getIt<Logger>().d('[TLWRMenu] authenticated');
+                authenticated: (_) {
                   return [
                     ...menus
                         .where((e) => [RouteType.auth, RouteType.both]
                             .contains(e.routeType))
                         .toList(),
-                    const TLWRMenuData(
-                      icon: Icon(Icons.person),
-                    ),
                   ];
                 },
                 orElse: () {
-                  getIt<Logger>().d('[TLWRMenu] unauthenticated');
                   return [
                     ...menus
                         .where((e) => [RouteType.nonAuth, RouteType.both]

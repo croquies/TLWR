@@ -4,6 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:tlwr_frontend/application/project/project_validator_mixin.dart';
 import 'package:tlwr_frontend/domain/auth/i_user_repository.dart';
 import 'package:tlwr_frontend/domain/project/i_project_repository.dart';
 import 'package:tlwr_frontend/domain/project/project.dart';
@@ -15,7 +16,8 @@ part 'project_state.dart';
 part 'project_bloc.freezed.dart';
 
 @injectable
-class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
+class ProjectBloc extends Bloc<ProjectEvent, ProjectState>
+    with ProjectValidatorMixin {
   ProjectBloc(this._userRepository, this._projectRepository)
       : super(ProjectState.initial());
 
@@ -27,18 +29,6 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
     ProjectEvent event,
   ) async* {
     yield* event.map(
-      nameChanged: (e) async* {
-        yield state.copyWith(
-          name: e.name ?? '',
-          projectFailureOrSuccessOption: none(),
-        );
-      },
-      projectSelected: (e) async* {
-        yield state.copyWith(
-          selectedProjectId: e.id ?? '',
-          projectFailureOrSuccessOption: none(),
-        );
-      },
       list: (e) async* {
         Either<ProjectFailure, Unit>? failureOrSuccess;
 
@@ -61,46 +51,26 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState> {
           projectFailureOrSuccessOption: optionOf(failureOrSuccess),
         );
       },
-      carete: (e) async* {
-        yield* _performAction(
-          _projectRepository.create,
-        );
-      },
       delete: (e) async* {
-        yield* _performAction(
-          _projectRepository.delete,
+        yield state.copyWith(
+          isLoading: true,
+          projectFailureOrSuccessOption: none(),
+        );
+
+        Either<ProjectFailure, Unit>? failureOrSuccess;
+        final userOption = await _userRepository.getSignedInUser();
+        await userOption.fold(() {
+          failureOrSuccess = left(const ProjectFailure.userIsUnAuthenticated());
+        }, (user) async {
+          failureOrSuccess =
+              await _projectRepository.delete(Project(id: e.projectId));
+        });
+
+        yield state.copyWith(
+          isLoading: false,
+          projectFailureOrSuccessOption: optionOf(failureOrSuccess),
         );
       },
-      update: (e) async* {
-        yield* _performAction(
-          _projectRepository.update,
-        );
-      },
-    );
-  }
-
-  Stream<ProjectState> _performAction(
-    Future<Either<ProjectFailure, Unit>> Function(Project project)
-        forwardedCall,
-  ) async* {
-    Either<ProjectFailure, Unit>? failureOrSuccess;
-
-    yield state.copyWith(
-      isLoading: true,
-      projectFailureOrSuccessOption: none(),
-    );
-
-    final userOption = await _userRepository.getSignedInUser();
-    await userOption.fold(() {
-      failureOrSuccess = left(const ProjectFailure.userIsUnAuthenticated());
-    }, (user) async {
-      failureOrSuccess = await forwardedCall(Project(
-          id: state.selectedProjectId, name: state.name, owner: user.id));
-    });
-
-    yield state.copyWith(
-      isLoading: false,
-      projectFailureOrSuccessOption: optionOf(failureOrSuccess),
     );
   }
 }

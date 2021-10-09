@@ -14,7 +14,8 @@ class HomePage extends StatelessWidget {
         return TLWRScaffold(
           child: Container(
             color: state.maybeWhen(
-                authenticated: () => Colors.green, orElse: () => Colors.yellow),
+                authenticated: (_) => Colors.green,
+                orElse: () => Colors.yellow),
             child: const Text('HomePage'),
           ),
         );

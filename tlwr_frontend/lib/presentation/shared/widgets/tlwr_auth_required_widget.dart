@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:logger/logger.dart';
@@ -19,7 +18,7 @@ class TLWRAuthRequiredWidget extends StatelessWidget {
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         state.maybeWhen(
-          authenticated: () {
+          authenticated: (_) {
             getIt<Logger>().d('[TLWRAuthRequiredWidget] authenticated');
           },
           orElse: () {

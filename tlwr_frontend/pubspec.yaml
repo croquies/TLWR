@@ -11,6 +11,7 @@ dependencies:
   adaptive_navigation: ^0.0.4
   beamer: ^0.14.1
   bloc: ^7.2.0
+  custom_pop_up_menu: ^1.2.2
   dartz: ^0.10.0
   flutter:
     sdk: flutter

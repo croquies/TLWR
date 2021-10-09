@@ -17,7 +17,7 @@ class PageNodeRepository implements IPageNodeRepository {
 
   @override
   Future<Either<Failure, List<PageNode>>> list(String projectId) async {
-    _logger.d('list');
+    _logger.d('[PageNodeRepository] list');
     try {
       final response = await _supabase.client
           .from(tableName)
@@ -39,7 +39,7 @@ class PageNodeRepository implements IPageNodeRepository {
         return right(json.map((item) => PageNode.fromJson(item)).toList());
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[PageNodeRepository] ${e.toString()}');
       return left(Failure.errorWithMessage(message: e.toString()));
     }
   }

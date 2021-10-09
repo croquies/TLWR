@@ -10,11 +10,12 @@ import 'package:tlwr_graph_viz/data_models/node.dart';
 import 'package:tlwr_graph_viz/tlwr_graph_widget.dart';
 
 class ProjectDetailPage extends StatelessWidget {
-  final String projectId;
   const ProjectDetailPage({
     Key? key,
     required this.projectId,
   }) : super(key: key);
+
+  final String projectId;
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +50,12 @@ class ProjectDetailPage extends StatelessWidget {
                           dynamicEvents: stateWithEvents.events,
                           nodes: stateWithNodes.nodes.map(
                             (pn) => Node(
-                                id: pn.id,
-                                path: pn.path,
-                                label: pn.className,
-                                frequency: 1,
-                                duration: 1.0),
+                              id: pn.id,
+                              path: pn.path,
+                              label: pn.className,
+                              frequency: 1,
+                              duration: 1,
+                            ),
                           ),
                         ),
                         failed: (_) => const Center(

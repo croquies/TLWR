@@ -5,6 +5,7 @@ import 'package:tlwr_frontend/presentation/shared/colors.dart';
 class TLWRInputFormField extends StatelessWidget {
   TLWRInputFormField({
     Key? key,
+    this.initialValue,
     this.autofocus = false,
     this.controller,
     this.autovalidateMode,
@@ -21,6 +22,7 @@ class TLWRInputFormField extends StatelessWidget {
         const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
   }) : super(key: key);
 
+  final String? initialValue;
   final bool autofocus;
   final TextEditingController? controller;
   final AutovalidateMode? autovalidateMode;
@@ -42,6 +44,7 @@ class TLWRInputFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       autofocus: autofocus,
       autovalidateMode: autovalidateMode,
       controller: controller,
