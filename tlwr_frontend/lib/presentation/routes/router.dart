@@ -1,4 +1,3 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 import 'package:tlwr_frontend/injectable.dart';
@@ -16,7 +15,7 @@ class RootLocation extends BeamLocation {
         RouteNames.home,
         RouteNames.signIn,
         RouteNames.signUp,
-        RouteNames.dashboard
+        RouteNames.dashboard,
       ].map(RouteNames.getPath).toList();
 
   @override

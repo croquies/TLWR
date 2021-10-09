@@ -1,3 +1,5 @@
+export 'package:beamer/beamer.dart';
+
 extension ReadableRouteName on String {
   String readable(String name) {
     final beforeCapitalLetter = RegExp('(?=[A-Z])');

@@ -1,10 +1,9 @@
-import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
 import 'package:tlwr_frontend/application/auth/auth_form/auth_form_bloc.dart';
-import 'package:tlwr_frontend/application/auth/auto_validator_mixin.dart';
+import 'package:tlwr_frontend/application/auth/auth_validator_mixin.dart';
 import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/shared/tlwr_ui/tlwr_button.dart';
 import 'package:tlwr_frontend/presentation/shared/tlwr_ui/tlwr_input.dart';

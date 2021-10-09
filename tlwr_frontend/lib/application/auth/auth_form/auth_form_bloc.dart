@@ -7,7 +7,7 @@ import 'package:flutter/widgets.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
-import 'package:tlwr_frontend/application/auth/auto_validator_mixin.dart';
+import 'package:tlwr_frontend/application/auth/auth_validator_mixin.dart';
 import 'package:tlwr_frontend/domain/auth/auth_failure.dart';
 import 'package:tlwr_frontend/domain/auth/i_user_repository.dart';
 
