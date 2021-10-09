@@ -1,22 +1,111 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:kt_dart/collection.dart';
+import 'dart:math' as math;
+
+import 'data_models/edge.dart';
+import 'data_models/node.dart';
+
+const pink = Color(0xffD95789);
+const blue = Color(0xff005789);
 
 class NodeLayout extends StatefulWidget {
-  const NodeLayout({Key? key}) : super(key: key);
+  final KtList<Node> nodes;
+  final KtList<Edge> edges;
+  const NodeLayout({
+    Key? key,
+    required this.nodes,
+    required this.edges,
+  }) : super(key: key);
 
   @override
   _NodeLayoutState createState() => _NodeLayoutState();
 }
 
 class _NodeLayoutState extends State<NodeLayout> {
-  List<Node> nodes = [
-    Node(offset: Offset(70, 100), text: 'Page 1'),
-    Node(offset: Offset(200, 100), text: 'Page 2'),
-    Node(offset: Offset(200, 230), text: 'Page 3'),
-  ];
+  KtList<NodeLocation> nodeLocations = emptyList<NodeLocation>();
 
-  Function onDragStart(int index) => (x, y) {
+  KtList<NodeLocation> _nodesToLocations({
+    required KtList<Node> nodes,
+    required double screenWidth,
+    required double screenHeight,
+  }) {
+    final random = math.Random();
+    return nodes.mapIndexed(
+      (i, p0) => NodeLocation(
+          offset: Offset(
+              (i + 2) * screenWidth / (nodes.size + 4),
+              (random.nextInt(nodes.size) + 1) *
+                  screenHeight /
+                  (nodes.size + 4)),
+          id: p0.id),
+    );
+  }
+
+  @override
+  void initState() {
+    nodeLocations = _nodesToLocations(
+      nodes: widget.nodes,
+      screenWidth: 800,
+      screenHeight: 800,
+    );
+    // nodeLocations = KtList.from([
+    //   NodeLocation(offset: const Offset(70, 100), id: 'node1'),
+    //   NodeLocation(offset: const Offset(200, 100), id: 'node2'),
+    //   NodeLocation(offset: const Offset(200, 230), id: 'node3'),
+    // ]);
+
+    // nodeMap = KtMap.from({
+    //   'node1': const Node(
+    //     label: "Home Page",
+    //     path: "/",
+    //     id: 'node1',
+    //     frequency: 5,
+    //     duration: 3.5,
+    //   ),
+    //   'node2': const Node(
+    //     label: "Login Page",
+    //     path: "/login",
+    //     id: 'node2',
+    //     frequency: 4,
+    //     duration: 1.2,
+    //   ),
+    //   'node3': const Node(
+    //     label: "Registration Page",
+    //     path: "/registration",
+    //     id: 'node3',
+    //     frequency: 3,
+    //     duration: 4.5,
+    //   ),
+    // });
+
+    // edges = KtList.from([
+    //   Edge(
+    //     from: nodes[0],
+    //     to: nodes[2],
+    //     frequency: 1,
+    //   ),
+    //   Edge(
+    //     from: nodes[1],
+    //     to: nodes[2],
+    //     frequency: 1,
+    //   ),
+    //   Edge(
+    //     from: nodes[0],
+    //     to: nodes[2],
+    //     frequency: 2,
+    //   ),
+    // ]);
+    super.initState();
+  }
+
+  Function onDragStart(String id) => (x, y) {
         setState(() {
-          nodes[index] = nodes[index].copyWithNewOffset(Offset(x, y));
+          nodeLocations = nodeLocations.map(
+            (nodeLoc) => nodeLoc.id == id
+                ? nodeLoc.copyWithNewOffset(Offset(x, y))
+                : nodeLoc,
+          );
         });
       };
 
@@ -24,10 +113,15 @@ class _NodeLayoutState extends State<NodeLayout> {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
+        Positioned.fill(
+            child: Container(
+          color: const Color(0xff18191F),
+        )),
         CustomPaint(
-          size: Size(double.infinity, double.infinity),
+          size: const Size(double.infinity, double.infinity),
           painter: CurvedEdgePainter(
-            offsets: nodes.map((item) => item.offset).toList(),
+            offsets: nodeLocations.map((item) => item.offset).asList(),
+            edges: _getEdgeLocations(widget.edges),
           ),
         ),
         ..._buildnodes()
@@ -37,15 +131,31 @@ class _NodeLayoutState extends State<NodeLayout> {
 
   List<Widget> _buildnodes() {
     final res = <Widget>[];
-    nodes.asMap().forEach((ind, item) {
-      res.add(_Item(
-        onDragStart: onDragStart(ind),
-        offset: item.offset,
-        text: item.text,
-      ));
+    nodeLocations.forEachIndexed((ind, item) {
+      final foundNode = widget.nodes.first((node) => node.id == item.id);
+      res.add(
+        _Item(
+          onDragStart: onDragStart(item.id),
+          offset: item.offset,
+          node: foundNode,
+          text: foundNode.label,
+        ),
+      );
     });
 
     return res;
+  }
+
+  KtList<EdgeLocation> _getEdgeLocations(KtList<Edge> edges) {
+    return edges.map(
+      (edge) => EdgeLocation(
+        fromOffset:
+            nodeLocations.first((nodeLoc) => nodeLoc.id == edge.from.id).offset,
+        toOffset:
+            nodeLocations.first((nodeLoc) => nodeLoc.id == edge.to.id).offset,
+        width: edge.frequency.toDouble(),
+      ),
+    );
   }
 }
 
@@ -55,12 +165,14 @@ class _Item extends StatelessWidget {
     required this.offset,
     required this.onDragStart,
     required this.text,
+    required this.node,
   });
 
-  final double size = 100;
+  double size = 30;
   final Offset offset;
   final Function onDragStart;
   final String text;
+  final Node node;
 
   _handleDrag(DragUpdateDetails details) {
     var x = offset.dx + details.delta.dx;
@@ -69,7 +181,6 @@ class _Item extends StatelessWidget {
   }
 
   _handleDragStart(details) {
-    print("handle drag start 2 : ${details.globalPosition} $offset");
     var x = details.globalPosition.dx;
     var y = details.globalPosition.dy;
     onDragStart(offset.dx, offset.dy);
@@ -77,6 +188,7 @@ class _Item extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    size = node.frequency * size;
     return Positioned(
       left: offset.dx - size / 2,
       top: offset.dy - size / 2,
@@ -86,11 +198,21 @@ class _Item extends StatelessWidget {
         child: Container(
           width: size,
           height: size,
-          child: Text(text),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(
-              color: Colors.blueAccent,
+          child: Center(
+              child: Text(
+            text,
+            style: const TextStyle(
+              fontSize: 14,
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          )),
+          decoration: const BoxDecoration(
+            color: blue,
+            borderRadius: BorderRadius.all(
+              Radius.circular(
+                10,
+              ),
             ),
           ),
         ),
@@ -100,48 +222,67 @@ class _Item extends StatelessWidget {
 }
 
 class CurvedEdgePainter extends CustomPainter {
-  CurvedEdgePainter({required this.offsets});
+  CurvedEdgePainter({
+    required this.offsets,
+    required this.edges,
+  });
 
   final List<Offset> offsets;
+  final KtList<EdgeLocation> edges;
 
   @override
   void paint(Canvas canvas, Size size) {
-    if (offsets.length > 1) {
-      offsets.asMap().forEach((index, offset) {
-        if (index == 0) return;
-        canvas.drawLine(
-          offsets[index - 1],
-          offsets[index],
-          Paint()
-            ..color = Colors.red
-            ..strokeWidth = 2,
-        );
-      });
-    }
+    edges.forEach((edge) {
+      canvas.drawLine(
+        edge.fromOffset,
+        edge.toOffset,
+        Paint()
+          ..color = pink
+          ..strokeWidth = 2.0 * edge.width,
+      );
+    });
+
+    // if (offsets.length > 1) {
+    //   offsets.asMap().forEach((index, offset) {
+    //     if (index == 0) return;
+    //     canvas.drawLine(
+    //       offsets[index - 1],
+    //       offsets[index],
+    //       Paint()
+    //         ..color = Colors.red
+    //         ..strokeWidth = 2,
+    //     );
+    //   });
+    // }
   }
 
   @override
   bool shouldRepaint(CurvedEdgePainter oldDelegate) => true;
 }
 
-class Node {
-  Node({required this.offset, required this.text});
+class NodeLocation {
+  NodeLocation({required this.offset, required this.id});
 
   final Offset offset;
-  final String text;
+  final String id;
 
-  Node copyWithNewOffset(Offset offset) {
-    return Node(offset: offset, text: text);
+  updateOffset(Offset offset) {
+    offset = offset;
+  }
+
+  NodeLocation copyWithNewOffset(Offset offset) {
+    return NodeLocation(offset: offset, id: id);
   }
 }
 
-class Edge {
-  Edge({required this.offset, required this.text});
+class EdgeLocation {
+  EdgeLocation({
+    required this.fromOffset,
+    required this.toOffset,
+    required this.width,
+  });
 
-  final Offset offset;
-  final String text;
-
-  Edge copyWithNewOffset(Offset offset) {
-    return Edge(offset: offset, text: text);
-  }
+  final Offset fromOffset;
+  final Offset toOffset;
+  final double width;
 }
