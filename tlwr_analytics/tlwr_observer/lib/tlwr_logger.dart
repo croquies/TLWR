@@ -1,6 +1,9 @@
-import 'package:tlwr_observer/entities/dynamic_event.dart';
+import 'package:dio/dio.dart';
 
 import 'entities/page_node.dart';
+
+const String uri = "http://ae88-220-70-71-150.ngrok.io";
+const String dynamicEventPath = "dynamicevents";
 
 class TLWRLogger {
   late final String projectId;
@@ -18,12 +21,22 @@ class TLWRLogger {
     required PageNode to,
     PageNode? from,
   }) async {
-    final dynamicEvent = DynamicEvent(
-      projectId: projectId,
-      from: from,
-      to: to,
-    );
-    print(
-        "send log project id: ${projectId} \n dynamic event: ${dynamicEvent}");
+    final dio = Dio();
+    final data = {
+      "project_id": projectId,
+      "from": {
+        "path": from?.path ?? "null path",
+        "class_name": from?.className ?? "null class",
+        "additional_info": {"initial": true}
+      },
+      "to": {
+        "path": to.path,
+        "class_name": to.className ?? "null class",
+        "additional_info": {"initial": true}
+      }
+    };
+    if (from != null) {
+      await dio.post('$uri/$dynamicEventPath', data: data);
+    }
   }
 }
