@@ -5,6 +5,7 @@ import 'package:tlwr_frontend/injectable.dart';
 import 'package:tlwr_frontend/presentation/auth/sign_in/sign_in_page.dart';
 import 'package:tlwr_frontend/presentation/auth/sign_up/sign_up_page.dart';
 import 'package:tlwr_frontend/presentation/dashboard/dashboard_page.dart';
+import 'package:tlwr_frontend/presentation/dashboard/project_detail_page.dart';
 import 'package:tlwr_frontend/presentation/home/home_page.dart';
 import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 
@@ -16,7 +17,8 @@ class RootLocation extends BeamLocation {
         RouteNames.home,
         RouteNames.signIn,
         RouteNames.signUp,
-        RouteNames.dashboard
+        RouteNames.dashboard,
+        RouteNames.dashboardWithProjectId,
       ].map(RouteNames.getPath).toList();
 
   @override
@@ -46,6 +48,14 @@ class RootLocation extends BeamLocation {
           key: const ValueKey(RouteNames.signUp),
           title: RouteNames.signUp,
           child: const SignUpPage(),
+        ),
+      if (state.uri.pathSegments.contains(RouteNames.dashboardWithProjectId))
+        BeamPage(
+          key: const ValueKey(RouteNames.dashboardWithProjectId),
+          title: RouteNames.dashboardWithProjectId,
+          child: ProjectDetailPage(
+            projectId: state.pathParameters['projectId']!,
+          ),
         ),
     ];
   }
