@@ -1,88 +1,84 @@
-import 'package:auto_route/auto_route.dart';
+import 'package:beamer/beamer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:responsive_builder/responsive_builder.dart';
-import 'package:tlwr_frontend/presentation/routes/router.gr.dart';
-import 'package:tlwr_frontend/presentation/shared/widgets/tlwr_side_menu.dart';
+import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
+import 'package:tlwr_frontend/presentation/routes/route_names.dart';
+import 'package:tlwr_frontend/presentation/shared/widgets/tlwr_menu.dart';
 
 class TLWRScaffold extends HookWidget {
-  const TLWRScaffold({Key? key, this.title, required this.child})
+  const TLWRScaffold(
+      {Key? key, this.title, required this.child, this.isLoading = false})
       : super(key: key);
 
   final String? title;
   final Widget child;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     final scaffoldKey = useMemoized(() => GlobalKey<ScaffoldState>());
-    final routes = useMemoized(() => AppRouter().routes);
-    final getRoutePath = useCallback(
-        (name) => routes.firstWhere((e) => e.name == name).path, routes);
+    final signOut = useState(false);
 
-    final menus = useMemoized(() => <SideMenuItem>[
-          SideMenuItem(
-            title: DashboardRoute.name,
-            icon: const Icon(Icons.dashboard),
-            onPressed: (context) => context.router.pushNamed(
-              getRoutePath(DashboardRoute.name),
-            ),
+    return BlocConsumer<AuthBloc, AuthState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        final menus = <TLWRMenuData>[
+          const TLWRMenuData(
+            title: 'Home',
+            icon: Icon(Icons.home),
+            routeName: RouteNames.home,
+            routeType: RouteType.both,
           ),
-          SideMenuItem(
-            title: SignInRoute.name,
-            icon: const Icon(Icons.login),
-            onPressed: (context) => context.router.pushNamed(
-              getRoutePath(SignInRoute.name),
-            ),
+          const TLWRMenuData(
+            title: 'Dashboard',
+            icon: Icon(Icons.dashboard),
+            routeName: RouteNames.dashboard,
           ),
-          SideMenuItem(
-            title: SignUpRoute.name,
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: (context) => context.router.pushNamed(
-              getRoutePath(SignUpRoute.name),
-            ),
+          const TLWRMenuData(
+            title: 'Sign in',
+            icon: Icon(Icons.login),
+            routeName: RouteNames.signIn,
+            routeType: RouteType.nonAuth,
           ),
-        ]);
+          const TLWRMenuData(
+            title: 'Sign up',
+            icon: Icon(Icons.exit_to_app),
+            routeName: RouteNames.signUp,
+            routeType: RouteType.nonAuth,
+          ),
+          TLWRMenuData(
+            title: 'Sign out',
+            icon: const Icon(Icons.logout),
+            callback: () {
+              signOut.value = true;
+              context.read<AuthBloc>().add(const AuthEvent.signedOut());
+              context.beamToNamed(RouteNames.home);
+              signOut.value = false;
+            },
+          ),
+        ];
 
-    return ResponsiveBuilder(
-      builder: (context, sizingInformation) {
-        return Scaffold(
-          key: scaffoldKey,
-          drawer:
-              sizingInformation.isDesktop ? null : TLWRSideMenu(menus: menus),
-          body: SafeArea(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (sizingInformation.isDesktop)
-                  Expanded(
-                    child: TLWRSideMenu(menus: menus),
-                  ),
-                Expanded(
-                    flex: 5,
-                    child: Column(
-                      children: [
-                        if (!sizingInformation.isDesktop)
-                          IconButton(
-                            icon: const Icon(Icons.menu),
-                            onPressed: () {
-                              if (scaffoldKey.currentState?.isDrawerOpen ??
-                                  false) {
-                                scaffoldKey.currentState?.openDrawer();
-                                scaffoldKey.currentState?.openEndDrawer();
-                              }
-                            },
-                          ),
-                        if (!sizingInformation.isMobile)
-                          Text(
-                            'Dashboard',
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                        if (!sizingInformation.isMobile)
-                          Spacer(flex: sizingInformation.isDesktop ? 2 : 1),
-                        child,
-                      ],
-                    )),
-              ],
+        return GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Scaffold(
+            key: scaffoldKey,
+            // endDrawer:
+            //     sizingInformation.isDesktop ? null : TLWRMenu(menus: menus),
+            body: SafeArea(
+              child: Column(
+                children: [
+                  TLWRMenu(menus: menus),
+                  if (isLoading || signOut.value)
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  else
+                    Expanded(child: child),
+                ],
+              ),
             ),
           ),
         );

@@ -9,7 +9,7 @@ environment:
 dependencies:
   adaptive_breakpoints: ^0.0.5
   adaptive_navigation: ^0.0.4
-  auto_route: ^2.4.2
+  beamer: ^0.14.1
   bloc: ^7.2.0
   dartz: ^0.10.0
   flutter:
@@ -19,22 +19,28 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   freezed: ^0.14.5
+  injectable: ^1.5.0
   intl: ^0.17.0
+  logger: ^1.1.0
   nil: ^1.1.1
   responsive_builder: ^0.4.1
   supabase_flutter: ^0.2.8
   uuid: ^3.0.5
 
 dev_dependencies:
-  auto_route_generator: ^2.4.1
   bloc_test: ^8.2.0
   build_runner: ^2.1.4
   flutter_test:
     sdk: flutter
   freezed_annotation: ^0.14.3
+  injectable_generator: ^1.5.2
+  json_serializable: ^5.0.2
   mocktail: ^0.1.0
   very_good_analysis: ^2.3.0
 
 flutter:
   uses-material-design: true
   generate: true
+
+  assets:
+    - assets/images/

@@ -8,10 +8,14 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:beamer/beamer.dart';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:tlwr_frontend/environment.dart';
+import 'package:tlwr_frontend/injectable.dart';
 
 class AppBlocObserver extends BlocObserver {
   @override
@@ -27,13 +31,18 @@ class AppBlocObserver extends BlocObserver {
   }
 }
 
-Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
+Future<void> bootstrap(
+    Environment environment, FutureOr<Widget> Function() builder) async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Bloc.observer = AppBlocObserver();
   FlutterError.onError = (details) {
     log(details.exceptionAsString(), stackTrace: details.stack);
   };
+
+  ResponsiveSizingConfig.instance.setCustomBreakpoints(
+    const ScreenBreakpoints(desktop: 1024, tablet: 800, watch: 200),
+  );
 
   await Supabase.initialize(
           url: 'https://kgmtyctqxepebrkzkfrt.supabase.co',
@@ -45,6 +54,10 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
       .catchError((error) {
     log(error.toString());
   });
+
+  configureInjection(environment.toString());
+
+  Beamer.setPathUrlStrategy();
 
   await runZonedGuarded(
     () async => runApp(await builder()),

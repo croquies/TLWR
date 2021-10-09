@@ -7,7 +7,9 @@ class DashboardPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TLWRScaffold(
-      child: Container(),
+      child: Container(
+        color: Colors.yellow,
+      ),
     );
   }
 }

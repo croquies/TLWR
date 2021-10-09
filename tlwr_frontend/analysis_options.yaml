@@ -5,6 +5,7 @@ analyzer:
     - "**/*.g.dart"
     - "**/*.gr.dart"
     - "**/*.freezed.dart"
+    - "**/injectable.config.dart"
   strong-mode:
     implicit-casts: true
     implicit-dynamic: true
