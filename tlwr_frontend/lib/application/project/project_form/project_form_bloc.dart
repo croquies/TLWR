@@ -29,6 +29,12 @@ class ProjectFormBloc extends Bloc<ProjectFormEvent, ProjectFormState>
     ProjectFormEvent event,
   ) async* {
     yield* event.map(
+      projectSelected: (e) async* {
+        yield state.copyWith(
+          selectedProjectId: e.projectId,
+          projectFailureOrSuccessOption: none(),
+        );
+      },
       nameChanged: (e) async* {
         yield state.copyWith(
           name: e.name ?? '',
@@ -44,6 +50,13 @@ class ProjectFormBloc extends Bloc<ProjectFormEvent, ProjectFormState>
       update: (e) async* {
         yield* _performActionOnExistsProject(
           _projectRepository.update,
+          project: e.project,
+        );
+      },
+      createOrUpdateComplete: (e) async* {
+        yield state.copyWith(
+          isSubmitted: false,
+          projectFailureOrSuccessOption: none(),
         );
       },
     );
@@ -52,7 +65,8 @@ class ProjectFormBloc extends Bloc<ProjectFormEvent, ProjectFormState>
   Stream<ProjectFormState> _performActionOnExistsProject(
       Future<Either<ProjectFailure, Unit>> Function(Project project)
           forwardedCall,
-      {bool create = false}) async* {
+      {bool create = false,
+      Project? project}) async* {
     Either<ProjectFailure, Unit>? failureOrSuccess;
 
     yield state.copyWith(
@@ -75,8 +89,11 @@ class ProjectFormBloc extends Bloc<ProjectFormEvent, ProjectFormState>
       await userOption.fold(() {
         failureOrSuccess = left(const ProjectFailure.userIsUnAuthenticated());
       }, (user) async {
-        failureOrSuccess = await forwardedCall(Project(
-            id: state.selectedProjectId, name: state.name, owner: user.id));
+        if (project != null) {
+          failureOrSuccess = await forwardedCall(project);
+        } else {
+          failureOrSuccess = left(const ProjectFailure.unexpected());
+        }
       });
 
       yield state.copyWith(

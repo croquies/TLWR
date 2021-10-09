@@ -17,6 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ProjectFormEventTearOff {
   const _$ProjectFormEventTearOff();
 
+  _ProjectSelected projectSelected(String? projectId) {
+    return _ProjectSelected(
+      projectId,
+    );
+  }
+
   _NameChanged nameChanged(String? name) {
     return _NameChanged(
       name,
@@ -32,6 +38,10 @@ class _$ProjectFormEventTearOff {
       project,
     );
   }
+
+  _CreateOrUpdateComplete createOrUpdateComplete() {
+    return const _CreateOrUpdateComplete();
+  }
 }
 
 /// @nodoc
@@ -41,45 +51,58 @@ const $ProjectFormEvent = _$ProjectFormEventTearOff();
 mixin _$ProjectFormEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String? projectId) projectSelected,
     required TResult Function(String? name) nameChanged,
     required TResult Function() create,
     required TResult Function(Project? project) update,
+    required TResult Function() createOrUpdateComplete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_ProjectSelected value) projectSelected,
     required TResult Function(_NameChanged value) nameChanged,
     required TResult Function(_Create value) create,
     required TResult Function(_Update value) update,
+    required TResult Function(_CreateOrUpdateComplete value)
+        createOrUpdateComplete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -100,6 +123,160 @@ class _$ProjectFormEventCopyWithImpl<$Res>
   final ProjectFormEvent _value;
   // ignore: unused_field
   final $Res Function(ProjectFormEvent) _then;
+}
+
+/// @nodoc
+abstract class _$ProjectSelectedCopyWith<$Res> {
+  factory _$ProjectSelectedCopyWith(
+          _ProjectSelected value, $Res Function(_ProjectSelected) then) =
+      __$ProjectSelectedCopyWithImpl<$Res>;
+  $Res call({String? projectId});
+}
+
+/// @nodoc
+class __$ProjectSelectedCopyWithImpl<$Res>
+    extends _$ProjectFormEventCopyWithImpl<$Res>
+    implements _$ProjectSelectedCopyWith<$Res> {
+  __$ProjectSelectedCopyWithImpl(
+      _ProjectSelected _value, $Res Function(_ProjectSelected) _then)
+      : super(_value, (v) => _then(v as _ProjectSelected));
+
+  @override
+  _ProjectSelected get _value => super._value as _ProjectSelected;
+
+  @override
+  $Res call({
+    Object? projectId = freezed,
+  }) {
+    return _then(_ProjectSelected(
+      projectId == freezed
+          ? _value.projectId
+          : projectId // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_ProjectSelected implements _ProjectSelected {
+  const _$_ProjectSelected(this.projectId);
+
+  @override
+  final String? projectId;
+
+  @override
+  String toString() {
+    return 'ProjectFormEvent.projectSelected(projectId: $projectId)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _ProjectSelected &&
+            (identical(other.projectId, projectId) ||
+                const DeepCollectionEquality()
+                    .equals(other.projectId, projectId)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(projectId);
+
+  @JsonKey(ignore: true)
+  @override
+  _$ProjectSelectedCopyWith<_ProjectSelected> get copyWith =>
+      __$ProjectSelectedCopyWithImpl<_ProjectSelected>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? projectId) projectSelected,
+    required TResult Function(String? name) nameChanged,
+    required TResult Function() create,
+    required TResult Function(Project? project) update,
+    required TResult Function() createOrUpdateComplete,
+  }) {
+    return projectSelected(projectId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
+    TResult Function(String? name)? nameChanged,
+    TResult Function()? create,
+    TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
+  }) {
+    return projectSelected?.call(projectId);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
+    TResult Function(String? name)? nameChanged,
+    TResult Function()? create,
+    TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
+    required TResult orElse(),
+  }) {
+    if (projectSelected != null) {
+      return projectSelected(projectId);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ProjectSelected value) projectSelected,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_Create value) create,
+    required TResult Function(_Update value) update,
+    required TResult Function(_CreateOrUpdateComplete value)
+        createOrUpdateComplete,
+  }) {
+    return projectSelected(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Create value)? create,
+    TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
+  }) {
+    return projectSelected?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Create value)? create,
+    TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
+    required TResult orElse(),
+  }) {
+    if (projectSelected != null) {
+      return projectSelected(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _ProjectSelected implements ProjectFormEvent {
+  const factory _ProjectSelected(String? projectId) = _$_ProjectSelected;
+
+  String? get projectId => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$ProjectSelectedCopyWith<_ProjectSelected> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -167,9 +344,11 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String? projectId) projectSelected,
     required TResult Function(String? name) nameChanged,
     required TResult Function() create,
     required TResult Function(Project? project) update,
+    required TResult Function() createOrUpdateComplete,
   }) {
     return nameChanged(name);
   }
@@ -177,9 +356,11 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
   }) {
     return nameChanged?.call(name);
   }
@@ -187,9 +368,11 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -201,9 +384,12 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_ProjectSelected value) projectSelected,
     required TResult Function(_NameChanged value) nameChanged,
     required TResult Function(_Create value) create,
     required TResult Function(_Update value) update,
+    required TResult Function(_CreateOrUpdateComplete value)
+        createOrUpdateComplete,
   }) {
     return nameChanged(this);
   }
@@ -211,9 +397,11 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
   }) {
     return nameChanged?.call(this);
   }
@@ -221,9 +409,11 @@ class _$_NameChanged implements _NameChanged {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
     required TResult orElse(),
   }) {
     if (nameChanged != null) {
@@ -279,9 +469,11 @@ class _$_Create implements _Create {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String? projectId) projectSelected,
     required TResult Function(String? name) nameChanged,
     required TResult Function() create,
     required TResult Function(Project? project) update,
+    required TResult Function() createOrUpdateComplete,
   }) {
     return create();
   }
@@ -289,9 +481,11 @@ class _$_Create implements _Create {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
   }) {
     return create?.call();
   }
@@ -299,9 +493,11 @@ class _$_Create implements _Create {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
     required TResult orElse(),
   }) {
     if (create != null) {
@@ -313,9 +509,12 @@ class _$_Create implements _Create {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_ProjectSelected value) projectSelected,
     required TResult Function(_NameChanged value) nameChanged,
     required TResult Function(_Create value) create,
     required TResult Function(_Update value) update,
+    required TResult Function(_CreateOrUpdateComplete value)
+        createOrUpdateComplete,
   }) {
     return create(this);
   }
@@ -323,9 +522,11 @@ class _$_Create implements _Create {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
   }) {
     return create?.call(this);
   }
@@ -333,9 +534,11 @@ class _$_Create implements _Create {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
     required TResult orElse(),
   }) {
     if (create != null) {
@@ -424,9 +627,11 @@ class _$_Update implements _Update {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String? projectId) projectSelected,
     required TResult Function(String? name) nameChanged,
     required TResult Function() create,
     required TResult Function(Project? project) update,
+    required TResult Function() createOrUpdateComplete,
   }) {
     return update(project);
   }
@@ -434,9 +639,11 @@ class _$_Update implements _Update {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
   }) {
     return update?.call(project);
   }
@@ -444,9 +651,11 @@ class _$_Update implements _Update {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
     TResult Function(String? name)? nameChanged,
     TResult Function()? create,
     TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
     required TResult orElse(),
   }) {
     if (update != null) {
@@ -458,9 +667,12 @@ class _$_Update implements _Update {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_ProjectSelected value) projectSelected,
     required TResult Function(_NameChanged value) nameChanged,
     required TResult Function(_Create value) create,
     required TResult Function(_Update value) update,
+    required TResult Function(_CreateOrUpdateComplete value)
+        createOrUpdateComplete,
   }) {
     return update(this);
   }
@@ -468,9 +680,11 @@ class _$_Update implements _Update {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
   }) {
     return update?.call(this);
   }
@@ -478,9 +692,11 @@ class _$_Update implements _Update {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_NameChanged value)? nameChanged,
     TResult Function(_Create value)? create,
     TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
     required TResult orElse(),
   }) {
     if (update != null) {
@@ -496,6 +712,129 @@ abstract class _Update implements ProjectFormEvent {
   Project? get project => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$UpdateCopyWith<_Update> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$CreateOrUpdateCompleteCopyWith<$Res> {
+  factory _$CreateOrUpdateCompleteCopyWith(_CreateOrUpdateComplete value,
+          $Res Function(_CreateOrUpdateComplete) then) =
+      __$CreateOrUpdateCompleteCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$CreateOrUpdateCompleteCopyWithImpl<$Res>
+    extends _$ProjectFormEventCopyWithImpl<$Res>
+    implements _$CreateOrUpdateCompleteCopyWith<$Res> {
+  __$CreateOrUpdateCompleteCopyWithImpl(_CreateOrUpdateComplete _value,
+      $Res Function(_CreateOrUpdateComplete) _then)
+      : super(_value, (v) => _then(v as _CreateOrUpdateComplete));
+
+  @override
+  _CreateOrUpdateComplete get _value => super._value as _CreateOrUpdateComplete;
+}
+
+/// @nodoc
+
+class _$_CreateOrUpdateComplete implements _CreateOrUpdateComplete {
+  const _$_CreateOrUpdateComplete();
+
+  @override
+  String toString() {
+    return 'ProjectFormEvent.createOrUpdateComplete()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _CreateOrUpdateComplete);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? projectId) projectSelected,
+    required TResult Function(String? name) nameChanged,
+    required TResult Function() create,
+    required TResult Function(Project? project) update,
+    required TResult Function() createOrUpdateComplete,
+  }) {
+    return createOrUpdateComplete();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
+    TResult Function(String? name)? nameChanged,
+    TResult Function()? create,
+    TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
+  }) {
+    return createOrUpdateComplete?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? projectId)? projectSelected,
+    TResult Function(String? name)? nameChanged,
+    TResult Function()? create,
+    TResult Function(Project? project)? update,
+    TResult Function()? createOrUpdateComplete,
+    required TResult orElse(),
+  }) {
+    if (createOrUpdateComplete != null) {
+      return createOrUpdateComplete();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_ProjectSelected value) projectSelected,
+    required TResult Function(_NameChanged value) nameChanged,
+    required TResult Function(_Create value) create,
+    required TResult Function(_Update value) update,
+    required TResult Function(_CreateOrUpdateComplete value)
+        createOrUpdateComplete,
+  }) {
+    return createOrUpdateComplete(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Create value)? create,
+    TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
+  }) {
+    return createOrUpdateComplete?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_ProjectSelected value)? projectSelected,
+    TResult Function(_NameChanged value)? nameChanged,
+    TResult Function(_Create value)? create,
+    TResult Function(_Update value)? update,
+    TResult Function(_CreateOrUpdateComplete value)? createOrUpdateComplete,
+    required TResult orElse(),
+  }) {
+    if (createOrUpdateComplete != null) {
+      return createOrUpdateComplete(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CreateOrUpdateComplete implements ProjectFormEvent {
+  const factory _CreateOrUpdateComplete() = _$_CreateOrUpdateComplete;
 }
 
 /// @nodoc

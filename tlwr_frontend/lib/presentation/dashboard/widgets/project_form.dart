@@ -2,18 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-import 'package:tlwr_frontend/application/project/project_bloc.dart';
 import 'package:tlwr_frontend/application/project/project_form/project_form_bloc.dart';
 import 'package:tlwr_frontend/application/project/project_validator_mixin.dart';
+import 'package:tlwr_frontend/domain/project/project.dart';
 import 'package:tlwr_frontend/injectable.dart';
-import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/shared/tlwr_ui/tlwr_button.dart';
 import 'package:tlwr_frontend/presentation/shared/tlwr_ui/tlwr_input.dart';
 import 'package:tlwr_frontend/presentation/shared/tlwr_ui/tlwr_text.dart';
 import 'package:tlwr_frontend/presentation/shared/widgets/tlwr_alert_dialog.dart';
 
 class ProjectForm extends HookWidget with ProjectValidatorMixin {
-  const ProjectForm({Key? key}) : super(key: key);
+  const ProjectForm({Key? key, this.project}) : super(key: key);
+
+  final Project? project;
 
   @override
   Widget build(BuildContext context) {
@@ -24,30 +25,43 @@ class ProjectForm extends HookWidget with ProjectValidatorMixin {
       create: (_) => getIt<ProjectFormBloc>(),
       child: BlocConsumer<ProjectFormBloc, ProjectFormState>(
         listener: (context, state) {
-          if (state.isSubmitted) {
-            Navigator.pop(context);
+          if (project != null && state.selectedProjectId != project?.id) {
+            context
+                .read<ProjectFormBloc>()
+                .add(ProjectFormEvent.projectSelected(project?.id));
           }
           state.projectFailureOrSuccessOption.fold(
             () {},
-            (either) => either.fold(
-              (failure) {
-                showDialog(
-                  context: context,
-                  builder: (context) => TLWRAlertDialog(
-                    description: failure.map(
-                      errorWithMessage: (error) => error.message,
-                      userIsUnAuthenticated: (_) =>
-                          'Sign in is required for this action.',
-                      unexpected: (_) => 'Unexpected error is occured.',
+            (either) {
+              either.fold(
+                (failure) {
+                  if (state.isSubmitted) {
+                    Navigator.pop(context, false);
+                  }
+                  showDialog(
+                    context: context,
+                    builder: (context) => TLWRAlertDialog(
+                      description: failure.map(
+                        errorWithMessage: (error) => error.message,
+                        userIsUnAuthenticated: (_) =>
+                            'Sign in is required for this action.',
+                        unexpected: (_) => 'Unexpected error is occured.',
+                      ),
                     ),
-                  ),
-                );
-              },
-              (_) {},
-            ),
+                  );
+                },
+                (_) {
+                  if (state.isSubmitted) {
+                    Navigator.pop(context, true);
+                  }
+                },
+              );
+            },
           );
         },
         builder: (context, state) {
+          final action = project == null ? 'Create' : 'Update';
+
           return AlertDialog(
             content: SizedBox(
               width: size.width *
@@ -62,9 +76,10 @@ class ProjectForm extends HookWidget with ProjectValidatorMixin {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const TLWRText.heading2('Create your project!'),
+                    TLWRText.heading2('$action your project!'),
                     const SizedBox(height: 10),
                     TLWRInputFormField(
+                      initialValue: project?.name,
                       autofocus: true,
                       placeholder: 'Project name',
                       autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -76,14 +91,21 @@ class ProjectForm extends HookWidget with ProjectValidatorMixin {
                     ),
                     const SizedBox(height: 30),
                     TLWRButton(
-                      title: 'Create new project',
+                      title: '$action project',
                       loading: state.isLoading,
+                      disabled: state.isLoading,
                       onTap: () {
                         FocusScope.of(context).unfocus();
                         if (formKey.currentState?.validate() ?? false) {
-                          context
-                              .read<ProjectFormBloc>()
-                              .add(const ProjectFormEvent.create());
+                          if (project != null) {
+                            context.read<ProjectFormBloc>().add(
+                                ProjectFormEvent.update(
+                                    project?.copyWith(name: state.name)));
+                          } else {
+                            context
+                                .read<ProjectFormBloc>()
+                                .add(const ProjectFormEvent.create());
+                          }
                         }
                       },
                     ),

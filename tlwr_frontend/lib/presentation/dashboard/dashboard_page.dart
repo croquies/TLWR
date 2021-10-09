@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:logger/logger.dart';
 import 'package:tlwr_frontend/application/project/project_bloc.dart';
 import 'package:tlwr_frontend/injectable.dart';
 import 'package:tlwr_frontend/presentation/dashboard/widgets/project_list.dart';

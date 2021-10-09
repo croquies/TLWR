@@ -50,7 +50,7 @@ class TLWRButton extends StatelessWidget {
                 ? kcPrimaryColor
                 : kcMediumGreyColor,
         child: InkWell(
-          onTap: onTap,
+          onTap: disabled ? null : onTap,
           borderRadius: BorderRadius.circular(8),
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 350),

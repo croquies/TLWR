@@ -17,15 +17,9 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ProjectEventTearOff {
   const _$ProjectEventTearOff();
 
-  _ProjectSelected projectSelected(String? id) {
-    return _ProjectSelected(
-      id,
-    );
-  }
-
-  _Delete delete(Project? project) {
+  _Delete delete(String projectId) {
     return _Delete(
-      project,
+      projectId,
     );
   }
 
@@ -41,43 +35,37 @@ const $ProjectEvent = _$ProjectEventTearOff();
 mixin _$ProjectEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? id) projectSelected,
-    required TResult Function(Project? project) delete,
+    required TResult Function(String projectId) delete,
     required TResult Function() list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
+    TResult Function(String projectId)? delete,
     TResult Function()? list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
+    TResult Function(String projectId)? delete,
     TResult Function()? list,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ProjectSelected value) projectSelected,
     required TResult Function(_Delete value) delete,
     required TResult Function(_List value) list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
     required TResult orElse(),
@@ -102,152 +90,10 @@ class _$ProjectEventCopyWithImpl<$Res> implements $ProjectEventCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$ProjectSelectedCopyWith<$Res> {
-  factory _$ProjectSelectedCopyWith(
-          _ProjectSelected value, $Res Function(_ProjectSelected) then) =
-      __$ProjectSelectedCopyWithImpl<$Res>;
-  $Res call({String? id});
-}
-
-/// @nodoc
-class __$ProjectSelectedCopyWithImpl<$Res>
-    extends _$ProjectEventCopyWithImpl<$Res>
-    implements _$ProjectSelectedCopyWith<$Res> {
-  __$ProjectSelectedCopyWithImpl(
-      _ProjectSelected _value, $Res Function(_ProjectSelected) _then)
-      : super(_value, (v) => _then(v as _ProjectSelected));
-
-  @override
-  _ProjectSelected get _value => super._value as _ProjectSelected;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-  }) {
-    return _then(_ProjectSelected(
-      id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_ProjectSelected implements _ProjectSelected {
-  const _$_ProjectSelected(this.id);
-
-  @override
-  final String? id;
-
-  @override
-  String toString() {
-    return 'ProjectEvent.projectSelected(id: $id)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other is _ProjectSelected &&
-            (identical(other.id, id) ||
-                const DeepCollectionEquality().equals(other.id, id)));
-  }
-
-  @override
-  int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(id);
-
-  @JsonKey(ignore: true)
-  @override
-  _$ProjectSelectedCopyWith<_ProjectSelected> get copyWith =>
-      __$ProjectSelectedCopyWithImpl<_ProjectSelected>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(String? id) projectSelected,
-    required TResult Function(Project? project) delete,
-    required TResult Function() list,
-  }) {
-    return projectSelected(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
-    TResult Function()? list,
-  }) {
-    return projectSelected?.call(id);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
-    TResult Function()? list,
-    required TResult orElse(),
-  }) {
-    if (projectSelected != null) {
-      return projectSelected(id);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_ProjectSelected value) projectSelected,
-    required TResult Function(_Delete value) delete,
-    required TResult Function(_List value) list,
-  }) {
-    return projectSelected(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
-    TResult Function(_Delete value)? delete,
-    TResult Function(_List value)? list,
-  }) {
-    return projectSelected?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
-    TResult Function(_Delete value)? delete,
-    TResult Function(_List value)? list,
-    required TResult orElse(),
-  }) {
-    if (projectSelected != null) {
-      return projectSelected(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _ProjectSelected implements ProjectEvent {
-  const factory _ProjectSelected(String? id) = _$_ProjectSelected;
-
-  String? get id => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  _$ProjectSelectedCopyWith<_ProjectSelected> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
 abstract class _$DeleteCopyWith<$Res> {
   factory _$DeleteCopyWith(_Delete value, $Res Function(_Delete) then) =
       __$DeleteCopyWithImpl<$Res>;
-  $Res call({Project? project});
-
-  $ProjectCopyWith<$Res>? get project;
+  $Res call({String projectId});
 }
 
 /// @nodoc
@@ -261,52 +107,42 @@ class __$DeleteCopyWithImpl<$Res> extends _$ProjectEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? project = freezed,
+    Object? projectId = freezed,
   }) {
     return _then(_Delete(
-      project == freezed
-          ? _value.project
-          : project // ignore: cast_nullable_to_non_nullable
-              as Project?,
+      projectId == freezed
+          ? _value.projectId
+          : projectId // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
-  }
-
-  @override
-  $ProjectCopyWith<$Res>? get project {
-    if (_value.project == null) {
-      return null;
-    }
-
-    return $ProjectCopyWith<$Res>(_value.project!, (value) {
-      return _then(_value.copyWith(project: value));
-    });
   }
 }
 
 /// @nodoc
 
 class _$_Delete implements _Delete {
-  const _$_Delete(this.project);
+  const _$_Delete(this.projectId);
 
   @override
-  final Project? project;
+  final String projectId;
 
   @override
   String toString() {
-    return 'ProjectEvent.delete(project: $project)';
+    return 'ProjectEvent.delete(projectId: $projectId)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Delete &&
-            (identical(other.project, project) ||
-                const DeepCollectionEquality().equals(other.project, project)));
+            (identical(other.projectId, projectId) ||
+                const DeepCollectionEquality()
+                    .equals(other.projectId, projectId)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(project);
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(projectId);
 
   @JsonKey(ignore: true)
   @override
@@ -316,33 +152,30 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? id) projectSelected,
-    required TResult Function(Project? project) delete,
+    required TResult Function(String projectId) delete,
     required TResult Function() list,
   }) {
-    return delete(project);
+    return delete(projectId);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
+    TResult Function(String projectId)? delete,
     TResult Function()? list,
   }) {
-    return delete?.call(project);
+    return delete?.call(projectId);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
+    TResult Function(String projectId)? delete,
     TResult Function()? list,
     required TResult orElse(),
   }) {
     if (delete != null) {
-      return delete(project);
+      return delete(projectId);
     }
     return orElse();
   }
@@ -350,7 +183,6 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ProjectSelected value) projectSelected,
     required TResult Function(_Delete value) delete,
     required TResult Function(_List value) list,
   }) {
@@ -360,7 +192,6 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
   }) {
@@ -370,7 +201,6 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
     required TResult orElse(),
@@ -383,9 +213,9 @@ class _$_Delete implements _Delete {
 }
 
 abstract class _Delete implements ProjectEvent {
-  const factory _Delete(Project? project) = _$_Delete;
+  const factory _Delete(String projectId) = _$_Delete;
 
-  Project? get project => throw _privateConstructorUsedError;
+  String get projectId => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   _$DeleteCopyWith<_Delete> get copyWith => throw _privateConstructorUsedError;
 }
@@ -427,8 +257,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String? id) projectSelected,
-    required TResult Function(Project? project) delete,
+    required TResult Function(String projectId) delete,
     required TResult Function() list,
   }) {
     return list();
@@ -437,8 +266,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
+    TResult Function(String projectId)? delete,
     TResult Function()? list,
   }) {
     return list?.call();
@@ -447,8 +275,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(String? id)? projectSelected,
-    TResult Function(Project? project)? delete,
+    TResult Function(String projectId)? delete,
     TResult Function()? list,
     required TResult orElse(),
   }) {
@@ -461,7 +288,6 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(_ProjectSelected value) projectSelected,
     required TResult Function(_Delete value) delete,
     required TResult Function(_List value) list,
   }) {
@@ -471,7 +297,6 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
   }) {
@@ -481,7 +306,6 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(_ProjectSelected value)? projectSelected,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
     required TResult orElse(),
@@ -502,13 +326,11 @@ class _$ProjectStateTearOff {
   const _$ProjectStateTearOff();
 
   _ProjectState call(
-      {required String? selectedProjectId,
-      required bool isLoading,
+      {required bool isLoading,
       required List<Project>? projects,
       required Option<Either<ProjectFailure, Unit>>
           projectFailureOrSuccessOption}) {
     return _ProjectState(
-      selectedProjectId: selectedProjectId,
       isLoading: isLoading,
       projects: projects,
       projectFailureOrSuccessOption: projectFailureOrSuccessOption,
@@ -521,7 +343,6 @@ const $ProjectState = _$ProjectStateTearOff();
 
 /// @nodoc
 mixin _$ProjectState {
-  String? get selectedProjectId => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   List<Project>? get projects => throw _privateConstructorUsedError;
   Option<Either<ProjectFailure, Unit>> get projectFailureOrSuccessOption =>
@@ -538,8 +359,7 @@ abstract class $ProjectStateCopyWith<$Res> {
           ProjectState value, $Res Function(ProjectState) then) =
       _$ProjectStateCopyWithImpl<$Res>;
   $Res call(
-      {String? selectedProjectId,
-      bool isLoading,
+      {bool isLoading,
       List<Project>? projects,
       Option<Either<ProjectFailure, Unit>> projectFailureOrSuccessOption});
 }
@@ -554,16 +374,11 @@ class _$ProjectStateCopyWithImpl<$Res> implements $ProjectStateCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? selectedProjectId = freezed,
     Object? isLoading = freezed,
     Object? projects = freezed,
     Object? projectFailureOrSuccessOption = freezed,
   }) {
     return _then(_value.copyWith(
-      selectedProjectId: selectedProjectId == freezed
-          ? _value.selectedProjectId
-          : selectedProjectId // ignore: cast_nullable_to_non_nullable
-              as String?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -588,8 +403,7 @@ abstract class _$ProjectStateCopyWith<$Res>
       __$ProjectStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? selectedProjectId,
-      bool isLoading,
+      {bool isLoading,
       List<Project>? projects,
       Option<Either<ProjectFailure, Unit>> projectFailureOrSuccessOption});
 }
@@ -606,16 +420,11 @@ class __$ProjectStateCopyWithImpl<$Res> extends _$ProjectStateCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? selectedProjectId = freezed,
     Object? isLoading = freezed,
     Object? projects = freezed,
     Object? projectFailureOrSuccessOption = freezed,
   }) {
     return _then(_ProjectState(
-      selectedProjectId: selectedProjectId == freezed
-          ? _value.selectedProjectId
-          : selectedProjectId // ignore: cast_nullable_to_non_nullable
-              as String?,
       isLoading: isLoading == freezed
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -636,13 +445,10 @@ class __$ProjectStateCopyWithImpl<$Res> extends _$ProjectStateCopyWithImpl<$Res>
 
 class _$_ProjectState implements _ProjectState {
   const _$_ProjectState(
-      {required this.selectedProjectId,
-      required this.isLoading,
+      {required this.isLoading,
       required this.projects,
       required this.projectFailureOrSuccessOption});
 
-  @override
-  final String? selectedProjectId;
   @override
   final bool isLoading;
   @override
@@ -652,16 +458,13 @@ class _$_ProjectState implements _ProjectState {
 
   @override
   String toString() {
-    return 'ProjectState(selectedProjectId: $selectedProjectId, isLoading: $isLoading, projects: $projects, projectFailureOrSuccessOption: $projectFailureOrSuccessOption)';
+    return 'ProjectState(isLoading: $isLoading, projects: $projects, projectFailureOrSuccessOption: $projectFailureOrSuccessOption)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _ProjectState &&
-            (identical(other.selectedProjectId, selectedProjectId) ||
-                const DeepCollectionEquality()
-                    .equals(other.selectedProjectId, selectedProjectId)) &&
             (identical(other.isLoading, isLoading) ||
                 const DeepCollectionEquality()
                     .equals(other.isLoading, isLoading)) &&
@@ -678,7 +481,6 @@ class _$_ProjectState implements _ProjectState {
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(selectedProjectId) ^
       const DeepCollectionEquality().hash(isLoading) ^
       const DeepCollectionEquality().hash(projects) ^
       const DeepCollectionEquality().hash(projectFailureOrSuccessOption);
@@ -691,14 +493,11 @@ class _$_ProjectState implements _ProjectState {
 
 abstract class _ProjectState implements ProjectState {
   const factory _ProjectState(
-      {required String? selectedProjectId,
-      required bool isLoading,
+      {required bool isLoading,
       required List<Project>? projects,
       required Option<Either<ProjectFailure, Unit>>
           projectFailureOrSuccessOption}) = _$_ProjectState;
 
-  @override
-  String? get selectedProjectId => throw _privateConstructorUsedError;
   @override
   bool get isLoading => throw _privateConstructorUsedError;
   @override

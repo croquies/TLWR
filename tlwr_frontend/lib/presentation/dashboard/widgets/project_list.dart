@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:tlwr_frontend/application/project/project_bloc.dart';
 import 'package:tlwr_frontend/domain/project/project.dart';
 import 'package:tlwr_frontend/presentation/dashboard/widgets/project_form.dart';
 import 'package:tlwr_frontend/presentation/shared/colors.dart';
@@ -55,6 +57,18 @@ class ProjectList extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final toast = useMemoized(() => FToast().init(context));
+
+    final showCreateOrUpdateDialog = useCallback((Project? project) {
+      showDialog<bool>(
+        context: context,
+        builder: (context) => ProjectForm(project: project),
+      ).then((result) {
+        if (result ?? false) {
+          context.read<ProjectBloc>().add(const ProjectEvent.list());
+        }
+      });
+    }, []);
+
     if (projects != null) {
       if (projects!.isNotEmpty) {
         final size = MediaQuery.of(context).size;
@@ -85,10 +99,7 @@ class ProjectList extends HookWidget {
                         child: TLWRButton(
                           title: 'Create new project',
                           onTap: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const ProjectForm(),
-                            );
+                            showCreateOrUpdateDialog(null);
                           },
                         ),
                       ),
@@ -169,6 +180,51 @@ class ProjectList extends HookWidget {
                                           copyToClipboard(toast, projectId);
                                         },
                                       ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    flex: 0,
+                                    child: PopupMenuButton<Project?>(
+                                      onSelected: (project) {
+                                        if (project != null) {
+                                          showCreateOrUpdateDialog(project);
+                                        }
+                                      },
+                                      itemBuilder: (_) {
+                                        return [
+                                          PopupMenuItem(
+                                            height: 20,
+                                            padding: const EdgeInsets.all(10),
+                                            value: project,
+                                            child: Row(
+                                              children: const [
+                                                Icon(Icons.update),
+                                                SizedBox(width: 5),
+                                                Text('Update'),
+                                              ],
+                                            ),
+                                          ),
+                                          PopupMenuItem(
+                                            height: 20,
+                                            padding: const EdgeInsets.all(10),
+                                            child: Row(
+                                              children: const [
+                                                Icon(Icons.delete),
+                                                SizedBox(width: 5),
+                                                Text('Delete'),
+                                              ],
+                                            ),
+                                            onTap: () {
+                                              context.read<ProjectBloc>().add(
+                                                    ProjectEvent.delete(
+                                                        projectId),
+                                                  );
+                                              context.read<ProjectBloc>().add(
+                                                  const ProjectEvent.list());
+                                            },
+                                          ),
+                                        ];
+                                      },
                                     ),
                                   ),
                                 ],

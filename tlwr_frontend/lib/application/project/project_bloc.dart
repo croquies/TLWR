@@ -29,12 +29,6 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState>
     ProjectEvent event,
   ) async* {
     yield* event.map(
-      projectSelected: (e) async* {
-        yield state.copyWith(
-          selectedProjectId: e.id ?? '',
-          projectFailureOrSuccessOption: none(),
-        );
-      },
       list: (e) async* {
         Either<ProjectFailure, Unit>? failureOrSuccess;
 
@@ -68,8 +62,8 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState>
         await userOption.fold(() {
           failureOrSuccess = left(const ProjectFailure.userIsUnAuthenticated());
         }, (user) async {
-          failureOrSuccess = await _projectRepository
-              .delete(Project(id: state.selectedProjectId));
+          failureOrSuccess =
+              await _projectRepository.delete(Project(id: e.projectId));
         });
 
         yield state.copyWith(
