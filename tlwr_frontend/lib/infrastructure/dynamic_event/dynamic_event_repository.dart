@@ -44,6 +44,8 @@ class DynamicEventRepository implements IDynamicEventRepository {
               }
             })
             .map((e) => DynamicEvent.fromJson(e))
+            .where((e) => e.to != null)
+            .where((e) => e.from != null)
             .toList();
         _logger.d(
             '[DynamicEventRepository] ${json.length}, ${filtered.length} $filtered');
