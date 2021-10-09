@@ -24,13 +24,13 @@ class _$DynamicEventTearOff {
   _DynamicEvent call(
       {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'from') String? fromNodeId,
-      @JsonKey(name: 'to') String? toNodeId}) {
+      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'to') String? to}) {
     return _DynamicEvent(
       id: id,
       createdAt: createdAt,
-      fromNodeId: fromNodeId,
-      toNodeId: toNodeId,
+      from: from,
+      to: to,
     );
   }
 
@@ -50,10 +50,10 @@ mixin _$DynamicEvent {
   String? get createdAt =>
       throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'from')
-  String? get fromNodeId =>
+  String? get from =>
       throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'to')
-  String? get toNodeId => throw _privateConstructorUsedError;
+  String? get to => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -69,8 +69,8 @@ abstract class $DynamicEventCopyWith<$Res> {
   $Res call(
       {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'from') String? fromNodeId,
-      @JsonKey(name: 'to') String? toNodeId});
+      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'to') String? to});
 }
 
 /// @nodoc
@@ -85,8 +85,8 @@ class _$DynamicEventCopyWithImpl<$Res> implements $DynamicEventCopyWith<$Res> {
   $Res call({
     Object? id = freezed,
     Object? createdAt = freezed,
-    Object? fromNodeId = freezed,
-    Object? toNodeId = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed
@@ -97,13 +97,13 @@ class _$DynamicEventCopyWithImpl<$Res> implements $DynamicEventCopyWith<$Res> {
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromNodeId: fromNodeId == freezed
-          ? _value.fromNodeId
-          : fromNodeId // ignore: cast_nullable_to_non_nullable
+      from: from == freezed
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
               as String?,
-      toNodeId: toNodeId == freezed
-          ? _value.toNodeId
-          : toNodeId // ignore: cast_nullable_to_non_nullable
+      to: to == freezed
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -119,8 +119,8 @@ abstract class _$DynamicEventCopyWith<$Res>
   $Res call(
       {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'from') String? fromNodeId,
-      @JsonKey(name: 'to') String? toNodeId});
+      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'to') String? to});
 }
 
 /// @nodoc
@@ -137,8 +137,8 @@ class __$DynamicEventCopyWithImpl<$Res> extends _$DynamicEventCopyWithImpl<$Res>
   $Res call({
     Object? id = freezed,
     Object? createdAt = freezed,
-    Object? fromNodeId = freezed,
-    Object? toNodeId = freezed,
+    Object? from = freezed,
+    Object? to = freezed,
   }) {
     return _then(_DynamicEvent(
       id: id == freezed
@@ -149,13 +149,13 @@ class __$DynamicEventCopyWithImpl<$Res> extends _$DynamicEventCopyWithImpl<$Res>
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
               as String?,
-      fromNodeId: fromNodeId == freezed
-          ? _value.fromNodeId
-          : fromNodeId // ignore: cast_nullable_to_non_nullable
+      from: from == freezed
+          ? _value.from
+          : from // ignore: cast_nullable_to_non_nullable
               as String?,
-      toNodeId: toNodeId == freezed
-          ? _value.toNodeId
-          : toNodeId // ignore: cast_nullable_to_non_nullable
+      to: to == freezed
+          ? _value.to
+          : to // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -167,8 +167,8 @@ class _$_DynamicEvent implements _DynamicEvent {
   const _$_DynamicEvent(
       {this.id,
       @JsonKey(name: 'created_at') this.createdAt,
-      @JsonKey(name: 'from') this.fromNodeId,
-      @JsonKey(name: 'to') this.toNodeId});
+      @JsonKey(name: 'from') this.from,
+      @JsonKey(name: 'to') this.to});
 
   factory _$_DynamicEvent.fromJson(Map<String, dynamic> json) =>
       _$$_DynamicEventFromJson(json);
@@ -180,14 +180,14 @@ class _$_DynamicEvent implements _DynamicEvent {
   final String? createdAt;
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'from')
-  final String? fromNodeId;
+  final String? from;
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'to')
-  final String? toNodeId;
+  final String? to;
 
   @override
   String toString() {
-    return 'DynamicEvent(id: $id, createdAt: $createdAt, fromNodeId: $fromNodeId, toNodeId: $toNodeId)';
+    return 'DynamicEvent(id: $id, createdAt: $createdAt, from: $from, to: $to)';
   }
 
   @override
@@ -199,12 +199,10 @@ class _$_DynamicEvent implements _DynamicEvent {
             (identical(other.createdAt, createdAt) ||
                 const DeepCollectionEquality()
                     .equals(other.createdAt, createdAt)) &&
-            (identical(other.fromNodeId, fromNodeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.fromNodeId, fromNodeId)) &&
-            (identical(other.toNodeId, toNodeId) ||
-                const DeepCollectionEquality()
-                    .equals(other.toNodeId, toNodeId)));
+            (identical(other.from, from) ||
+                const DeepCollectionEquality().equals(other.from, from)) &&
+            (identical(other.to, to) ||
+                const DeepCollectionEquality().equals(other.to, to)));
   }
 
   @override
@@ -212,8 +210,8 @@ class _$_DynamicEvent implements _DynamicEvent {
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
       const DeepCollectionEquality().hash(createdAt) ^
-      const DeepCollectionEquality().hash(fromNodeId) ^
-      const DeepCollectionEquality().hash(toNodeId);
+      const DeepCollectionEquality().hash(from) ^
+      const DeepCollectionEquality().hash(to);
 
   @JsonKey(ignore: true)
   @override
@@ -230,8 +228,8 @@ abstract class _DynamicEvent implements DynamicEvent {
   const factory _DynamicEvent(
       {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      @JsonKey(name: 'from') String? fromNodeId,
-      @JsonKey(name: 'to') String? toNodeId}) = _$_DynamicEvent;
+      @JsonKey(name: 'from') String? from,
+      @JsonKey(name: 'to') String? to}) = _$_DynamicEvent;
 
   factory _DynamicEvent.fromJson(Map<String, dynamic> json) =
       _$_DynamicEvent.fromJson;
@@ -243,10 +241,10 @@ abstract class _DynamicEvent implements DynamicEvent {
   String? get createdAt => throw _privateConstructorUsedError;
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'from')
-  String? get fromNodeId => throw _privateConstructorUsedError;
+  String? get from => throw _privateConstructorUsedError;
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'to')
-  String? get toNodeId => throw _privateConstructorUsedError;
+  String? get to => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$DynamicEventCopyWith<_DynamicEvent> get copyWith =>

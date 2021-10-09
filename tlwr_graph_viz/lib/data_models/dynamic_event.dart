@@ -10,9 +10,9 @@ class DynamicEvent with _$DynamicEvent {
     // ignore: invalid_annotation_target
     @JsonKey(name: 'created_at') String? createdAt,
     // ignore: invalid_annotation_target
-    @JsonKey(name: 'from') String? fromNodeId,
+    @JsonKey(name: 'from') String? from,
     // ignore: invalid_annotation_target
-    @JsonKey(name: 'to') String? toNodeId,
+    @JsonKey(name: 'to') String? to,
   }) = _DynamicEvent;
 
   factory DynamicEvent.fromJson(Map<String, dynamic> json) =>
