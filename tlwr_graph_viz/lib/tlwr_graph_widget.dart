@@ -26,8 +26,8 @@ class TLWRGraphWidget extends StatelessWidget {
 
   KtList<Edge> _transformToEdgeList(
       KtList<DynamicEvent> events, KtMap<String, Node> nodeMap) {
-    final groupedEvents = dynamicEvents.groupBy<KtPair<String, String>>(
-        (p0) => KtPair(p0.fromNodeId!, p0.toNodeId!));
+    final groupedEvents = dynamicEvents
+        .groupBy<KtPair<String, String>>((p0) => KtPair(p0.from!, p0.to!));
     return groupedEvents.map<Edge>(
       (group) => Edge(
           from: nodeMap[group.key.first]!,
@@ -40,13 +40,18 @@ class TLWRGraphWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final nodeMap = _transformToNodeMap(nodes);
     final edges = _transformToEdgeList(dynamicEvents, nodeMap);
+    final sortedNodes = nodes.sortedBy((node) =>
+        dynamicEvents
+            .firstOrNull((event) => event.from == node.id)
+            ?.createdAt ??
+        "");
     return Container(
       alignment: Alignment.center,
       child: NodeLayout(
-        nodes: nodes.sortedBy((node) => dynamicEvents
-            .first((event) => event.fromNodeId == node.id)
-            .createdAt!),
+        nodes: sortedNodes,
         edges: edges,
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
       ),
       decoration: BoxDecoration(
         border: Border.all(
