@@ -17,11 +17,11 @@ class TLWRButton extends StatelessWidget {
   const TLWRButton.outline({
     Key? key,
     required this.title,
+    this.loading = false,
+    this.disabled = false,
     this.onTap,
     this.leading,
-  })  : disabled = false,
-        loading = false,
-        outline = true,
+  })  : outline = true,
         super(key: key);
 
   final String title;
@@ -33,43 +33,51 @@ class TLWRButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 350),
-        width: double.infinity,
-        height: 48,
-        alignment: Alignment.center,
-        decoration: !outline
-            ? BoxDecoration(
-                color: !disabled ? kcPrimaryColor : kcMediumGreyColor,
-                borderRadius: BorderRadius.circular(8),
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: outline
+            ? Border.all(
+                color: kcPrimaryColor,
               )
-            : BoxDecoration(
-                color: Colors.transparent,
-                borderRadius: BorderRadius.circular(8),
-                border: Border.all(
-                  color: kcPrimaryColor,
-                )),
-        child: !loading
-            ? Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (leading != null) leading!,
-                  if (leading != null) const SizedBox(width: 5),
-                  Text(
-                    title,
-                    style: bodyStyle.copyWith(
-                      fontWeight: !outline ? FontWeight.bold : FontWeight.w400,
-                      color: !outline ? Colors.white : kcPrimaryColor,
-                    ),
+            : null,
+      ),
+      child: Material(
+        borderRadius: BorderRadius.circular(8),
+        color: outline
+            ? Colors.transparent
+            : !disabled
+                ? kcPrimaryColor
+                : kcMediumGreyColor,
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(8),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 350),
+            width: double.infinity,
+            height: 48,
+            alignment: Alignment.center,
+            child: !loading
+                ? Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (leading != null) leading!,
+                      if (leading != null) const SizedBox(width: 5),
+                      Text(
+                        title,
+                        style: bodyStyle.copyWith(
+                          fontWeight:
+                              outline ? FontWeight.w400 : FontWeight.bold,
+                          color: outline ? kcPrimaryColor : Colors.white,
+                        ),
+                      ),
+                    ],
+                  )
+                : const CircularProgressIndicator(
+                    valueColor: AlwaysStoppedAnimation(Colors.white),
                   ),
-                ],
-              )
-            : const CircularProgressIndicator(
-                strokeWidth: 8,
-                valueColor: AlwaysStoppedAnimation(Colors.white),
-              ),
+          ),
+        ),
       ),
     );
   }
