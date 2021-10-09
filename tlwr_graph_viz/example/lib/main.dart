@@ -84,45 +84,54 @@ class _MyHomePageState extends State<MyHomePage> {
 
     dynamicEvents = KtList.from([
       DynamicEvent(
-          id: "edge1",
-          fromNodeId: "node1",
-          toNodeId: "node2",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100000)),
+        id: "edge1",
+        fromNodeId: "node1",
+        toNodeId: "node2",
+        createdAt:
+            DateTime.fromMillisecondsSinceEpoch(100000).toIso8601String(),
+      ),
       DynamicEvent(
           id: "edge1",
           fromNodeId: "node1",
           toNodeId: "node2",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100001)),
+          createdAt:
+              DateTime.fromMillisecondsSinceEpoch(100001).toIso8601String()),
       DynamicEvent(
           id: "edge1",
           fromNodeId: "node3",
           toNodeId: "node2",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100002)),
+          createdAt:
+              DateTime.fromMillisecondsSinceEpoch(100002).toIso8601String()),
       DynamicEvent(
           id: "edge1",
           fromNodeId: "node1",
           toNodeId: "node2",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100003)),
+          createdAt:
+              DateTime.fromMillisecondsSinceEpoch(100003).toIso8601String()),
       DynamicEvent(
           id: "edge1",
           fromNodeId: "node1",
           toNodeId: "node3",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100004)),
+          createdAt:
+              DateTime.fromMillisecondsSinceEpoch(100004).toIso8601String()),
       DynamicEvent(
           id: "edge1",
           fromNodeId: "node1",
           toNodeId: "node3",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100005)),
+          createdAt:
+              DateTime.fromMillisecondsSinceEpoch(100005).toIso8601String()),
       DynamicEvent(
           id: "edge1",
           fromNodeId: "node2",
           toNodeId: "node2",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100006)),
+          createdAt:
+              DateTime.fromMillisecondsSinceEpoch(100006).toIso8601String()),
       DynamicEvent(
           id: "edge1",
           fromNodeId: "node1",
           toNodeId: "node2",
-          createdAt: DateTime.fromMillisecondsSinceEpoch(100007)),
+          createdAt:
+              DateTime.fromMillisecondsSinceEpoch(100007).toIso8601String()),
     ]);
     super.initState();
   }

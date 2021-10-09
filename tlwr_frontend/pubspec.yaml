@@ -23,10 +23,13 @@ dependencies:
   freezed: ^0.14.5
   injectable: ^1.5.0
   intl: ^0.17.0
+  kt_dart: ^0.9.1
   logger: ^1.1.0
   nil: ^1.1.1
   responsive_builder: ^0.4.1
   supabase_flutter: ^0.2.8
+  tlwr_graph_viz:
+    path: ../tlwr_graph_viz
   uuid: ^3.0.5
 
 dev_dependencies:
