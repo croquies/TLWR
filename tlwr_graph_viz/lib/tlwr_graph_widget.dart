@@ -27,7 +27,7 @@ class TLWRGraphWidget extends StatelessWidget {
   KtList<Edge> _transformToEdgeList(
       KtList<DynamicEvent> events, KtMap<String, Node> nodeMap) {
     final groupedEvents = dynamicEvents.groupBy<KtPair<String, String>>(
-        (p0) => KtPair(p0.fromNodeId, p0.toNodeId));
+        (p0) => KtPair(p0.fromNodeId!, p0.toNodeId!));
     return groupedEvents.map<Edge>(
       (group) => Edge(
           from: nodeMap[group.key.first]!,

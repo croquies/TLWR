@@ -22,10 +22,10 @@ class _$DynamicEventTearOff {
   const _$DynamicEventTearOff();
 
   _DynamicEvent call(
-      {required String id,
+      {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      required String fromNodeId,
-      required String toNodeId}) {
+      @JsonKey(name: 'from') String? fromNodeId,
+      @JsonKey(name: 'to') String? toNodeId}) {
     return _DynamicEvent(
       id: id,
       createdAt: createdAt,
@@ -44,12 +44,16 @@ const $DynamicEvent = _$DynamicEventTearOff();
 
 /// @nodoc
 mixin _$DynamicEvent {
-  String get id =>
+  String? get id =>
       throw _privateConstructorUsedError; // ignore: invalid_annotation_target
   @JsonKey(name: 'created_at')
-  String? get createdAt => throw _privateConstructorUsedError;
-  String get fromNodeId => throw _privateConstructorUsedError;
-  String get toNodeId => throw _privateConstructorUsedError;
+  String? get createdAt =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  @JsonKey(name: 'from')
+  String? get fromNodeId =>
+      throw _privateConstructorUsedError; // ignore: invalid_annotation_target
+  @JsonKey(name: 'to')
+  String? get toNodeId => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -63,10 +67,10 @@ abstract class $DynamicEventCopyWith<$Res> {
           DynamicEvent value, $Res Function(DynamicEvent) then) =
       _$DynamicEventCopyWithImpl<$Res>;
   $Res call(
-      {String id,
+      {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      String fromNodeId,
-      String toNodeId});
+      @JsonKey(name: 'from') String? fromNodeId,
+      @JsonKey(name: 'to') String? toNodeId});
 }
 
 /// @nodoc
@@ -88,7 +92,7 @@ class _$DynamicEventCopyWithImpl<$Res> implements $DynamicEventCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -96,11 +100,11 @@ class _$DynamicEventCopyWithImpl<$Res> implements $DynamicEventCopyWith<$Res> {
       fromNodeId: fromNodeId == freezed
           ? _value.fromNodeId
           : fromNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       toNodeId: toNodeId == freezed
           ? _value.toNodeId
           : toNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -113,10 +117,10 @@ abstract class _$DynamicEventCopyWith<$Res>
       __$DynamicEventCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
+      {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      String fromNodeId,
-      String toNodeId});
+      @JsonKey(name: 'from') String? fromNodeId,
+      @JsonKey(name: 'to') String? toNodeId});
 }
 
 /// @nodoc
@@ -140,7 +144,7 @@ class __$DynamicEventCopyWithImpl<$Res> extends _$DynamicEventCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: createdAt == freezed
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -148,11 +152,11 @@ class __$DynamicEventCopyWithImpl<$Res> extends _$DynamicEventCopyWithImpl<$Res>
       fromNodeId: fromNodeId == freezed
           ? _value.fromNodeId
           : fromNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       toNodeId: toNodeId == freezed
           ? _value.toNodeId
           : toNodeId // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -161,23 +165,25 @@ class __$DynamicEventCopyWithImpl<$Res> extends _$DynamicEventCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_DynamicEvent implements _DynamicEvent {
   const _$_DynamicEvent(
-      {required this.id,
+      {this.id,
       @JsonKey(name: 'created_at') this.createdAt,
-      required this.fromNodeId,
-      required this.toNodeId});
+      @JsonKey(name: 'from') this.fromNodeId,
+      @JsonKey(name: 'to') this.toNodeId});
 
   factory _$_DynamicEvent.fromJson(Map<String, dynamic> json) =>
       _$$_DynamicEventFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'created_at')
   final String? createdAt;
-  @override
-  final String fromNodeId;
-  @override
-  final String toNodeId;
+  @override // ignore: invalid_annotation_target
+  @JsonKey(name: 'from')
+  final String? fromNodeId;
+  @override // ignore: invalid_annotation_target
+  @JsonKey(name: 'to')
+  final String? toNodeId;
 
   @override
   String toString() {
@@ -222,23 +228,25 @@ class _$_DynamicEvent implements _DynamicEvent {
 
 abstract class _DynamicEvent implements DynamicEvent {
   const factory _DynamicEvent(
-      {required String id,
+      {String? id,
       @JsonKey(name: 'created_at') String? createdAt,
-      required String fromNodeId,
-      required String toNodeId}) = _$_DynamicEvent;
+      @JsonKey(name: 'from') String? fromNodeId,
+      @JsonKey(name: 'to') String? toNodeId}) = _$_DynamicEvent;
 
   factory _DynamicEvent.fromJson(Map<String, dynamic> json) =
       _$_DynamicEvent.fromJson;
 
   @override
-  String get id => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
   @override // ignore: invalid_annotation_target
   @JsonKey(name: 'created_at')
   String? get createdAt => throw _privateConstructorUsedError;
-  @override
-  String get fromNodeId => throw _privateConstructorUsedError;
-  @override
-  String get toNodeId => throw _privateConstructorUsedError;
+  @override // ignore: invalid_annotation_target
+  @JsonKey(name: 'from')
+  String? get fromNodeId => throw _privateConstructorUsedError;
+  @override // ignore: invalid_annotation_target
+  @JsonKey(name: 'to')
+  String? get toNodeId => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$DynamicEventCopyWith<_DynamicEvent> get copyWith =>
