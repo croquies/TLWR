@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tlwr_graph_viz/data_models/node.dart';
 import 'package:tlwr_graph_viz/tlwr_graph_viz.dart';
+import 'package:kt_dart/collection.dart';
 
 void main() {
   runApp(const MyApp());
@@ -51,6 +53,80 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  KtList<Node> nodes = emptyList();
+  KtList<DynamicEvent> dynamicEvents = emptyList();
+
+  @override
+  void initState() {
+    nodes = KtList.from([
+      const Node(
+        label: "Home Page",
+        path: "/",
+        id: 'node1',
+        frequency: 5,
+        duration: 3.5,
+      ),
+      const Node(
+        label: "Login Page",
+        path: "/login",
+        id: 'node2',
+        frequency: 4,
+        duration: 1.2,
+      ),
+      const Node(
+        label: "Registration Page",
+        path: "/registration",
+        id: 'node3',
+        frequency: 3,
+        duration: 4.5,
+      ),
+    ]);
+
+    dynamicEvents = KtList.from([
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node1",
+          toNodeId: "node2",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100000)),
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node1",
+          toNodeId: "node2",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100001)),
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node3",
+          toNodeId: "node2",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100002)),
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node1",
+          toNodeId: "node2",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100003)),
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node1",
+          toNodeId: "node3",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100004)),
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node1",
+          toNodeId: "node3",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100005)),
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node2",
+          toNodeId: "node2",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100006)),
+      DynamicEvent(
+          id: "edge1",
+          fromNodeId: "node1",
+          toNodeId: "node2",
+          createdAt: DateTime.fromMillisecondsSinceEpoch(100007)),
+    ]);
+    super.initState();
+  }
+
   void _incrementCounter() {
     setState(() {
       // This call to setState tells the Flutter framework that something has
@@ -76,7 +152,10 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: TLWRGraphWidget(),
+      body: TLWRGraphWidget(
+        dynamicEvents: dynamicEvents,
+        nodes: nodes,
+      ),
     );
   }
 }
