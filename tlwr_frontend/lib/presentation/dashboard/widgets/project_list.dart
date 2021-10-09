@@ -8,6 +8,7 @@ import 'package:responsive_builder/responsive_builder.dart';
 import 'package:tlwr_frontend/application/project/project_bloc.dart';
 import 'package:tlwr_frontend/domain/project/project.dart';
 import 'package:tlwr_frontend/presentation/dashboard/widgets/project_form.dart';
+import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/shared/colors.dart';
 import 'package:tlwr_frontend/presentation/shared/tlwr_ui/tlwr_button.dart';
 import 'package:tlwr_frontend/presentation/shared/tlwr_ui/tlwr_input.dart';
@@ -137,6 +138,17 @@ class ProjectList extends HookWidget {
                           return Card(
                             margin: const EdgeInsets.only(bottom: 10),
                             child: ListTile(
+                              onTap: () {
+                                context.beamToNamed(
+                                  RouteNames.getPath(
+                                    RouteNames.dashboardWithProjectId
+                                        .replaceAll(
+                                      RouteNames.paramProjectId,
+                                      projectId,
+                                    ),
+                                  ),
+                                );
+                              },
                               title: Row(
                                 children: [
                                   Expanded(child: Text(project.name ?? '')),

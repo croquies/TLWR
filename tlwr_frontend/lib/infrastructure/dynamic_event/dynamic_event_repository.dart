@@ -17,17 +17,14 @@ class DynamicEventRepository implements IDynamicEventRepository {
 
   @override
   Future<Either<Failure, List<DynamicEvent>>> list(String projectId) async {
-    _logger.d('list');
+    _logger.d('[DynamicEventRepository] list $projectId');
     try {
       final response = await _supabase.client
           .from(tableName)
           .select()
-          .filter(
-            'project_id',
-            'eq',
-            projectId,
-          )
+          .eq('project_id', projectId)
           .execute();
+
       if (response.error != null) {
         return left(
           Failure.errorWithMessage(
@@ -36,10 +33,24 @@ class DynamicEventRepository implements IDynamicEventRepository {
         );
       } else {
         final json = response.data as List<dynamic>;
-        return right(json.map((item) => DynamicEvent.fromJson(item)).toList());
+        final filtered = json
+            .where((item) {
+              try {
+                DynamicEvent.fromJson(item);
+                return true;
+              } catch (e) {
+                _logger.e('${e.toString()} $item');
+                return false;
+              }
+            })
+            .map((e) => DynamicEvent.fromJson(e))
+            .toList();
+        _logger.d(
+            '[DynamicEventRepository] ${json.length}, ${filtered.length} $filtered');
+        return right(filtered);
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[DynamicEventRepository] ${e.toString()}');
       return left(Failure.errorWithMessage(message: e.toString()));
     }
   }

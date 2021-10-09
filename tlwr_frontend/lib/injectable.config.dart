@@ -12,6 +12,8 @@ import 'package:supabase_flutter/supabase_flutter.dart' as _i4;
 import 'application/auth/auth_bloc.dart' as _i15;
 import 'application/auth/auth_form/auth_form_bloc.dart' as _i16;
 import 'application/dynamic_event/cubit/get_dynamic_event_cubit.dart' as _i17;
+import 'application/page_node/get_page_node/cubit/get_page_node_cubit.dart'
+    as _i18;
 import 'application/project/project_bloc.dart' as _i13;
 import 'application/project/project_form/project_form_bloc.dart' as _i14;
 import 'domain/auth/i_user_repository.dart' as _i11;
@@ -22,7 +24,7 @@ import 'infrastructure/auth/user_repository.dart' as _i12;
 import 'infrastructure/dynamic_event/dynamic_event_repository.dart' as _i6;
 import 'infrastructure/page_node/page_node_repository.dart' as _i8;
 import 'infrastructure/project/project_repository.dart' as _i10;
-import 'modules.dart' as _i18; // ignore_for_file: unnecessary_lambdas
+import 'modules.dart' as _i19; // ignore_for_file: unnecessary_lambdas
 
 // ignore_for_file: lines_longer_than_80_chars
 /// initializes the registration of provided dependencies inside of [GetIt]
@@ -51,9 +53,11 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       () => _i16.AuthFormBloc(get<_i11.IUserRepository>()));
   gh.factory<_i17.GetDynamicEventCubit>(
       () => _i17.GetDynamicEventCubit(get<_i5.IDynamicEventRepository>()));
+  gh.factory<_i18.GetPageNodeCubit>(
+      () => _i18.GetPageNodeCubit(get<_i7.IPageNodeRepository>()));
   return get;
 }
 
-class _$LoggerModule extends _i18.LoggerModule {}
+class _$LoggerModule extends _i19.LoggerModule {}
 
-class _$SupabaseModule extends _i18.SupabaseModule {}
+class _$SupabaseModule extends _i19.SupabaseModule {}

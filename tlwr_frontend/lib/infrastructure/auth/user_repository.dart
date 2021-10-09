@@ -16,14 +16,16 @@ class UserRepository implements IUserRepository {
 
   @override
   Future<void> signOut() async {
-    _logger.d('signOut');
+    _logger.d('[UserRepository] signOut');
     await _supabase.client.auth.signOut();
-    _logger.d(_supabase.client.auth.session()?.toJson());
+    _logger.d('[UserRepository] signOut '
+        '${_supabase.client.auth.session()?.toJson()}');
   }
 
   @override
   Future<Option<User>> getSignedInUser() async {
-    _logger.d('getSignedInUser ${_supabase.client.auth.currentUser?.toJson()}');
+    _logger.d('[UserRepository] getSignedInUser '
+        '${_supabase.client.auth.currentUser?.toJson()}');
     final currentUser = _supabase.client.auth.currentUser;
     return optionOf(
       currentUser != null ? User.fromJson(currentUser.toJson()) : null,
@@ -35,13 +37,13 @@ class UserRepository implements IUserRepository {
     required String email,
     required String password,
   }) async {
-    _logger.d('signUpWithEmailAndPassword');
+    _logger.d('[UserRepository] signUpWithEmailAndPassword');
     try {
       final response = await _supabase.client.auth.signUp(
         email,
         password,
       );
-      _logger.d(response.data);
+      _logger.d('[UserRepository] ${response.data}');
       if (response.error != null) {
         return left(
             AuthFailure.errorWithMessage(response.error?.message ?? ''));
@@ -49,7 +51,7 @@ class UserRepository implements IUserRepository {
         return right(unit);
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[UserRepository] ${e.toString()}');
       return left(const AuthFailure.serverError());
     }
   }
@@ -57,13 +59,13 @@ class UserRepository implements IUserRepository {
   @override
   Future<Either<AuthFailure, Unit>> signInWithEmailAndPassword(
       {required String email, required String password}) async {
-    _logger.d('signInWithEmailAndPassword');
+    _logger.d('[UserRepository] signInWithEmailAndPassword');
     try {
       final response = await _supabase.client.auth.signIn(
         email: email,
         password: password,
       );
-      _logger.d('signInWithEmailAndPassword - user: '
+      _logger.d('[UserRepository] signInWithEmailAndPassword - user: '
           '${response.data?.user?.toJson()}');
       if (response.error != null) {
         return left(
@@ -74,14 +76,14 @@ class UserRepository implements IUserRepository {
         return right(unit);
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[UserRepository] ${e.toString()}');
       return left(const AuthFailure.serverError());
     }
   }
 
   @override
   Future<Either<AuthFailure, Unit>> signInWithGithub() async {
-    _logger.d('signInWithGithub');
+    _logger.d('[UserRepository] signInWithGithub');
     return left(const AuthFailure.serverError());
   }
 }

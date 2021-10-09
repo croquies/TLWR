@@ -18,7 +18,8 @@ class RouteNames {
 
   static const String dashboard = 'dashboard';
 
-  static const String dashboardWithProjectId = 'dashboard/:projectId';
+  static const String paramProjectId = ':projectId';
+  static const String dashboardWithProjectId = 'dashboard/$paramProjectId';
 
   static final List<String> nonAuthRoutes = [
     getPath(home),

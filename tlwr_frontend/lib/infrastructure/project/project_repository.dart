@@ -18,28 +18,28 @@ class ProjectRepository implements IProjectRepository {
 
   @override
   Future<Either<ProjectFailure, List<Project>>> list() async {
-    _logger.d('list');
+    _logger.d('[ProjectRepository] list');
     try {
       final response =
           await _supabase.client.from(tableName).select().execute();
       if (response.error != null) {
-        _logger.e(response.error);
+        _logger.e('[ProjectRepository] ${response.error}');
         return left(
             ProjectFailure.errorWithMessage(response.error?.message ?? ''));
       } else {
-        _logger.d(response.data);
+        _logger.d('[ProjectRepository] ${response.data}');
         final json = response.data as List<dynamic>;
         return right(json.map((item) => Project.fromJson(item)).toList());
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[ProjectRepository] ${e.toString()}');
       return left(const ProjectFailure.unexpected());
     }
   }
 
   @override
   Future<Either<ProjectFailure, Unit>> create(Project project) async {
-    _logger.d('create ${project.toJson()}');
+    _logger.d('[ProjectRepository] create ${project.toJson()}');
     try {
       final projectJson = project.toJson()
         ..removeWhere((key, value) => value == null);
@@ -47,22 +47,22 @@ class ProjectRepository implements IProjectRepository {
       final response =
           await _supabase.client.from(tableName).insert(projectJson).execute();
       if (response.error != null) {
-        _logger.e(response.error);
+        _logger.e('[ProjectRepository] ${response.error}');
         return left(
             ProjectFailure.errorWithMessage(response.error?.message ?? ''));
       } else {
-        _logger.d(response.data);
+        _logger.d('[ProjectRepository] ${response.data}');
         return right(unit);
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[ProjectRepository] ${e.toString()}');
       return left(const ProjectFailure.unexpected());
     }
   }
 
   @override
   Future<Either<ProjectFailure, Unit>> delete(Project project) async {
-    _logger.d('delete ${project.toJson()}');
+    _logger.d('[ProjectRepository] delete ${project.toJson()}');
     try {
       final response = await _supabase.client
           .from(tableName)
@@ -70,22 +70,22 @@ class ProjectRepository implements IProjectRepository {
           .eq('id', project.id)
           .execute();
       if (response.error != null) {
-        _logger.e(response.error);
+        _logger.e('[ProjectRepository] ${response.error}');
         return left(
             ProjectFailure.errorWithMessage(response.error?.message ?? ''));
       } else {
-        _logger.d(response.data);
+        _logger.d('[ProjectRepository] ${response.data}');
         return right(unit);
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[ProjectRepository] ${e.toString()}');
       return left(const ProjectFailure.unexpected());
     }
   }
 
   @override
   Future<Either<ProjectFailure, Unit>> update(Project project) async {
-    _logger.d('update ${project.toJson()}');
+    _logger.d('[ProjectRepository] update ${project.toJson()}');
     try {
       final projectJson = project.toJson()
         ..removeWhere((key, value) => value == null);
@@ -96,15 +96,15 @@ class ProjectRepository implements IProjectRepository {
           .eq('id', project.id)
           .execute();
       if (response.error != null) {
-        _logger.e(response.error);
+        _logger.e('[ProjectRepository] ${response.error}');
         return left(
             ProjectFailure.errorWithMessage(response.error?.message ?? ''));
       } else {
-        _logger.d(response.data);
+        _logger.d('[ProjectRepository] ${response.data}');
         return right(unit);
       }
     } catch (e) {
-      _logger.e(e.toString());
+      _logger.e('[ProjectRepository] ${e.toString()}');
       return left(const ProjectFailure.unexpected());
     }
   }

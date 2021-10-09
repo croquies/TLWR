@@ -173,7 +173,6 @@ class TLWRMenuDesktop extends HookWidget {
       if (currentPath.contains(menus[i].routeName) &&
           selectedIndex.value != i) {
         selectedIndex.value = i;
-        getIt<Logger>().d('selectedIndex: $i');
       }
     }
 
@@ -232,7 +231,6 @@ class TLWRMenu extends StatelessWidget {
             tablet: TLWRMenuDesktop(
               menus: state.maybeWhen(
                 authenticated: (_) {
-                  getIt<Logger>().d('[TLWRMenu] authenticated');
                   return [
                     ...menus
                         .where((e) => [RouteType.auth, RouteType.both]
@@ -241,7 +239,6 @@ class TLWRMenu extends StatelessWidget {
                   ];
                 },
                 orElse: () {
-                  getIt<Logger>().d('[TLWRMenu] unauthenticated');
                   return [
                     ...menus
                         .where((e) => [RouteType.nonAuth, RouteType.both]

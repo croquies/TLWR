@@ -22,19 +22,16 @@ class RootLocation extends BeamLocation {
 
   @override
   List<BeamPage> buildPages(BuildContext context, BeamState state) {
-    getIt<Logger>().d('[RootLocation] ${state.pathBlueprintSegments}');
-    return [
+    getIt<Logger>().d(
+      '[RootLocation] segments: ${state.pathBlueprintSegments}, '
+      'parameters: ${state.pathParameters}',
+    );
+    final pages = [
       if (state.uri.pathSegments.contains(RouteNames.home))
         BeamPage(
           key: const ValueKey(RouteNames.home),
           title: RouteNames.home,
           child: const HomePage(),
-        ),
-      if (state.uri.pathSegments.contains(RouteNames.dashboard))
-        BeamPage(
-          key: const ValueKey(RouteNames.dashboard),
-          title: RouteNames.dashboard,
-          child: const DashboardPage(),
         ),
       if (state.uri.pathSegments.contains(RouteNames.signIn))
         BeamPage(
@@ -48,14 +45,24 @@ class RootLocation extends BeamLocation {
           title: RouteNames.signUp,
           child: const SignUpPage(),
         ),
-      if (state.uri.pathSegments.contains(RouteNames.dashboardWithProjectId))
+      if (state.uri.pathSegments.contains(RouteNames.dashboard))
         BeamPage(
-          key: const ValueKey(RouteNames.dashboardWithProjectId),
+          key: const ValueKey(RouteNames.dashboard),
+          title: RouteNames.dashboard,
+          child: const DashboardPage(),
+        ),
+      if (state.uri.pathSegments.contains(RouteNames.dashboard) &&
+          state.pathParameters['projectId'] != null)
+        BeamPage(
+          key: ValueKey(
+              '${RouteNames.dashboard}-${state.pathParameters['projectId']}'),
           title: RouteNames.dashboardWithProjectId,
           child: ProjectDetailPage(
             projectId: state.pathParameters['projectId']!,
           ),
         ),
     ];
+    getIt<Logger>().d('[RootLocation] pages: $pages');
+    return pages;
   }
 }
