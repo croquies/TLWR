@@ -1,7 +1,13 @@
 tlwr_analytics/.fvm/flutter_sdk
 tlwr_frontend/.fvm/flutter_sdk
+tlwr_analytics/tlwr_generator/example/android/*
+tlwr_analytics/tlwr_generator/example/ios/*
+tlwr_backend/node_modules/*
 node_modules
 logs
 build
 .env
 .env.local
+.vscode/settings.json
+tlwr_frontend/.fvm/fvm_config.json
+tlwr_frontend/.fvm/fvm_config.json
