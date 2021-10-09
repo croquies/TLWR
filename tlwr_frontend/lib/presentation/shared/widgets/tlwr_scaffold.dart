@@ -71,12 +71,13 @@ class TLWRScaffold extends HookWidget {
               child: Column(
                 children: [
                   TLWRMenu(menus: menus),
-                  if (isLoading || signOut.value)
-                    const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  else
-                    Expanded(child: child),
+                  Expanded(
+                    child: (isLoading || signOut.value)
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : child,
+                  ),
                 ],
               ),
             ),
