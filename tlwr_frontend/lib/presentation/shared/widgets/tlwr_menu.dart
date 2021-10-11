@@ -58,11 +58,19 @@ class TLWRMenuLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.only(left: 15),
-      child: Image(
-        image: AssetImage(Images.logo),
-        height: 50,
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(
+        onTap: () {
+          context.beamToNamed(RouteNames.getPath(RouteNames.home));
+        },
+        child: const Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: Image(
+            image: AssetImage(Images.logo),
+            height: 50,
+          ),
+        ),
       ),
     );
   }
