@@ -171,7 +171,7 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
                             padding: const EdgeInsets.only(top: 20),
                             child: TLWRButton(
                               title: 'Sign In with Demo Account',
-                              loading: state.isSubmitting,
+                              loading: state.isSubmitting && isDemoLogin.value,
                               onTap: () {
                                 isDemoLogin.value = true;
                                 FocusScope.of(context).unfocus();
