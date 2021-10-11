@@ -36,7 +36,7 @@ class HomeContents extends StatelessWidget {
                   ),
                 ),
                 verticalHeight3,
-                Image.asset(Images.tlwrImage),
+                Image.asset(Images.logo),
                 verticalHeight1,
                 const SecondaryTitle('Problem We tried to Solve'),
                 const Paragraph(
