@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
 import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/shared/widgets/tlwr_menu.dart';
@@ -60,7 +61,15 @@ class TLWRScaffold extends HookWidget {
                 callback: () {
                   signOut.value = true;
                   context.read<AuthBloc>().add(const AuthEvent.signedOut());
-                  context.beamToNamed(RouteNames.home);
+                  // Beamer.of(context).clearBeamStateHistory();
+                  // Beamer.of(context).clearBeamLocationHistory();
+                  if (getValueForScreenType(
+                      context: context, mobile: true, tablet: false)) {
+                    Navigator.pop(context);
+                  }
+                  context.beamToNamed(
+                    RouteNames.getPath(RouteNames.home),
+                  );
                   signOut.value = false;
                 },
               ),
