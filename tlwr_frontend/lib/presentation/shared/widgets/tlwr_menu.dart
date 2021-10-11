@@ -148,12 +148,21 @@ class TLWRMenuItem extends HookWidget {
   }
 }
 
-class TLWRMenuMobile extends StatelessWidget {
-  final List<TLWRMenuData> menus;
+class TLWRMenuMobile extends HookWidget {
   const TLWRMenuMobile(this.menus, {Key? key}) : super(key: key);
+  final List<TLWRMenuData> menus;
 
   @override
   Widget build(BuildContext context) {
+    final selectedIndex = useState(0);
+    final currentPath = context.currentBeamLocation.state.pathBlueprintSegments;
+    for (var i = 0; i < menus.length; i++) {
+      if (currentPath.contains(menus[i].routeName) &&
+          selectedIndex.value != i) {
+        selectedIndex.value = i;
+      }
+    }
+
     return SizedBox(
       height: 80,
       child: Row(
@@ -161,7 +170,7 @@ class TLWRMenuMobile extends StatelessWidget {
         children: <Widget>[
           const TLWRMenuLogo(),
           Padding(
-            padding: const EdgeInsets.only(right: 20.0),
+            padding: const EdgeInsets.only(right: 20),
             child: IconButton(
               icon: const Icon(
                 Icons.menu,
@@ -177,7 +186,7 @@ class TLWRMenuMobile extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: TLWRMenuItem(
                           item: menus[index],
-                          selected: false,
+                          selected: index == selectedIndex.value,
                           onPressed: () {
                             final menu = menus[index];
                             final callback = menu.callback;
@@ -332,55 +341,25 @@ class _SelectActionBottomSheetState extends State<SelectActionBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: GestureDetector(
-            onTap: _close,
-            child: Container(),
-          ),
+    return Container(
+      // height: 50 * (widget.children.length + 1) + 30,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(12),
+          topRight: Radius.circular(12),
         ),
-        Container(
-          // height: 50 * (widget.children.length + 1) + 30,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
-            ),
-            color: Colors.white.withOpacity(0.9),
+        color: kcBlackHighlightColor.withOpacity(0.6),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: const [Expanded(child: SizedBox())],
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: const [Expanded(child: SizedBox())],
-              ),
-              ...widget.children,
-              // Expanded(
-              //   child: Row(
-              //     children: [
-              //       Expanded(
-              //         child: InkWell(
-              //           onTap: _close,
-              //           child: Container(
-              //             child: const Center(
-              //               child: Text(
-              //                 'Close',
-              //                 style: TextStyle(
-              //                     color: kcLightGreyColor, fontSize: 20),
-              //               ),
-              //             ),
-              //           ),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
-            ],
-          ),
-        ),
-      ],
+          ...widget.children,
+        ],
+      ),
     );
   }
 
