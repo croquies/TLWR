@@ -262,7 +262,26 @@ class TLWRMenu extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return ScreenTypeLayout(
-            mobile: TLWRMenuMobile(menus),
+            mobile: TLWRMenuMobile(
+              state.maybeWhen(
+                authenticated: (_) {
+                  return [
+                    ...menus
+                        .where((e) => [RouteType.auth, RouteType.both]
+                            .contains(e.routeType))
+                        .toList(),
+                  ];
+                },
+                orElse: () {
+                  return [
+                    ...menus
+                        .where((e) => [RouteType.nonAuth, RouteType.both]
+                            .contains(e.routeType))
+                        .toList(),
+                  ];
+                },
+              ),
+            ),
             tablet: TLWRMenuDesktop(
               menus: state.maybeWhen(
                 authenticated: (_) {
@@ -308,7 +327,7 @@ class _SelectActionBottomSheetState extends State<SelectActionBottomSheet> {
     return Column(
       children: [
         Expanded(
-            child: InkWell(
+            child: GestureDetector(
           onTap: () => _close(),
           child: Container(),
         )),
