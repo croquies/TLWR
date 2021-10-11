@@ -141,7 +141,8 @@ class TLWRMenuItem extends HookWidget {
 }
 
 class TLWRMenuMobile extends StatelessWidget {
-  const TLWRMenuMobile({Key? key}) : super(key: key);
+  final List<TLWRMenuData> menus;
+  const TLWRMenuMobile(this.menus, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -151,9 +152,43 @@ class TLWRMenuMobile extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           const TLWRMenuLogo(),
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () {},
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: IconButton(
+              icon: const Icon(
+                Icons.menu,
+                color: kcPrimaryColor,
+              ),
+              onPressed: () {
+                showModalBottomSheet(
+                  context: context,
+                  builder: (context) => SelectActionBottomSheet(
+                    children: List.generate(
+                      menus.length,
+                      (index) => Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
+                        child: TLWRMenuItem(
+                          item: menus[index],
+                          selected: false,
+                          onPressed: () {
+                            final menu = menus[index];
+                            final callback = menu.callback;
+                            if (callback != null) {
+                              callback();
+                            } else {
+                              if (menu.routeName.isNotEmpty) {
+                                context.beamToNamed(
+                                    RouteNames.getPath(menu.routeName));
+                              }
+                            }
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -227,7 +262,7 @@ class TLWRMenu extends StatelessWidget {
         listener: (context, state) {},
         builder: (context, state) {
           return ScreenTypeLayout(
-            mobile: const TLWRMenuMobile(),
+            mobile: TLWRMenuMobile(menus),
             tablet: TLWRMenuDesktop(
               menus: state.maybeWhen(
                 authenticated: (_) {
@@ -250,5 +285,81 @@ class TLWRMenu extends StatelessWidget {
             ),
           ); // return widget here based on BlocA's state
         });
+  }
+}
+
+class SelectActionBottomSheet extends StatefulWidget {
+  const SelectActionBottomSheet({
+    Key? key,
+    required this.children,
+  }) : super(key: key);
+  final List<Widget> children;
+
+  @override
+  State<SelectActionBottomSheet> createState() =>
+      _SelectActionBottomSheetState();
+}
+
+class _SelectActionBottomSheetState extends State<SelectActionBottomSheet> {
+  bool _isClosing = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Expanded(
+            child: InkWell(
+          onTap: () => _close(),
+          child: Container(),
+        )),
+        Container(
+          // height: 50 * (widget.children.length + 1) + 30,
+          decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+            ),
+            color: Colors.white.withOpacity(0.9),
+          ),
+          child: Column(
+            children: [
+              Row(
+                children: const [Expanded(child: SizedBox())],
+              ),
+              ...widget.children,
+              // Expanded(
+              //   child: Row(
+              //     children: [
+              //       Expanded(
+              //         child: InkWell(
+              //           onTap: _close,
+              //           child: Container(
+              //             child: const Center(
+              //               child: Text(
+              //                 'Close',
+              //                 style: TextStyle(
+              //                     color: kcLightGreyColor, fontSize: 20),
+              //               ),
+              //             ),
+              //           ),
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _close() {
+    if (!_isClosing) {
+      Navigator.of(context).pop();
+      setState(() {
+        _isClosing = true;
+      });
+    }
   }
 }

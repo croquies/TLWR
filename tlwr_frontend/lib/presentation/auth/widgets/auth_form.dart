@@ -138,6 +138,22 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
                         }
                       },
                     ),
+                    if (!signUp)
+                      Padding(
+                        padding: const EdgeInsets.only(top: 20.0),
+                        child: TLWRButton(
+                          title: 'Sign In with Demo Account',
+                          loading: state.isSubmitting,
+                          onTap: () {
+                            FocusScope.of(context).unfocus();
+                            {
+                              context
+                                  .read<AuthFormBloc>()
+                                  .add(const AuthFormEvent.signInWithDemo());
+                            }
+                          },
+                        ),
+                      ),
                     const SizedBox(height: 70),
                   ],
                 ),

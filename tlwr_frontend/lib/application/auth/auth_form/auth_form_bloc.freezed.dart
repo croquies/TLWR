@@ -46,6 +46,10 @@ class _$AuthFormEventTearOff {
   SignInWithGithubPressed signInWithGithubPressed() {
     return const SignInWithGithubPressed();
   }
+
+  SignInWithDemo signInWithDemo() {
+    return const SignInWithDemo();
+  }
 }
 
 /// @nodoc
@@ -61,6 +65,7 @@ mixin _$AuthFormEvent {
     required TResult Function() signUpWithEmailAndPasswordPressed,
     required TResult Function() signInWithEmailAndPasswordPressed,
     required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -71,6 +76,7 @@ mixin _$AuthFormEvent {
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -81,6 +87,7 @@ mixin _$AuthFormEvent {
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -96,6 +103,7 @@ mixin _$AuthFormEvent {
         signInWithEmailAndPasswordPressed,
     required TResult Function(SignInWithGithubPressed value)
         signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -108,6 +116,7 @@ mixin _$AuthFormEvent {
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -120,6 +129,7 @@ mixin _$AuthFormEvent {
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -220,6 +230,7 @@ class _$EmailChanged with DiagnosticableTreeMixin implements EmailChanged {
     required TResult Function() signUpWithEmailAndPasswordPressed,
     required TResult Function() signInWithEmailAndPasswordPressed,
     required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
   }) {
     return emailChanged(email);
   }
@@ -233,6 +244,7 @@ class _$EmailChanged with DiagnosticableTreeMixin implements EmailChanged {
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
   }) {
     return emailChanged?.call(email);
   }
@@ -246,6 +258,7 @@ class _$EmailChanged with DiagnosticableTreeMixin implements EmailChanged {
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -267,6 +280,7 @@ class _$EmailChanged with DiagnosticableTreeMixin implements EmailChanged {
         signInWithEmailAndPasswordPressed,
     required TResult Function(SignInWithGithubPressed value)
         signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
   }) {
     return emailChanged(this);
   }
@@ -282,6 +296,7 @@ class _$EmailChanged with DiagnosticableTreeMixin implements EmailChanged {
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
   }) {
     return emailChanged?.call(this);
   }
@@ -297,6 +312,7 @@ class _$EmailChanged with DiagnosticableTreeMixin implements EmailChanged {
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
     required TResult orElse(),
   }) {
     if (emailChanged != null) {
@@ -397,6 +413,7 @@ class _$PasswordChanged
     required TResult Function() signUpWithEmailAndPasswordPressed,
     required TResult Function() signInWithEmailAndPasswordPressed,
     required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
   }) {
     return passwordChanged(password);
   }
@@ -410,6 +427,7 @@ class _$PasswordChanged
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
   }) {
     return passwordChanged?.call(password);
   }
@@ -423,6 +441,7 @@ class _$PasswordChanged
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -444,6 +463,7 @@ class _$PasswordChanged
         signInWithEmailAndPasswordPressed,
     required TResult Function(SignInWithGithubPressed value)
         signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
   }) {
     return passwordChanged(this);
   }
@@ -459,6 +479,7 @@ class _$PasswordChanged
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
   }) {
     return passwordChanged?.call(this);
   }
@@ -474,6 +495,7 @@ class _$PasswordChanged
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
     required TResult orElse(),
   }) {
     if (passwordChanged != null) {
@@ -576,6 +598,7 @@ class _$ConfirmPasswordChanged
     required TResult Function() signUpWithEmailAndPasswordPressed,
     required TResult Function() signInWithEmailAndPasswordPressed,
     required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
   }) {
     return confirmPasswordChanged(confirmPassword);
   }
@@ -589,6 +612,7 @@ class _$ConfirmPasswordChanged
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
   }) {
     return confirmPasswordChanged?.call(confirmPassword);
   }
@@ -602,6 +626,7 @@ class _$ConfirmPasswordChanged
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
     required TResult orElse(),
   }) {
     if (confirmPasswordChanged != null) {
@@ -623,6 +648,7 @@ class _$ConfirmPasswordChanged
         signInWithEmailAndPasswordPressed,
     required TResult Function(SignInWithGithubPressed value)
         signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
   }) {
     return confirmPasswordChanged(this);
   }
@@ -638,6 +664,7 @@ class _$ConfirmPasswordChanged
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
   }) {
     return confirmPasswordChanged?.call(this);
   }
@@ -653,6 +680,7 @@ class _$ConfirmPasswordChanged
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
     required TResult orElse(),
   }) {
     if (confirmPasswordChanged != null) {
@@ -732,6 +760,7 @@ class _$SignUpWithEmailAndPasswordPressed
     required TResult Function() signUpWithEmailAndPasswordPressed,
     required TResult Function() signInWithEmailAndPasswordPressed,
     required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
   }) {
     return signUpWithEmailAndPasswordPressed();
   }
@@ -745,6 +774,7 @@ class _$SignUpWithEmailAndPasswordPressed
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
   }) {
     return signUpWithEmailAndPasswordPressed?.call();
   }
@@ -758,6 +788,7 @@ class _$SignUpWithEmailAndPasswordPressed
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
     required TResult orElse(),
   }) {
     if (signUpWithEmailAndPasswordPressed != null) {
@@ -779,6 +810,7 @@ class _$SignUpWithEmailAndPasswordPressed
         signInWithEmailAndPasswordPressed,
     required TResult Function(SignInWithGithubPressed value)
         signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
   }) {
     return signUpWithEmailAndPasswordPressed(this);
   }
@@ -794,6 +826,7 @@ class _$SignUpWithEmailAndPasswordPressed
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
   }) {
     return signUpWithEmailAndPasswordPressed?.call(this);
   }
@@ -809,6 +842,7 @@ class _$SignUpWithEmailAndPasswordPressed
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
     required TResult orElse(),
   }) {
     if (signUpWithEmailAndPasswordPressed != null) {
@@ -883,6 +917,7 @@ class _$SignInWithEmailAndPasswordPressed
     required TResult Function() signUpWithEmailAndPasswordPressed,
     required TResult Function() signInWithEmailAndPasswordPressed,
     required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
   }) {
     return signInWithEmailAndPasswordPressed();
   }
@@ -896,6 +931,7 @@ class _$SignInWithEmailAndPasswordPressed
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
   }) {
     return signInWithEmailAndPasswordPressed?.call();
   }
@@ -909,6 +945,7 @@ class _$SignInWithEmailAndPasswordPressed
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
     required TResult orElse(),
   }) {
     if (signInWithEmailAndPasswordPressed != null) {
@@ -930,6 +967,7 @@ class _$SignInWithEmailAndPasswordPressed
         signInWithEmailAndPasswordPressed,
     required TResult Function(SignInWithGithubPressed value)
         signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
   }) {
     return signInWithEmailAndPasswordPressed(this);
   }
@@ -945,6 +983,7 @@ class _$SignInWithEmailAndPasswordPressed
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
   }) {
     return signInWithEmailAndPasswordPressed?.call(this);
   }
@@ -960,6 +999,7 @@ class _$SignInWithEmailAndPasswordPressed
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
     required TResult orElse(),
   }) {
     if (signInWithEmailAndPasswordPressed != null) {
@@ -1030,6 +1070,7 @@ class _$SignInWithGithubPressed
     required TResult Function() signUpWithEmailAndPasswordPressed,
     required TResult Function() signInWithEmailAndPasswordPressed,
     required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
   }) {
     return signInWithGithubPressed();
   }
@@ -1043,6 +1084,7 @@ class _$SignInWithGithubPressed
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
   }) {
     return signInWithGithubPressed?.call();
   }
@@ -1056,6 +1098,7 @@ class _$SignInWithGithubPressed
     TResult Function()? signUpWithEmailAndPasswordPressed,
     TResult Function()? signInWithEmailAndPasswordPressed,
     TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
     required TResult orElse(),
   }) {
     if (signInWithGithubPressed != null) {
@@ -1077,6 +1120,7 @@ class _$SignInWithGithubPressed
         signInWithEmailAndPasswordPressed,
     required TResult Function(SignInWithGithubPressed value)
         signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
   }) {
     return signInWithGithubPressed(this);
   }
@@ -1092,6 +1136,7 @@ class _$SignInWithGithubPressed
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
   }) {
     return signInWithGithubPressed?.call(this);
   }
@@ -1107,6 +1152,7 @@ class _$SignInWithGithubPressed
     TResult Function(SignInWithEmailAndPasswordPressed value)?
         signInWithEmailAndPasswordPressed,
     TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
     required TResult orElse(),
   }) {
     if (signInWithGithubPressed != null) {
@@ -1118,6 +1164,155 @@ class _$SignInWithGithubPressed
 
 abstract class SignInWithGithubPressed implements AuthFormEvent {
   const factory SignInWithGithubPressed() = _$SignInWithGithubPressed;
+}
+
+/// @nodoc
+abstract class $SignInWithDemoCopyWith<$Res> {
+  factory $SignInWithDemoCopyWith(
+          SignInWithDemo value, $Res Function(SignInWithDemo) then) =
+      _$SignInWithDemoCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class _$SignInWithDemoCopyWithImpl<$Res>
+    extends _$AuthFormEventCopyWithImpl<$Res>
+    implements $SignInWithDemoCopyWith<$Res> {
+  _$SignInWithDemoCopyWithImpl(
+      SignInWithDemo _value, $Res Function(SignInWithDemo) _then)
+      : super(_value, (v) => _then(v as SignInWithDemo));
+
+  @override
+  SignInWithDemo get _value => super._value as SignInWithDemo;
+}
+
+/// @nodoc
+
+class _$SignInWithDemo with DiagnosticableTreeMixin implements SignInWithDemo {
+  const _$SignInWithDemo();
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'AuthFormEvent.signInWithDemo()';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'AuthFormEvent.signInWithDemo'));
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is SignInWithDemo);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String? email) emailChanged,
+    required TResult Function(String? password) passwordChanged,
+    required TResult Function(String? confirmPassword) confirmPasswordChanged,
+    required TResult Function() signUpWithEmailAndPasswordPressed,
+    required TResult Function() signInWithEmailAndPasswordPressed,
+    required TResult Function() signInWithGithubPressed,
+    required TResult Function() signInWithDemo,
+  }) {
+    return signInWithDemo();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String? email)? emailChanged,
+    TResult Function(String? password)? passwordChanged,
+    TResult Function(String? confirmPassword)? confirmPasswordChanged,
+    TResult Function()? signUpWithEmailAndPasswordPressed,
+    TResult Function()? signInWithEmailAndPasswordPressed,
+    TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
+  }) {
+    return signInWithDemo?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String? email)? emailChanged,
+    TResult Function(String? password)? passwordChanged,
+    TResult Function(String? confirmPassword)? confirmPasswordChanged,
+    TResult Function()? signUpWithEmailAndPasswordPressed,
+    TResult Function()? signInWithEmailAndPasswordPressed,
+    TResult Function()? signInWithGithubPressed,
+    TResult Function()? signInWithDemo,
+    required TResult orElse(),
+  }) {
+    if (signInWithDemo != null) {
+      return signInWithDemo();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(EmailChanged value) emailChanged,
+    required TResult Function(PasswordChanged value) passwordChanged,
+    required TResult Function(ConfirmPasswordChanged value)
+        confirmPasswordChanged,
+    required TResult Function(SignUpWithEmailAndPasswordPressed value)
+        signUpWithEmailAndPasswordPressed,
+    required TResult Function(SignInWithEmailAndPasswordPressed value)
+        signInWithEmailAndPasswordPressed,
+    required TResult Function(SignInWithGithubPressed value)
+        signInWithGithubPressed,
+    required TResult Function(SignInWithDemo value) signInWithDemo,
+  }) {
+    return signInWithDemo(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(EmailChanged value)? emailChanged,
+    TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(ConfirmPasswordChanged value)? confirmPasswordChanged,
+    TResult Function(SignUpWithEmailAndPasswordPressed value)?
+        signUpWithEmailAndPasswordPressed,
+    TResult Function(SignInWithEmailAndPasswordPressed value)?
+        signInWithEmailAndPasswordPressed,
+    TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
+  }) {
+    return signInWithDemo?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(EmailChanged value)? emailChanged,
+    TResult Function(PasswordChanged value)? passwordChanged,
+    TResult Function(ConfirmPasswordChanged value)? confirmPasswordChanged,
+    TResult Function(SignUpWithEmailAndPasswordPressed value)?
+        signUpWithEmailAndPasswordPressed,
+    TResult Function(SignInWithEmailAndPasswordPressed value)?
+        signInWithEmailAndPasswordPressed,
+    TResult Function(SignInWithGithubPressed value)? signInWithGithubPressed,
+    TResult Function(SignInWithDemo value)? signInWithDemo,
+    required TResult orElse(),
+  }) {
+    if (signInWithDemo != null) {
+      return signInWithDemo(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SignInWithDemo implements AuthFormEvent {
+  const factory SignInWithDemo() = _$SignInWithDemo;
 }
 
 /// @nodoc
