@@ -18,49 +18,21 @@ class TLWRAuthRequiredWidget extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isAuthenticated = useState(false);
     return BlocConsumer<AuthBloc, AuthState>(
       listener: (context, state) {
         state.maybeWhen(
           authenticated: (_) {
             getIt<Logger>().d('[TLWRAuthRequiredWidget] authenticated');
-            isAuthenticated.value = true;
           },
           orElse: () {
             getIt<Logger>().d('[TLWRAuthRequiredWidget] unauthenticated');
-            isAuthenticated.value = false;
             Future.microtask(() => context.beamToNamed(
                   RouteNames.getPath(RouteNames.signIn),
                 ));
           },
         );
       },
-      builder: isAuthenticated.value
-          ? builder
-          : (context, state) {
-              return TLWRScaffold(
-                child: Center(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 30),
-                      Text('Sign in is required.',
-                          style: Theme.of(context).textTheme.headline3),
-                      const SizedBox(height: 15),
-                      Container(
-                        constraints: const BoxConstraints(maxWidth: 500),
-                        child: TLWRButton(
-                          title: 'Go to sign in page',
-                          onTap: () {
-                            context.beamToNamed(
-                                RouteNames.getPath(RouteNames.signIn));
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            },
+      builder: builder,
     );
   }
 }
