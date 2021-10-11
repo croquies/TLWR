@@ -35,7 +35,7 @@ Supabase has been great hand for finishing this project in such a short period o
 
 The frontend web site visualizes the page network of a running flutter service based on how users often and long visited and routed to the other page.
 
-## How to user TLWR observer
+## How to use TLWR observer
 
 ```dart
 final _logger = TLWRLogger.initialize(id: PROJECT_ID);
