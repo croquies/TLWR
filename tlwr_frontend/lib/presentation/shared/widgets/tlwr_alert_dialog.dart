@@ -29,6 +29,14 @@ class TLWRAlertDialog extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
           ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              child: const Text('Close'),
+            ),
+          ],
         );
       },
     );

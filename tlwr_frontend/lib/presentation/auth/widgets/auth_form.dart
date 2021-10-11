@@ -26,10 +26,16 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
               showDialog(
                 context: context,
                 builder: (context) => TLWRAlertDialog(
+                  title: failure.map(
+                      errorWithMessage: (error) => 'Notice',
+                      emailIsNotConfirmed: (_) =>
+                          'Your sign-up is almost complete!',
+                      cancelledByUser: (_) => 'Please retry sign up',
+                      serverError: (_) => 'Server Error'),
                   description: failure.map(
                     errorWithMessage: (error) => error.message,
                     emailIsNotConfirmed: (_) =>
-                        'Please check your email to complete sign up process.',
+                        'Please check your email to complete sign-up process.',
                     cancelledByUser: (_) => 'Cancelled',
                     serverError: (_) => 'Server error',
                   ),
@@ -37,7 +43,20 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
               ).then((value) => context.read<AuthFormBloc>().clearPassword());
             },
             (_) {
-              context.beamToNamed(RouteNames.home);
+              if (signUp) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return const TLWRAlertDialog(
+                      title: 'Your sign-up is almost complete!',
+                      description:
+                          'Please check your email to complete sign-up process.',
+                    );
+                  },
+                );
+              }
+              Future.microtask(() =>
+                  context.beamToNamed(RouteNames.getPath(RouteNames.home)));
               context
                   .read<AuthBloc>()
                   .add(const AuthEvent.authCheckRequested());

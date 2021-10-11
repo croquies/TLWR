@@ -1323,6 +1323,7 @@ class _$AuthFormStateTearOff {
       {required String email,
       required String password,
       required String confirmPassword,
+      required String title,
       required String message,
       required bool showErrorMessages,
       required bool isSubmitting,
@@ -1331,6 +1332,7 @@ class _$AuthFormStateTearOff {
       email: email,
       password: password,
       confirmPassword: confirmPassword,
+      title: title,
       message: message,
       showErrorMessages: showErrorMessages,
       isSubmitting: isSubmitting,
@@ -1347,6 +1349,7 @@ mixin _$AuthFormState {
   String get email => throw _privateConstructorUsedError;
   String get password => throw _privateConstructorUsedError;
   String get confirmPassword => throw _privateConstructorUsedError;
+  String get title => throw _privateConstructorUsedError;
   String get message => throw _privateConstructorUsedError;
   bool get showErrorMessages => throw _privateConstructorUsedError;
   bool get isSubmitting => throw _privateConstructorUsedError;
@@ -1367,6 +1370,7 @@ abstract class $AuthFormStateCopyWith<$Res> {
       {String email,
       String password,
       String confirmPassword,
+      String title,
       String message,
       bool showErrorMessages,
       bool isSubmitting,
@@ -1387,6 +1391,7 @@ class _$AuthFormStateCopyWithImpl<$Res>
     Object? email = freezed,
     Object? password = freezed,
     Object? confirmPassword = freezed,
+    Object? title = freezed,
     Object? message = freezed,
     Object? showErrorMessages = freezed,
     Object? isSubmitting = freezed,
@@ -1404,6 +1409,10 @@ class _$AuthFormStateCopyWithImpl<$Res>
       confirmPassword: confirmPassword == freezed
           ? _value.confirmPassword
           : confirmPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       message: message == freezed
           ? _value.message
@@ -1436,6 +1445,7 @@ abstract class _$AuthFormStateCopyWith<$Res>
       {String email,
       String password,
       String confirmPassword,
+      String title,
       String message,
       bool showErrorMessages,
       bool isSubmitting,
@@ -1458,6 +1468,7 @@ class __$AuthFormStateCopyWithImpl<$Res>
     Object? email = freezed,
     Object? password = freezed,
     Object? confirmPassword = freezed,
+    Object? title = freezed,
     Object? message = freezed,
     Object? showErrorMessages = freezed,
     Object? isSubmitting = freezed,
@@ -1475,6 +1486,10 @@ class __$AuthFormStateCopyWithImpl<$Res>
       confirmPassword: confirmPassword == freezed
           ? _value.confirmPassword
           : confirmPassword // ignore: cast_nullable_to_non_nullable
+              as String,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
               as String,
       message: message == freezed
           ? _value.message
@@ -1503,6 +1518,7 @@ class _$_AuthFormState with DiagnosticableTreeMixin implements _AuthFormState {
       {required this.email,
       required this.password,
       required this.confirmPassword,
+      required this.title,
       required this.message,
       required this.showErrorMessages,
       required this.isSubmitting,
@@ -1515,6 +1531,8 @@ class _$_AuthFormState with DiagnosticableTreeMixin implements _AuthFormState {
   @override
   final String confirmPassword;
   @override
+  final String title;
+  @override
   final String message;
   @override
   final bool showErrorMessages;
@@ -1525,7 +1543,7 @@ class _$_AuthFormState with DiagnosticableTreeMixin implements _AuthFormState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthFormState(email: $email, password: $password, confirmPassword: $confirmPassword, message: $message, showErrorMessages: $showErrorMessages, isSubmitting: $isSubmitting, authFailureOrSuccessOption: $authFailureOrSuccessOption)';
+    return 'AuthFormState(email: $email, password: $password, confirmPassword: $confirmPassword, title: $title, message: $message, showErrorMessages: $showErrorMessages, isSubmitting: $isSubmitting, authFailureOrSuccessOption: $authFailureOrSuccessOption)';
   }
 
   @override
@@ -1536,6 +1554,7 @@ class _$_AuthFormState with DiagnosticableTreeMixin implements _AuthFormState {
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('password', password))
       ..add(DiagnosticsProperty('confirmPassword', confirmPassword))
+      ..add(DiagnosticsProperty('title', title))
       ..add(DiagnosticsProperty('message', message))
       ..add(DiagnosticsProperty('showErrorMessages', showErrorMessages))
       ..add(DiagnosticsProperty('isSubmitting', isSubmitting))
@@ -1555,6 +1574,8 @@ class _$_AuthFormState with DiagnosticableTreeMixin implements _AuthFormState {
             (identical(other.confirmPassword, confirmPassword) ||
                 const DeepCollectionEquality()
                     .equals(other.confirmPassword, confirmPassword)) &&
+            (identical(other.title, title) ||
+                const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.message, message) ||
                 const DeepCollectionEquality()
                     .equals(other.message, message)) &&
@@ -1577,6 +1598,7 @@ class _$_AuthFormState with DiagnosticableTreeMixin implements _AuthFormState {
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(password) ^
       const DeepCollectionEquality().hash(confirmPassword) ^
+      const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(message) ^
       const DeepCollectionEquality().hash(showErrorMessages) ^
       const DeepCollectionEquality().hash(isSubmitting) ^
@@ -1593,6 +1615,7 @@ abstract class _AuthFormState implements AuthFormState {
       {required String email,
       required String password,
       required String confirmPassword,
+      required String title,
       required String message,
       required bool showErrorMessages,
       required bool isSubmitting,
@@ -1605,6 +1628,8 @@ abstract class _AuthFormState implements AuthFormState {
   String get password => throw _privateConstructorUsedError;
   @override
   String get confirmPassword => throw _privateConstructorUsedError;
+  @override
+  String get title => throw _privateConstructorUsedError;
   @override
   String get message => throw _privateConstructorUsedError;
   @override

@@ -145,21 +145,22 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState>
       );
     }
 
-    var message = '';
-    if (signUp) {
-      optionOf(failureOrSuccess).fold(() {}, (either) {
-        either.fold((l) => null, (r) {
-          message = 'Congratulations!\n';
-          message += 'Your registration is almost complete.';
-          message += 'Please confirm your email address.';
-        });
-      });
-    }
+    // var title = '';
+    // var message = '';
+    // if (signUp) {
+    //   optionOf(failureOrSuccess).fold(() {}, (either) {
+    //     either.fold((l) => null, (r) {
+    //       title += 'Your registration is almost complete!';
+    //       message += 'Please check your email to complete sign-up process.';
+    //     });
+    //   });
+    // }
 
     yield state.copyWith(
       isSubmitting: false,
       showErrorMessages: true,
-      message: message,
+      // title: title,
+      // message: message,
       authFailureOrSuccessOption: optionOf(failureOrSuccess),
     );
   }
