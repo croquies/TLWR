@@ -58,7 +58,7 @@ class HomeContents extends StatelessWidget {
                 ),
                 const Paragraph(
                   // ignore: lines_longer_than_80_chars
-                  'This is a working site (https://tlwr.kkiri.app). Have a look around, we made the frontend as intuitive as possible to make it supa-easy for new users, and also prepared a demo account with pre-recorded routing behaviors.',
+                  'This is a working site (https://tlwr.netlify.app). Have a look around, we made the frontend as intuitive as possible to make it supa-easy for new users, and also prepared a demo account with pre-recorded routing behaviors.',
                 ),
                 const SecondaryTitle('The Team'),
                 const Paragraph(
