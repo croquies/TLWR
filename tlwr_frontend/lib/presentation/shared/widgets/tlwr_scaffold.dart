@@ -61,12 +61,6 @@ class TLWRScaffold extends HookWidget {
                 callback: () {
                   signOut.value = true;
                   context.read<AuthBloc>().add(const AuthEvent.signedOut());
-                  // Beamer.of(context).clearBeamStateHistory();
-                  // Beamer.of(context).clearBeamLocationHistory();
-                  if (getValueForScreenType(
-                      context: context, mobile: true, tablet: false)) {
-                    Navigator.pop(context);
-                  }
                   context.beamToNamed(
                     RouteNames.getPath(RouteNames.home),
                   );
