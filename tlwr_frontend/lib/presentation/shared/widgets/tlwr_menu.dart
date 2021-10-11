@@ -327,10 +327,11 @@ class _SelectActionBottomSheetState extends State<SelectActionBottomSheet> {
     return Column(
       children: [
         Expanded(
-            child: GestureDetector(
-          onTap: () => _close(),
-          child: Container(),
-        )),
+          child: GestureDetector(
+            onTap: _close,
+            child: Container(),
+          ),
+        ),
         Container(
           // height: 50 * (widget.children.length + 1) + 30,
           decoration: BoxDecoration(
@@ -341,6 +342,8 @@ class _SelectActionBottomSheetState extends State<SelectActionBottomSheet> {
             color: Colors.white.withOpacity(0.9),
           ),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: const [Expanded(child: SizedBox())],
