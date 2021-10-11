@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
 import 'package:tlwr_frontend/application/auth/auth_form/auth_form_bloc.dart';
@@ -53,113 +54,123 @@ class AuthForm extends StatelessWidget with AuthValidatorMixin {
       builder: (BuildContext context, state) {
         final size = MediaQuery.of(context).size;
 
-        return Column(
-          children: <Widget>[
-            SizedBox(
-              child: Container(
-                margin: const EdgeInsets.only(top: 50),
-                child: Center(
-                  child: TLWRText.heading1(
-                    signUp ? 'Sign up' : 'Sign in',
+        return HookBuilder(
+          builder: (context) {
+            final isDemoLogin = useState(false);
+            return Column(
+              children: <Widget>[
+                SizedBox(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 50),
+                    child: Center(
+                      child: TLWRText.heading1(
+                        signUp ? 'Sign up' : 'Sign in',
+                      ),
+                    ),
                   ),
                 ),
-              ),
-            ),
-            Container(
-              constraints: const BoxConstraints(
-                maxWidth: 500,
-              ),
-              width: size.width *
-                  getValueForScreenType<double>(
-                    context: context,
-                    mobile: 0.8,
-                    tablet: 0.8,
-                    desktop: 0.45,
+                Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: 500,
                   ),
-              padding: const EdgeInsets.all(30),
-              child: Form(
-                child: Column(
-                  children: <Widget>[
-                    TLWRInputFormField(
-                      // autofocus: true,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      keyboardType: TextInputType.emailAddress,
-                      textInputAction: TextInputAction.next,
-                      validator: emailValidator,
-                      placeholder: 'Email',
-                      onChanged: (value) => context
-                          .read<AuthFormBloc>()
-                          .add(AuthFormEvent.emailChanged(value)),
-                    ),
-                    const SizedBox(height: 10),
-                    TLWRInputFormField(
-                      controller:
-                          context.read<AuthFormBloc>().passwordController,
-                      // autofocus: true,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      textInputAction:
-                          signUp ? TextInputAction.next : TextInputAction.done,
-                      validator: passwordValidator,
-                      password: true,
-                      placeholder: 'Password',
-                      onChanged: (value) => context
-                          .read<AuthFormBloc>()
-                          .add(AuthFormEvent.passwordChanged(value)),
-                    ),
-                    const SizedBox(height: 10),
-                    if (signUp)
-                      TLWRInputFormField(
-                        controller: context
-                            .read<AuthFormBloc>()
-                            .confirmPasswordController,
-                        // autofocus: true,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        textInputAction: TextInputAction.done,
-                        validator: (_) => confirmPasswordValidator(
-                            state.confirmPassword, state.password),
-                        password: true,
-                        placeholder: 'Confirm password',
-                        onChanged: (value) => context
-                            .read<AuthFormBloc>()
-                            .add(AuthFormEvent.confirmPasswordChanged(value)),
+                  width: size.width *
+                      getValueForScreenType<double>(
+                        context: context,
+                        mobile: 0.8,
+                        tablet: 0.8,
+                        desktop: 0.45,
                       ),
-                    const SizedBox(height: 20),
-                    TLWRButton(
-                      title: signUp ? 'Sign up' : 'Sign in',
-                      loading: state.isSubmitting,
-                      onTap: () {
-                        FocusScope.of(context).unfocus();
-                        if (signUp) {
-                          context.read<AuthFormBloc>().add(const AuthFormEvent
-                              .signUpWithEmailAndPasswordPressed());
-                        } else {
-                          context.read<AuthFormBloc>().add(const AuthFormEvent
-                              .signInWithEmailAndPasswordPressed());
-                        }
-                      },
-                    ),
-                    if (!signUp)
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20.0),
-                        child: TLWRButton(
-                          title: 'Sign In with Demo Account',
-                          loading: state.isSubmitting,
+                  padding: const EdgeInsets.all(30),
+                  child: Form(
+                    child: Column(
+                      children: <Widget>[
+                        TLWRInputFormField(
+                          // autofocus: true,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          keyboardType: TextInputType.emailAddress,
+                          textInputAction: TextInputAction.next,
+                          validator: emailValidator,
+                          placeholder: 'Email',
+                          onChanged: (value) => context
+                              .read<AuthFormBloc>()
+                              .add(AuthFormEvent.emailChanged(value)),
+                        ),
+                        const SizedBox(height: 10),
+                        TLWRInputFormField(
+                          controller:
+                              context.read<AuthFormBloc>().passwordController,
+                          // autofocus: true,
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
+                          textInputAction: signUp
+                              ? TextInputAction.next
+                              : TextInputAction.done,
+                          validator: passwordValidator,
+                          password: true,
+                          placeholder: 'Password',
+                          onChanged: (value) => context
+                              .read<AuthFormBloc>()
+                              .add(AuthFormEvent.passwordChanged(value)),
+                        ),
+                        const SizedBox(height: 10),
+                        if (signUp)
+                          TLWRInputFormField(
+                            controller: context
+                                .read<AuthFormBloc>()
+                                .confirmPasswordController,
+                            // autofocus: true,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            textInputAction: TextInputAction.done,
+                            validator: (_) => confirmPasswordValidator(
+                                state.confirmPassword, state.password),
+                            password: true,
+                            placeholder: 'Confirm password',
+                            onChanged: (value) => context
+                                .read<AuthFormBloc>()
+                                .add(AuthFormEvent.confirmPasswordChanged(
+                                    value)),
+                          ),
+                        const SizedBox(height: 20),
+                        TLWRButton(
+                          title: signUp ? 'Sign up' : 'Sign in',
+                          loading: state.isSubmitting && !isDemoLogin.value,
                           onTap: () {
                             FocusScope.of(context).unfocus();
-                            {
-                              context
-                                  .read<AuthFormBloc>()
-                                  .add(const AuthFormEvent.signInWithDemo());
+                            if (signUp) {
+                              context.read<AuthFormBloc>().add(
+                                  const AuthFormEvent
+                                      .signUpWithEmailAndPasswordPressed());
+                            } else {
+                              context.read<AuthFormBloc>().add(
+                                  const AuthFormEvent
+                                      .signInWithEmailAndPasswordPressed());
                             }
                           },
                         ),
-                      ),
-                    const SizedBox(height: 70),
-                  ],
+                        if (!signUp)
+                          Padding(
+                            padding: const EdgeInsets.only(top: 20),
+                            child: TLWRButton(
+                              title: 'Sign In with Demo Account',
+                              loading: state.isSubmitting,
+                              onTap: () {
+                                isDemoLogin.value = true;
+                                FocusScope.of(context).unfocus();
+                                {
+                                  context.read<AuthFormBloc>().add(
+                                      const AuthFormEvent.signInWithDemo());
+                                }
+                              },
+                            ),
+                          ),
+                        const SizedBox(height: 70),
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
+              ],
+            );
+          },
         );
       },
     );
