@@ -13,4 +13,5 @@ class AuthFormEvent with _$AuthFormEvent {
       SignInWithEmailAndPasswordPressed;
   const factory AuthFormEvent.signInWithGithubPressed() =
       SignInWithGithubPressed;
+  const factory AuthFormEvent.signInWithDemo() = SignInWithDemo;
 }

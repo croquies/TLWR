@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
 import 'package:tlwr_frontend/application/project/project_form/project_form_bloc.dart';
 import 'package:tlwr_frontend/application/project/project_validator_mixin.dart';
 import 'package:tlwr_frontend/domain/project/project.dart';
@@ -102,9 +103,19 @@ class ProjectForm extends HookWidget with ProjectValidatorMixin {
                                 ProjectFormEvent.update(
                                     project?.copyWith(name: state.name)));
                           } else {
-                            context
-                                .read<ProjectFormBloc>()
-                                .add(const ProjectFormEvent.create());
+                            context.read<AuthBloc>().getOptionOfUser().fold(
+                              () => null,
+                              (a) {
+                                context.read<ProjectFormBloc>().add(
+                                      ProjectFormEvent.create(
+                                        Project(
+                                          name: state.name,
+                                          owner: a.id,
+                                        ),
+                                      ),
+                                    );
+                              },
+                            );
                           }
                         }
                       },

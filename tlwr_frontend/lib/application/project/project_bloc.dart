@@ -29,6 +29,22 @@ class ProjectBloc extends Bloc<ProjectEvent, ProjectState>
     ProjectEvent event,
   ) async* {
     yield* event.map(
+      create: (e) async* {
+        yield state.copyWith(
+          isLoading: true,
+          projectFailureOrSuccessOption: none(),
+        );
+        final project = Project(
+          owner: e.ownerId,
+          name: e.projectName,
+        );
+        final failureOrSuccess = await _projectRepository.create(project);
+        failureOrSuccess.fold((l) => null, (r) => null);
+        yield state.copyWith(
+          isLoading: false,
+          projectFailureOrSuccessOption: optionOf(failureOrSuccess),
+        );
+      },
       list: (e) async* {
         Either<ProjectFailure, Unit>? failureOrSuccess;
 

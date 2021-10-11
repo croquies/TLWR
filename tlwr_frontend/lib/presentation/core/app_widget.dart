@@ -44,12 +44,16 @@ class AppWidget extends HookWidget {
           title: 'TLWR: The Long and Winding Road',
           routerDelegate: routerDelegate,
           routeInformationParser: BeamerParser(),
+          debugShowCheckedModeBanner: false,
           theme: ThemeData(
             brightness: Brightness.dark,
             primaryColor: kcPrimaryColor,
             primarySwatch: kcPrimarySwatch,
             backgroundColor: kcBackgroundColor,
             scaffoldBackgroundColor: kcBackgroundColor,
+            bottomSheetTheme: BottomSheetThemeData(
+              backgroundColor: Colors.black.withOpacity(0),
+            ),
             textTheme: TextTheme(
               headline1: defaultTextTheme.headline1?.copyWith(
                 inherit: false,

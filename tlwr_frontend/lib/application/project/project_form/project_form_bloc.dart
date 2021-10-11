@@ -45,6 +45,7 @@ class ProjectFormBloc extends Bloc<ProjectFormEvent, ProjectFormState>
         yield* _performActionOnExistsProject(
           _projectRepository.create,
           create: true,
+          project: e.project,
         );
       },
       update: (e) async* {

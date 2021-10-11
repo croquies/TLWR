@@ -17,6 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 class _$ProjectEventTearOff {
   const _$ProjectEventTearOff();
 
+  _Create create(String ownerId, {String? projectName}) {
+    return _Create(
+      ownerId,
+      projectName: projectName,
+    );
+  }
+
   _Delete delete(String projectId) {
     return _Delete(
       projectId,
@@ -35,18 +42,21 @@ const $ProjectEvent = _$ProjectEventTearOff();
 mixin _$ProjectEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String ownerId, String? projectName) create,
     required TResult Function(String projectId) delete,
     required TResult Function() list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
     TResult Function(String projectId)? delete,
     TResult Function()? list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
     TResult Function(String projectId)? delete,
     TResult Function()? list,
     required TResult orElse(),
@@ -54,18 +64,21 @@ mixin _$ProjectEvent {
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Create value) create,
     required TResult Function(_Delete value) delete,
     required TResult Function(_List value) list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Create value)? create,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Create value)? create,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
     required TResult orElse(),
@@ -87,6 +100,156 @@ class _$ProjectEventCopyWithImpl<$Res> implements $ProjectEventCopyWith<$Res> {
   final ProjectEvent _value;
   // ignore: unused_field
   final $Res Function(ProjectEvent) _then;
+}
+
+/// @nodoc
+abstract class _$CreateCopyWith<$Res> {
+  factory _$CreateCopyWith(_Create value, $Res Function(_Create) then) =
+      __$CreateCopyWithImpl<$Res>;
+  $Res call({String ownerId, String? projectName});
+}
+
+/// @nodoc
+class __$CreateCopyWithImpl<$Res> extends _$ProjectEventCopyWithImpl<$Res>
+    implements _$CreateCopyWith<$Res> {
+  __$CreateCopyWithImpl(_Create _value, $Res Function(_Create) _then)
+      : super(_value, (v) => _then(v as _Create));
+
+  @override
+  _Create get _value => super._value as _Create;
+
+  @override
+  $Res call({
+    Object? ownerId = freezed,
+    Object? projectName = freezed,
+  }) {
+    return _then(_Create(
+      ownerId == freezed
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
+              as String,
+      projectName: projectName == freezed
+          ? _value.projectName
+          : projectName // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$_Create implements _Create {
+  const _$_Create(this.ownerId, {this.projectName});
+
+  @override
+  final String ownerId;
+  @override
+  final String? projectName;
+
+  @override
+  String toString() {
+    return 'ProjectEvent.create(ownerId: $ownerId, projectName: $projectName)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Create &&
+            (identical(other.ownerId, ownerId) ||
+                const DeepCollectionEquality()
+                    .equals(other.ownerId, ownerId)) &&
+            (identical(other.projectName, projectName) ||
+                const DeepCollectionEquality()
+                    .equals(other.projectName, projectName)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(ownerId) ^
+      const DeepCollectionEquality().hash(projectName);
+
+  @JsonKey(ignore: true)
+  @override
+  _$CreateCopyWith<_Create> get copyWith =>
+      __$CreateCopyWithImpl<_Create>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String ownerId, String? projectName) create,
+    required TResult Function(String projectId) delete,
+    required TResult Function() list,
+  }) {
+    return create(ownerId, projectName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
+    TResult Function(String projectId)? delete,
+    TResult Function()? list,
+  }) {
+    return create?.call(ownerId, projectName);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
+    TResult Function(String projectId)? delete,
+    TResult Function()? list,
+    required TResult orElse(),
+  }) {
+    if (create != null) {
+      return create(ownerId, projectName);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_Create value) create,
+    required TResult Function(_Delete value) delete,
+    required TResult Function(_List value) list,
+  }) {
+    return create(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Create value)? create,
+    TResult Function(_Delete value)? delete,
+    TResult Function(_List value)? list,
+  }) {
+    return create?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Create value)? create,
+    TResult Function(_Delete value)? delete,
+    TResult Function(_List value)? list,
+    required TResult orElse(),
+  }) {
+    if (create != null) {
+      return create(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Create implements ProjectEvent {
+  const factory _Create(String ownerId, {String? projectName}) = _$_Create;
+
+  String get ownerId => throw _privateConstructorUsedError;
+  String? get projectName => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  _$CreateCopyWith<_Create> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -152,6 +315,7 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String ownerId, String? projectName) create,
     required TResult Function(String projectId) delete,
     required TResult Function() list,
   }) {
@@ -161,6 +325,7 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
     TResult Function(String projectId)? delete,
     TResult Function()? list,
   }) {
@@ -170,6 +335,7 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
     TResult Function(String projectId)? delete,
     TResult Function()? list,
     required TResult orElse(),
@@ -183,6 +349,7 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Create value) create,
     required TResult Function(_Delete value) delete,
     required TResult Function(_List value) list,
   }) {
@@ -192,6 +359,7 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Create value)? create,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
   }) {
@@ -201,6 +369,7 @@ class _$_Delete implements _Delete {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Create value)? create,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
     required TResult orElse(),
@@ -257,6 +426,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
+    required TResult Function(String ownerId, String? projectName) create,
     required TResult Function(String projectId) delete,
     required TResult Function() list,
   }) {
@@ -266,6 +436,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
     TResult Function(String projectId)? delete,
     TResult Function()? list,
   }) {
@@ -275,6 +446,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String ownerId, String? projectName)? create,
     TResult Function(String projectId)? delete,
     TResult Function()? list,
     required TResult orElse(),
@@ -288,6 +460,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
+    required TResult Function(_Create value) create,
     required TResult Function(_Delete value) delete,
     required TResult Function(_List value) list,
   }) {
@@ -297,6 +470,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
+    TResult Function(_Create value)? create,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
   }) {
@@ -306,6 +480,7 @@ class _$_List implements _List {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
+    TResult Function(_Create value)? create,
     TResult Function(_Delete value)? delete,
     TResult Function(_List value)? list,
     required TResult orElse(),

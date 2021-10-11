@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
+import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:logger/logger.dart';
@@ -19,6 +20,14 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final IUserRepository _userRepository;
   final Logger _logger;
+
+  Option<User> getOptionOfUser() {
+    return state.map(
+      initial: (_) => none(),
+      authenticated: (a) => some(a.user),
+      unauthenticated: (_) => none(),
+    );
+  }
 
   @override
   Stream<AuthState> mapEventToState(

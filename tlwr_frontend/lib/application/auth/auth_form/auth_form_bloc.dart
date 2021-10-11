@@ -54,6 +54,23 @@ class AuthFormBloc extends Bloc<AuthFormEvent, AuthFormState>
     AuthFormEvent event,
   ) async* {
     yield* event.map(
+      signInWithDemo: (e) async* {
+        yield state.copyWith(
+          isSubmitting: true,
+          authFailureOrSuccessOption: none(),
+        );
+        final failureOrSuccess =
+            await _userRepository.signInWithEmailAndPassword(
+          email: 'tlwr.demo@gmail.com',
+          password: '123123123',
+        );
+        yield state.copyWith(
+          isSubmitting: false,
+          showErrorMessages: true,
+          message: '',
+          authFailureOrSuccessOption: optionOf(failureOrSuccess),
+        );
+      },
       emailChanged: (e) async* {
         yield state.copyWith(
           email: e.email ?? '',

@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:responsive_builder/responsive_builder.dart';
+import 'package:tlwr_frontend/application/auth/auth_bloc.dart';
 import 'package:tlwr_frontend/application/project/project_bloc.dart';
 import 'package:tlwr_frontend/domain/project/project.dart';
 import 'package:tlwr_frontend/presentation/dashboard/widgets/project_form.dart';
@@ -253,7 +254,50 @@ class ProjectList extends HookWidget {
           ),
         );
       } else {
-        return const Center(child: Text('Create your project!'));
+        final size = MediaQuery.of(context).size;
+        return Center(
+          child: Column(
+            children: [
+              Container(
+                width: size.width *
+                    getValueForScreenType<double>(
+                      context: context,
+                      mobile: 0.95,
+                      desktop: 0.6,
+                    ),
+                padding: const EdgeInsets.all(30),
+                margin: const EdgeInsets.all(10),
+                child: Column(
+                  children: [
+                    Expanded(
+                      flex: 0,
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: Wrap(
+                          spacing: 10,
+                          runSpacing: 10,
+                          alignment: WrapAlignment.spaceBetween,
+                          runAlignment: WrapAlignment.spaceAround,
+                          children: [
+                            Container(
+                              constraints: const BoxConstraints(maxWidth: 180),
+                              child: TLWRButton(
+                                title: 'Create new project',
+                                onTap: () {
+                                  showCreateOrUpdateDialog(null);
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        );
       }
     } else {
       return const Center(child: CircularProgressIndicator());
