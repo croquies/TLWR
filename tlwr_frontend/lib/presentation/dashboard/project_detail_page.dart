@@ -66,7 +66,6 @@ class ProjectDetailPage extends StatelessWidget {
                                   },
                                 ),
                               );
-                              print(nodes);
                               if (nodes.size > 0) {
                                 return TLWRGraphWidget(
                                   dynamicEvents: stateWithEvents.events,
