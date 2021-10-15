@@ -12,6 +12,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "swagger": "tsoa spec",
+    "deploy": "git push heroku deploy/backend:main",
     "heroku-postbuild": "npm run build"
   },
   "repository": {

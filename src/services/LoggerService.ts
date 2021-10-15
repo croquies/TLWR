@@ -1,6 +1,6 @@
 import {Service} from 'typedi';
 import winston = require('winston');
-import winstonDaily = require('winston-daily-rotate-file');
+// import winstonDaily = require('winston-daily-rotate-file');
 
 import ConfigService from './ConfigService';
 const {combine, timestamp, printf} = winston.format;
@@ -20,22 +20,22 @@ export default class LoggerService {
       ),
       transports: [
         new winston.transports.Console(),
-        new winstonDaily({
-          level: 'info',
-          datePattern: 'YYYY-MM-DD',
-          dirname: config.log_dir,
-          filename: '%DATE%.log',
-          maxFiles: 30,
-          zippedArchive: true,
-        }),
-        new winstonDaily({
-          level: 'error',
-          datePattern: 'YYYY-MM-DD',
-          dirname: config.log_dir + '/error',
-          filename: '%DATE%.error.log',
-          maxFiles: 30,
-          zippedArchive: true,
-        }),
+        // new winstonDaily({
+        //   level: 'info',
+        //   datePattern: 'YYYY-MM-DD',
+        //   dirname: config.log_dir,
+        //   filename: '%DATE%.log',
+        //   maxFiles: 30,
+        //   zippedArchive: true,
+        // }),
+        // new winstonDaily({
+        //   level: 'error',
+        //   datePattern: 'YYYY-MM-DD',
+        //   dirname: config.log_dir + '/error',
+        //   filename: '%DATE%.error.log',
+        //   maxFiles: 30,
+        //   zippedArchive: true,
+        // }),
       ],
     });
     if (config.isNotProduction) {

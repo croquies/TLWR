@@ -1,5 +1,4 @@
 export interface IPageNodeAdditionalInfo {
-  initial?: boolean;
   [key: string]: any;
 }
 
