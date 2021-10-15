@@ -11,7 +11,9 @@
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
-    "swagger": "tsoa spec"
+    "swagger": "tsoa spec",
+    "deploy": "git push heroku deploy/backend:main",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,9 @@
     "api",
     "analytics"
   ],
+  "engins": {
+    "node": "14.x"
+  },
   "author": "Aqudi",
   "license": "MIT",
   "devDependencies": {

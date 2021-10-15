@@ -58,8 +58,13 @@ export class Application {
 
     // Register routers
     RegisterRoutes(server);
+
+    let docsUrl = '/docs';
+    if (this.config.isProduction) {
+      docsUrl = '/tlwrdocsdessss';
+    }
     server.use(
-      '/docs',
+      docsUrl,
       swaggerUi.serve,
       async (req: express.Request, res: express.Response) => {
         return res.send(
