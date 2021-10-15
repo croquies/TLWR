@@ -35,8 +35,6 @@ class TLWRLogger {
         "additional_info": {"initial": true}
       }
     };
-    if (from != null) {
-      await dio.post('$uri/$dynamicEventPath', data: data);
-    }
+    await dio.post('$uri/$dynamicEventPath', data: data);
   }
 }

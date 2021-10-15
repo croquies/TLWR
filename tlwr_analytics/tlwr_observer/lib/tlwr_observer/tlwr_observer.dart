@@ -48,7 +48,7 @@ class TLWRObserver extends RouteObserver<ModalRoute<dynamic>> {
     toPageNode = some(PageNode(path: route.settings.name ?? "null-path"));
     fromPageNode = optionOf(previousRoute).flatMap(
       (a) => some(
-        PageNode(path: a.settings.name ?? "null-paht"),
+        PageNode(path: a.settings.name ?? "null-path"),
       ),
     );
     super.didPush(route, previousRoute); // call rout aware did push
@@ -72,10 +72,10 @@ class TLWRObserver extends RouteObserver<ModalRoute<dynamic>> {
   void didPop(Route route, Route? previousRoute) {
     assert(fromPageNode.isNone());
     assert(toPageNode.isNone());
-    toPageNode = some(PageNode(path: route.settings.name ?? "null-path"));
-    fromPageNode = optionOf(previousRoute).flatMap(
+    toPageNode = some(PageNode(path: previousRoute?.settings.name ?? "null-path"));
+    fromPageNode = optionOf(route).flatMap(
       (a) => some(
-        PageNode(path: a.settings.name ?? "null-paht"),
+        PageNode(path: a.settings.name ?? "null-path"),
       ),
     );
     super.didPop(route, previousRoute); // call rout aware did push
