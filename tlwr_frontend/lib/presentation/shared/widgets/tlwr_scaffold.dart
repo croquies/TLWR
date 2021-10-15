@@ -27,7 +27,6 @@ class TLWRScaffold extends HookWidget {
           const TLWRMenuData(
             title: 'Home',
             icon: Icon(Icons.home),
-            routeName: RouteNames.home,
             routeType: RouteType.both,
           ),
           const TLWRMenuData(

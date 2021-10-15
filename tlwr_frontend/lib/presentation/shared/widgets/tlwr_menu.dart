@@ -219,14 +219,7 @@ class TLWRMenuDesktop extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final selectedIndex = useState(0);
     final currentPath = context.currentBeamLocation.state.pathBlueprintSegments;
-    for (var i = 0; i < menus.length; i++) {
-      if (currentPath.contains(menus[i].routeName) &&
-          selectedIndex.value != i) {
-        selectedIndex.value = i;
-      }
-    }
 
     return SizedBox(
       height: 100,
@@ -239,26 +232,36 @@ class TLWRMenuDesktop extends HookWidget {
             children: [
               ...List.generate(
                 menus.length,
-                (index) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: TLWRMenuItem(
-                    item: menus[index],
-                    selected: index == selectedIndex.value,
-                    onPressed: () {
-                      final menu = menus[index];
-                      final callback = menu.callback;
-                      if (callback != null) {
-                        callback();
-                      } else {
-                        selectedIndex.value = index;
-                        if (menu.routeName.isNotEmpty) {
-                          context
-                              .beamToNamed(RouteNames.getPath(menu.routeName));
+                (index) {
+                  final menu = menus[index];
+                  late final bool selected;
+                  if (currentPath.isEmpty) {
+                    selected = menus[index].routeName == RouteNames.home;
+                  } else {
+                    selected = currentPath.contains(menus[index].routeName);
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: TLWRMenuItem(
+                      item: menu,
+                      selected: selected,
+                      onPressed: () {
+                        final callback = menu.callback;
+                        if (callback != null) {
+                          callback();
+                        } else {
+                          if (menu.routeName.isEmpty) {
+                            context.beamToNamed(
+                                RouteNames.getPath(RouteNames.home));
+                          } else {
+                            context.beamToNamed(
+                                RouteNames.getPath(menu.routeName));
+                          }
                         }
-                      }
-                    },
-                  ),
-                ),
+                      },
+                    ),
+                  );
+                },
               ),
             ],
           )

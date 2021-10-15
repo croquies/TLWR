@@ -27,28 +27,31 @@ class RootLocation extends BeamLocation {
       'parameters: ${state.pathParameters}',
     );
     final pages = [
-      if (state.uri.pathSegments.contains(RouteNames.home))
-        BeamPage(
-          key: const ValueKey(RouteNames.home),
-          title: RouteNames.home,
-          child: const HomePage(),
-        ),
+      BeamPage(
+        key: const ValueKey(RouteNames.home),
+        title: RouteNames.homeTitle,
+        name: RouteNames.home,
+        child: const HomePage(),
+      ),
       if (state.uri.pathSegments.contains(RouteNames.signIn))
         BeamPage(
           key: const ValueKey(RouteNames.signIn),
-          title: RouteNames.signIn,
+          title: RouteNames.signInTitle,
+          name: RouteNames.signIn,
           child: const SignInPage(),
         ),
       if (state.uri.pathSegments.contains(RouteNames.signUp))
         BeamPage(
           key: const ValueKey(RouteNames.signUp),
-          title: RouteNames.signUp,
+          title: RouteNames.signUpTitle,
+          name: RouteNames.signUp,
           child: const SignUpPage(),
         ),
       if (state.uri.pathSegments.contains(RouteNames.dashboard))
         BeamPage(
           key: const ValueKey(RouteNames.dashboard),
-          title: RouteNames.dashboard,
+          title: RouteNames.dashboardTitle,
+          name: RouteNames.dashboard,
           child: const DashboardPage(),
         ),
       if (state.uri.pathSegments.contains(RouteNames.dashboard) &&
@@ -56,7 +59,9 @@ class RootLocation extends BeamLocation {
         BeamPage(
           key: ValueKey(
               '${RouteNames.dashboard}-${state.pathParameters['projectId']}'),
-          title: RouteNames.dashboardWithProjectId,
+          title: '${RouteNames.dashboardTitle} - '
+              '${state.pathParameters['projectId']}',
+          name: RouteNames.dashboardWithProjectId,
           child: ProjectDetailPage(
             projectId: state.pathParameters['projectId']!,
           ),
