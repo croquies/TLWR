@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 
 import 'entities/page_node.dart';
 
-const String uri = "http://ae88-220-70-71-150.ngrok.io";
+const String uri = "https://tlwr.herokuapp.com";
 const String dynamicEventPath = "dynamicevents";
 
 class TLWRLogger {
