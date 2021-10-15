@@ -12,7 +12,7 @@ dependencies:
   beamer: ^0.14.1
   bloc: ^7.2.0
   custom_pop_up_menu: ^1.2.2
-  dartz: ^0.10.0
+  dartz: ^0.10.0-nullsafety.1
   flutter:
     sdk: flutter
   flutter_bloc: ^7.3.0
@@ -30,6 +30,8 @@ dependencies:
   supabase_flutter: ^0.2.8
   tlwr_graph_viz:
     path: ../tlwr_graph_viz
+  tlwr_observer:
+    path: ../tlwr_analytics/tlwr_observer
   uuid: ^3.0.5
 
 dev_dependencies:

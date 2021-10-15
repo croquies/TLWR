@@ -6,21 +6,25 @@ import 'package:tlwr_frontend/application/auth/auth_form/auth_form_bloc.dart';
 import 'package:tlwr_frontend/injectable.dart';
 import 'package:tlwr_frontend/presentation/auth/widgets/auth_form.dart';
 import 'package:tlwr_frontend/presentation/shared/widgets/tlwr_scaffold.dart';
+import 'package:tlwr_observer/tlwr_observer.dart';
 
 class SignUpPage extends HookWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(builder: (context, sizingInformation) {
-      return TLWRScaffold(
-        child: SingleChildScrollView(
-          child: BlocProvider(
-            create: (context) => getIt<AuthFormBloc>(),
-            child: const AuthForm(signUp: true),
+    return TLWRPageWidget(
+      label: 'Sign up',
+      child: ResponsiveBuilder(builder: (context, sizingInformation) {
+        return TLWRScaffold(
+          child: SingleChildScrollView(
+            child: BlocProvider(
+              create: (context) => getIt<AuthFormBloc>(),
+              child: const AuthForm(signUp: true),
+            ),
           ),
-        ),
-      );
-    });
+        );
+      }),
+    );
   }
 }

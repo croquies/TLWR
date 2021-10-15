@@ -6,19 +6,19 @@ import 'package:tlwr_frontend/injectable.dart';
 import 'package:tlwr_frontend/presentation/routes/route_names.dart';
 import 'package:tlwr_frontend/presentation/routes/router.dart';
 import 'package:tlwr_frontend/presentation/shared/colors.dart';
+import 'package:tlwr_observer/tlwr_logger.dart';
+import 'package:tlwr_observer/tlwr_observer/tlwr_observer.dart';
+
+final tlwrLogger =
+    TLWRLogger.initialize(id: '3f963ff8-cf80-4709-9309-7db573b8eec6');
+final tlwrObserver = TLWRObserver.initialize(tlwrLogger: tlwrLogger);
 
 class AppWidget extends HookWidget {
   AppWidget({Key? key}) : super(key: key);
 
   final routerDelegate = BeamerDelegate(
+    navigatorObservers: [tlwrObserver],
     transitionDelegate: const NoAnimationTransitionDelegate(),
-    guards: [
-      BeamGuard(
-        pathBlueprints: ['/'],
-        check: (context, _) => false,
-        beamToNamed: RouteNames.getPath(RouteNames.home),
-      ),
-    ],
     initialPath: RouteNames.getPath(RouteNames.home),
     locationBuilder: BeamerLocationBuilder(
       beamLocations: [
